@@ -1,0 +1,4 @@
+# (PART) Images to measurements  {-}
+# Configure tools to process images
+## Download software
+## Setup Distributed CellProfiler

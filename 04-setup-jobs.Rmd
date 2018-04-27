@@ -1,0 +1,4 @@
+# Setup jobs 
+## Illumination correction 
+## Quality control 
+## Analysis 

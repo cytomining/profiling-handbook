@@ -1,0 +1,6 @@
+# Setup pipelines and images
+## Get CellProfiler pipelines
+## Specify pipeline set
+## Prepare images
+## Create list of plates
+## Create LoadData CSVs

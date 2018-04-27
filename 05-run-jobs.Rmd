@@ -1,0 +1,10 @@
+# Run jobs
+## Illumination correction
+### Single node
+### DCP
+## Quality control
+### Process QC results into a database for CPA
+## Analysis 
+### Single node
+### DCP
+

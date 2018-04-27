@@ -1,0 +1,8 @@
+# (PART) Configuration {-} 
+
+# Configure environment 
+
+## Set up a virtual machine
+## Define variables 
+## Create directories
+

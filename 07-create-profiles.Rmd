@@ -1,0 +1,11 @@
+# Create profiles
+## Create database backend
+## Annotate
+## Normalize
+## Selection variables
+## Aggregate perturbations
+## Audit
+## Convert to other formats
+## Upload data
+### Sync to S3
+### Sync from S3 to another machine
