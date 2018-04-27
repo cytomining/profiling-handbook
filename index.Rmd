@@ -12,3 +12,4 @@ github-repo: rstudio/bookdown-demo
 description: "This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer"
 ---
 
+# Preface {-}
