@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-04-27">
+<meta name="date" content="2018-04-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,6 +49,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -111,13 +148,13 @@
 <li class="chapter" data-level="7.1" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>7.1</b> Create database backend</a></li>
 <li class="chapter" data-level="7.2" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>7.2</b> Annotate</a></li>
 <li class="chapter" data-level="7.3" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>7.3</b> Normalize</a></li>
-<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#selection-variables"><i class="fa fa-check"></i><b>7.4</b> Selection variables</a></li>
-<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-perturbations"><i class="fa fa-check"></i><b>7.5</b> Aggregate perturbations</a></li>
+<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>7.4</b> Select variables</a></li>
+<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>7.5</b> Aggregate replicates</a></li>
 <li class="chapter" data-level="7.6" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>7.6</b> Audit</a></li>
 <li class="chapter" data-level="7.7" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>7.7</b> Convert to other formats</a></li>
 <li class="chapter" data-level="7.8" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>7.8</b> Upload data</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>7.8.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-from-s3-to-another-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync from S3 to another machine</a></li>
+<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync down from S3 onto a machine</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -148,12 +185,63 @@
 <h1><span class="header-section-number">Chapter 1</span> Configure environment</h1>
 <div id="set-up-a-virtual-machine" class="section level2">
 <h2><span class="header-section-number">1.1</span> Set up a virtual machine</h2>
+<p>This example assumes that AWS infrastructure has been set up using <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting" class="uri">https://github.com/broadinstitute/aws-infrastructure-cellpainting</a></p>
+<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json" class="uri">https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json</a>. You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. See <code>module &quot;ec2_login&quot;</code> in the Terraform <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/main.tf">configuration</a> for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to <code>ec2_login</code>, which is set up in this infrastructure. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume.</p>
+<p>After starting the instance, ensure that the S3 bucket is mount on <code>~/bucket</code>. If not, do <code>sudo mount -a</code></p>
+<p>Troubleshooting: Note that given this configuration in this AMI, EFS can only be mounted from us-east-1a or 1b. This can be changed by appropriately editing the EFS configuration via Terraform.</p>
+<p>Log in to the EC2 instance</p>
+<p>Check available space on the instance</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">du</span> -h</code></pre></div>
+<p>Ensure that the <code>Available</code> column is at least 30Gb x <code>p</code>, where <code>p</code> is the number of plates you will process in parallel when creating the database backend. We recommend <code>p</code> to be one less than the number of cores (<code>p</code> = 3 for <code>m4.xlarge</code>, so 60Gb should be available)</p>
+<p>Enter your AWS credentials</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> configure</code></pre></div>
+<p>The infrastructure is configure with one S3 bucket. Mount this S3 bucket (if it is not automatically mounted)</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> mount -a</code></pre></div>
+<p>Check that the bucket was was mounted. This path should exist:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">ls</span> ~/bucket/projects</code></pre></div>
 </div>
 <div id="define-variables" class="section level2">
 <h2><span class="header-section-number">1.2</span> Define variables</h2>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">PROJECT_NAME=</span>2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad
+
+<span class="va">BATCH_ID=</span>2016_04_01_a549_48hr_batch1
+
+<span class="va">BUCKET=</span>imaging-platform
+
+<span class="va">MAXPROCS=</span>3 <span class="co"># m4.xlarge has 4 cores; keep 1 free</span></code></pre></div>
 </div>
 <div id="create-directories" class="section level2">
 <h2><span class="header-section-number">1.3</span> Create directories</h2>
+<p>*Troublshooting <a href="tip:*" class="uri">tip:*</a> See note above about EFS - that it can only be mounted from us-east-1a or 1b.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
+
+<span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
+
+<span class="fu">mkdir</span> -p log/<span class="va">${BATCH_ID}</span></code></pre></div>
+<p>Create a temp directory which is required when creating the database backed using <code>cytominer-database</code> (discussed later). This is also useful if you decide to run CellProfiler directly on this node – running the Cell Painting analysis spipeline results in large temporary files.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> ~/ebs_tmp</code></pre></div>
+<p>*Troublshooting <a href="tip:*" class="uri">tip:*</a> If at this point you realize that the ec2 instance doesn’t have enough space (which you can check using <code>du -h</code>), create and attach an EBS volume, and then mount it.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="co"># check the name of the disk</span>
+<span class="ex">lsblk</span>
+
+<span class="co">#&gt; NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span>
+<span class="co">#&gt; xvda    202:0    0     8G  0 disk</span>
+<span class="co">#&gt; └─xvda1 202:1    0     8G  0 part /</span>
+<span class="co">#&gt; xvdf    202:80   0   100G  0 disk</span>
+
+<span class="co"># check if it has a file system</span>
+<span class="fu">sudo</span> file -s /dev/xvdf
+<span class="co"># ...likely not, in which case you get:</span>
+<span class="co">#&gt; /dev/xvdf: data</span>
+
+<span class="co"># if no file system, then create it</span>
+<span class="fu">sudo</span> mkfs -t ext4 /dev/xvdf
+
+<span class="co"># mount it</span>
+<span class="fu">sudo</span> mount /dev/xvdf /home/ubuntu/ebs_tmp/
+
+<span class="co"># change perm</span>
+<span class="fu">sudo</span> chmod 777 ~/ebs_tmp/</code></pre></div>
 
 </div>
 </div>

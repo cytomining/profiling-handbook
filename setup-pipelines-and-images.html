@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-04-27">
+<meta name="date" content="2018-04-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,6 +49,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -111,13 +148,13 @@
 <li class="chapter" data-level="7.1" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>7.1</b> Create database backend</a></li>
 <li class="chapter" data-level="7.2" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>7.2</b> Annotate</a></li>
 <li class="chapter" data-level="7.3" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>7.3</b> Normalize</a></li>
-<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#selection-variables"><i class="fa fa-check"></i><b>7.4</b> Selection variables</a></li>
-<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-perturbations"><i class="fa fa-check"></i><b>7.5</b> Aggregate perturbations</a></li>
+<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>7.4</b> Select variables</a></li>
+<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>7.5</b> Aggregate replicates</a></li>
 <li class="chapter" data-level="7.6" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>7.6</b> Audit</a></li>
 <li class="chapter" data-level="7.7" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>7.7</b> Convert to other formats</a></li>
 <li class="chapter" data-level="7.8" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>7.8</b> Upload data</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>7.8.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-from-s3-to-another-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync from S3 to another machine</a></li>
+<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync down from S3 onto a machine</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -148,18 +185,81 @@
 <h1><span class="header-section-number">Chapter 3</span> Setup pipelines and images</h1>
 <div id="get-cellprofiler-pipelines" class="section level2">
 <h2><span class="header-section-number">3.1</span> Get CellProfiler pipelines</h2>
+<p>Cell Painting pipelines are stored in a GitHub repo. If you are using a new pipeline, be sure to add it to the repo first. Follow instructions on <a href="https://github.com/broadinstitute/imaging-platform-pipelines" class="uri">https://github.com/broadinstitute/imaging-platform-pipelines</a> for adding new pipelines.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
+<span class="fu">mkdir</span> github
+<span class="bu">cd</span> github/
+<span class="fu">git</span> clone git@github.com:broadinstitute/imaging-platform-pipelines.git
+<span class="bu">cd</span> ..
+<span class="fu">ln</span> -s github/imaging-platform-pipelines pipelines</code></pre></div>
+<p>This is the resulting structure of <code>github</code> and <code>pipelines</code> on EFS (one level below <code>workspace</code>):</p>
+<pre><code>├── github
+│    └── imaging-platform-pipelines
+└── pipelines -&gt; github/imaging-platform-pipelines</code></pre>
 </div>
 <div id="specify-pipeline-set" class="section level2">
 <h2><span class="header-section-number">3.2</span> Specify pipeline set</h2>
+<pre><code>PIPELINE_SET=cellpainting_a549_20x_with_bf_phenix_bin1</code></pre>
+<p>Ensure that, both, <code>analysis.cppipe</code> as well as <code>illum.cppipe</code> are present for this set. As well, each pipeline should have a <code>_without_batchfile</code> version of it in the same directory. It’s easy to create such a version of the pipeline - simply copy it and set <code>enabled=False</code> for the <code>CreateBatchFiles</code> module (like <a href="https://github.com/broadinstitute/imaging-platform-pipelines/blob/master/cellpainting_u2os_20x_imagexpress/illum_without_batchfile.cppipe#L384">here</a>).</p>
 </div>
 <div id="prepare-images" class="section level2">
 <h2><span class="header-section-number">3.3</span> Prepare images</h2>
+<p>Create soft link to the image folder, which should be uploaded on S3. Note that the relevant S3 bucket has been mounted at <code>/home/ubuntu/bucket/</code>.</p>
+<p>*Troublshooting <a href="tip:*" class="uri">tip:*</a> The folder structure for <code>images</code> differs between <code>S3</code> and <code>EFS</code>. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when <code>pe2loaddata</code> is run (later in the process, via <code>create_csv_from_xml.sh</code>) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the <code>images</code> folder have a similar structure as the others (e.g. <code>load_data_csv</code>, <code>metadata</code>, <code>analysis</code>).</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
+<span class="fu">mkdir</span> images
+<span class="bu">cd</span> images
+<span class="fu">ln</span> -s ~/bucket/projects/<span class="va">${PROJECT_NAME}</span>/<span class="va">${BATCH_ID}</span>/images/ <span class="va">${BATCH_ID}</span>
+<span class="bu">cd</span> ..</code></pre></div>
+<p>This is the resulting structure of the image folder on EFS (one level below <code>workspace</code>):</p>
+<pre><code>└── images
+    └── 2016_04_01_a549_48hr_batch1 -&gt; /home/ubuntu/bucket/projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/images/</code></pre>
+<p>This is the structure of the image folder on S3 (one level above <code>workspace</code>, under the folder <code>2016_04_01_a549_48hr_batch1</code>.) Here, only one plate (<code>SQ00015167__2016-04-21T03_34_00-Measurement1</code>) is show but there are often many more.</p>
+<pre><code>└── images
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167__2016-04-21T03_34_00-Measurement1
+            ├── Assaylayout
+            ├── FFC_Profile
+            └── Images
+                ├── r01c01f01p01-ch1sk1fk1fl1.tiff
+                ├── r01c01f01p01-ch2sk1fk1fl1.tiff
+                ├── r01c01f01p01-ch3sk1fk1fl1.tiff
+                ├── r01c01f01p01-ch4sk1fk1fl1.tiff
+                └── r01c01f01p01-ch5sk1fk1fl1.tiff</code></pre>
+<p><code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> is the typical nomenclature followed by Broad Chemical Biology Platform for plate names. <code>Measurement1</code> indicates the first attempt to image the plate. <code>Measurement2</code> indicates second attempt and so on. Ensure that there’s only one folder corresponding to a plate before running <code>create_csv_from_xml.sh</code> below (it gracefully exits if not).</p>
 </div>
 <div id="create-list-of-plates" class="section level2">
 <h2><span class="header-section-number">3.4</span> Create list of plates</h2>
+<p>Create a text file with one plate id per line.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p scratch/<span class="va">${BATCH_ID}</span>/
+
+<span class="va">PLATES=$(</span><span class="fu">readlink</span> -f ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/plates_to_process.txt<span class="va">)</span>
+
+<span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span></code></pre></div>
 </div>
 <div id="create-loaddata-csvs" class="section level2">
 <h2><span class="header-section-number">3.5</span> Create LoadData CSVs</h2>
+<p>The script below works only for Phenix microscopes – it reads a standard XML file (<code>Index.idx.xml</code>) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires <code>config.yml</code>, which specifies (1) the mapping between channel names in <code>Index.idx.xml</code> and the channel names in the CellProfiler pipelines (2) metadata to extract from <code>Index.idx.xml</code>. Ensure that all the metadata fields defined in <code>config.yml</code> are present in the <code>Index.idx.xml</code>.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/cellpainting_scripts/
+<span class="ex">pyenv</span> shell 2.7.12
+<span class="ex">parallel</span> \
+  --max-procs <span class="va">${MAXPROCS}</span> \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/create_csv_from_xml.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/create_csv_from_xml \
+  --files \
+  --keep-order \
+  ./create_csv_from_xml.sh \
+  -b <span class="va">${BATCH_ID}</span> \
+  --plate <span class="dt">{1}</span> :::: <span class="va">${PLATES}</span>
+<span class="bu">cd</span> ../../</code></pre></div>
+<p>This is the resulting structure of <code>load_data_csv</code> on EFS (one level below <code>workspace</code>). Files for only <code>SQ00015167</code> are shown.</p>
+<pre><code>└── load_data_csv
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── load_data.csv
+            └── load_data_with_illum.csv</code></pre>
+<p><code>load_data.csv</code> will be used by <code>illum.cppipe</code>. <code>load_data_with_illum.csv</code> will be used by <code>analysis.cppipe</code>. When creating <code>load_data_with_illum.csv</code>, the script assumes a specific location for the output folder, discussed below (see discussion on <code>--illum_pipeline_name</code> option).</p>
 
 </div>
 </div>

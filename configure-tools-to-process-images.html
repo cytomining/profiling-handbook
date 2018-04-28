@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-04-27">
+<meta name="date" content="2018-04-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,6 +49,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -111,13 +148,13 @@
 <li class="chapter" data-level="7.1" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>7.1</b> Create database backend</a></li>
 <li class="chapter" data-level="7.2" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>7.2</b> Annotate</a></li>
 <li class="chapter" data-level="7.3" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>7.3</b> Normalize</a></li>
-<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#selection-variables"><i class="fa fa-check"></i><b>7.4</b> Selection variables</a></li>
-<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-perturbations"><i class="fa fa-check"></i><b>7.5</b> Aggregate perturbations</a></li>
+<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>7.4</b> Select variables</a></li>
+<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>7.5</b> Aggregate replicates</a></li>
 <li class="chapter" data-level="7.6" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>7.6</b> Audit</a></li>
 <li class="chapter" data-level="7.7" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>7.7</b> Convert to other formats</a></li>
 <li class="chapter" data-level="7.8" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>7.8</b> Upload data</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>7.8.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-from-s3-to-another-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync from S3 to another machine</a></li>
+<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync down from S3 onto a machine</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -148,9 +185,31 @@
 <h1><span class="header-section-number">Chapter 2</span> Configure tools to process images</h1>
 <div id="download-software" class="section level2">
 <h2><span class="header-section-number">2.1</span> Download software</h2>
+<p>You may need to authenticate your GitHub account to be able to clone these:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
+<span class="fu">mkdir</span> software
+<span class="bu">cd</span> software
+<span class="fu">git</span> clone git@github.com:broadinstitute/cellpainting_scripts.git
+<span class="fu">git</span> clone git@github.com:broadinstitute/pe2loaddata.git
+<span class="fu">git</span> clone git@github.com:broadinstitute/cytominer_scripts.git
+<span class="bu">cd</span> ..</code></pre></div>
+<p>To authenticate your GitHub account, follow instructions to setup SSH keys here <a href="https://help.github.com/articles/connecting-to-github-with-ssh/" class="uri">https://help.github.com/articles/connecting-to-github-with-ssh/</a>.</p>
+<p>You can also clone these repos by following the structure below and inputting your OAuth token as necessary.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">git</span> clone https://username@github.com/broadinstitute/cytominer_scripts.git</code></pre></div>
+<p>If these repos have already been cloned, <code>git pull</code> to make sure they are up to date.</p>
+<p>This is the resulting structure of <code>software</code> on EFS (one level below <code>workspace</code>):</p>
+<pre><code>└── software
+    ├── cellpainting_scripts
+    ├── cytominer_scripts
+    └── pe2loaddata</code></pre>
 </div>
 <div id="setup-distributed-cellprofiler" class="section level2">
 <h2><span class="header-section-number">2.2</span> Setup Distributed CellProfiler</h2>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/Distributed-CellProfiler/
+
+<span class="ex">pyenv</span> shell 2.7.12
+
+<span class="ex">pip</span> install -r files/requirements.txt</code></pre></div>
 
 </div>
 </div>

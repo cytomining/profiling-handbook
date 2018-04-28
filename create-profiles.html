@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-04-27">
+<meta name="date" content="2018-04-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,6 +49,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -111,13 +148,13 @@
 <li class="chapter" data-level="7.1" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>7.1</b> Create database backend</a></li>
 <li class="chapter" data-level="7.2" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>7.2</b> Annotate</a></li>
 <li class="chapter" data-level="7.3" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>7.3</b> Normalize</a></li>
-<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#selection-variables"><i class="fa fa-check"></i><b>7.4</b> Selection variables</a></li>
-<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-perturbations"><i class="fa fa-check"></i><b>7.5</b> Aggregate perturbations</a></li>
+<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>7.4</b> Select variables</a></li>
+<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>7.5</b> Aggregate replicates</a></li>
 <li class="chapter" data-level="7.6" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>7.6</b> Audit</a></li>
 <li class="chapter" data-level="7.7" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>7.7</b> Convert to other formats</a></li>
 <li class="chapter" data-level="7.8" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>7.8</b> Upload data</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>7.8.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-from-s3-to-another-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync from S3 to another machine</a></li>
+<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync down from S3 onto a machine</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -148,32 +185,340 @@
 <h1><span class="header-section-number">Chapter 7</span> Create profiles</h1>
 <div id="create-database-backend" class="section level2">
 <h2><span class="header-section-number">7.1</span> Create database backend</h2>
+<p>Run creation of sqlite backend as well as aggregation of measurements into per-well profiles. This process can be very slow since the files are read from s3fs/EFS. We recommend first downloading the CSVs files locally and then ingesting.</p>
+<p>To do so, you need to recreate the folder structure on EBS and then run <code>collate.R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ~/ebs_tmp/<span class="va">${PROJECT_NAME}</span>/workspace/software
+
+<span class="bu">cd</span> ~/ebs_tmp/<span class="va">${PROJECT_NAME}</span>/workspace/software
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="ot">-d</span> cytominer_scripts<span class="bu"> ]</span>; <span class="kw">then</span> <span class="fu">rm</span> -rf cytominer_scripts<span class="kw">;</span> <span class="kw">fi</span>
+
+<span class="fu">git</span> clone https://github.com/broadinstitute/cytominer_scripts.git
+
+<span class="bu">cd</span> cytominer_scripts
+
+<span class="ex">pyenv</span> local 3.5.1</code></pre></div>
+<p>The command below first calls <code>cytominer-database ingest</code> to create the sqlite backend, and then <code>aggregate.R</code> to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache is deleted.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p  ../../log/<span class="va">${BATCH_ID}</span>/
+<span class="ex">parallel</span> \
+  --max-procs <span class="va">${MAXPROCS}</span> \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/collate.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/collate \
+  --files \
+  --keep-order \
+  ./collate.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  --plate <span class="dt">{1}</span> \
+  -c ingest_config.ini \
+  --tmpdir ~/ebs_tmp \
+  -d \
+  -r s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace :::: <span class="va">${PLATES}</span></code></pre></div>
+<p>*Troublshooting <a href="tip:*" class="uri">tip:*</a> For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: <code>expected X columns but found Y - filling the rest with NULL</code>. This is expected behavior.</p>
+<p>This is the resulting structure of <code>backend</code> on S3 (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
+<pre><code>└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167.csv
+            └── SQ00015167.sqlite</code></pre>
+<p><code>SQ00015167.sqlite</code> is the per cell data and <code>SQ00015167.csv</code> is the aggregated per-well data.</p>
+<p>Copy these files from S3 to EFS to continue with the rest of the processing</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 sync --exclude <span class="st">&quot;*.sqlite&quot;</span> s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/backend/<span class="va">${BATCH_ID}</span>/ ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/backend/<span class="va">${BATCH_ID}</span>/</code></pre></div>
+<p>Do a quick check to view how many rows are present in each of the aggregated per-well data.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}</span>.csv :::: <span class="va">${PLATES}</span></code></pre></div>
 </div>
 <div id="annotate" class="section level2">
 <h2><span class="header-section-number">7.2</span> Annotate</h2>
+<p>First, get metadata for the plates. This should be created beforehand and be made available in S3.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 sync s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/metadata/<span class="va">${BATCH_ID}</span>/ ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/metadata/<span class="va">${BATCH_ID}</span>/</code></pre></div>
+<p>This is the resulting structure of the metadata folder on EFS (one level below <code>workspace</code>)</p>
+<pre><code>└── metadata
+    └── 2016_04_01_a549_48hr_batch1
+        ├── barcode_platemap.csv
+        └── platemap
+            └── C-7161-01-LM6-006.txt</code></pre>
+<p><code>2016_04_01_a549_48hr_batch1</code> is the batch name – the plates (and all related data) are arranged under batches, as seen below.</p>
+<p><code>barcode_platemap.csv</code> is structured as shown below. <code>Assay_Plate_Barcode</code> and <code>Plate_Map_Name</code> are currently the only mandatory columns (they are used to join the metadata of the plate map with each assay plate). Each unique entry in the <code>Plate_Map_Name</code> should have a corresponding tab-separated file <code>.txt</code> file under <code>platemap</code> (e.g. <code>C-7161-01-LM6-006.txt</code>)</p>
+<pre><code>Assay_Plate_Barcode,Plate_Map_Name
+SQ00015167,C-7161-01-LM6-006</code></pre>
+<p>The tab-separated files are plate maps and are structured like this: (This is the typical format followed by Broad Chemical Biology Platform)</p>
+<pre><code>plate_map_name  well_position broad_sample  mg_per_ml mmoles_per_liter  solvent
+C-7161-01-LM6-006 A07 BRD-K18895904-001-16-1  3.12432000000000016 9.99999999999999999 DMSO
+C-7161-01-LM6-006 A08 BRD-K18895904-001-16-1  1.04143999999919895 3.33333333333076923 DMSO
+C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.11111111111538462 DMSO</code></pre>
+<p>NOTE: - <code>plate_map_name</code> should be identical to the name of the file (without extension). - <code>plate_map_name</code> and <code>well_position</code> are mandatory columns. - If you have two sets of plates that have the same platemap but are plated with different cell lines, then create one plate map file for each cell line, e.g. <code>C-7161-01-LM6-006_A549.txt</code>, rename the <code>plate_map_name</code> to the name of the file (without extension), add a column <code>cell_id</code>, and populate it with the name of the cell line (e.g. <code>A549</code>). This should also be reflected in the <code>barcode_platemap.csv</code> file.</p>
+<p>Next, append the metadata to the aggregated per-well data. You may choose to additionally append columns from another source (“EXTERNAL_METADATA” below), which you can specify using the <code>-j</code> flag.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span>  ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/cytominer_scripts
+
+<span class="va">EXTERNAL_METADATA=</span>../../metadata/<span class="va">${BATCH_ID}</span>/cell_painting_dataset_cmap_annotations_moa.csv
+
+<span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/annotate.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/annotate \
+  --files \
+  --keep-order \
+  ./annotate.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  -p <span class="dt">{1}</span> \
+  -d \
+  -j <span class="va">${EXTERNAL_METADATA}</span> \
+  -m chemical :::: <span class="va">${PLATES}</span>
+  <span class="kw">```</span>
+
+<span class="ex">This</span> is the resulting structure of <span class="kw">`</span><span class="ex">backend</span><span class="kw">`</span> <span class="ex">on</span> EFS (one level below <span class="kw">`</span>workspace<span class="kw">`</span>) <span class="kw">for</span> <span class="kw">`</span>SQ00015167<span class="kw">`</span><span class="bu">:</span></code></pre></div>
+<p>└── backend    └── 2016_04_01_a549_48hr_batch1 └── SQ00015167 ├── SQ00015167_augmented.csv └── SQ00015167.csv ```</p>
+<p><code>SQ00015167_augmented.csv</code> is the aggregated per-well data, annotated with metadata.</p>
+<p>Do a quick check to view how many rows are present in each of the annotated per-well data.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}</span>_augmented.csv :::: <span class="va">${PLATES}</span></code></pre></div>
 </div>
 <div id="normalize" class="section level2">
 <h2><span class="header-section-number">7.3</span> Normalize</h2>
+<p>Use all wells on the plate to normalize each feature. By default, this performs robust z-scoring per feature. The default input is the annotated per-well data.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/normalize.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/normalize \
+  --files \
+  --keep-order \
+  ./normalize.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  -p <span class="dt">{1}</span> \
+  -s <span class="dt">\&quot;</span>Metadata_broad_sample_type != <span class="dt">\&#39;\&#39;\&#39;</span>dummy<span class="dt">\&#39;\&#39;\&#39;\&quot;</span> :::: <span class="va">${PLATES}</span></code></pre></div>
+<p>NOTE: - don’t escape quotes if not using parallel i.e. use <code>-s &quot;Metadata_broad_sample_type != '''dummy'''&quot;</code> if not using within parallel. - to use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the <code>-s</code> flag.</p>
+<p>This is the resulting structure of <code>backend</code> on EFS (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
+<pre><code>└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167_augmented.csv
+            ├── SQ00015167.csv
+            └── SQ00015167_normalized.csv</code></pre>
+<p><code>SQ00015167_normalized.csv</code> is the robust z-scored (normalized) per-well data.</p>
+<p>Do a quick check to view how many rows are present in each of the normalized per-well data.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}</span>_normalized.csv :::: <span class="va">${PLATES}</span></code></pre></div>
 </div>
-<div id="selection-variables" class="section level2">
-<h2><span class="header-section-number">7.4</span> Selection variables</h2>
+<div id="select-variables" class="section level2">
+<h2><span class="header-section-number">7.4</span> Select variables</h2>
+<p>Create samples to do variable selection. Sample some wells from each replicate. Below, this is done by sample 2 entire replicate plates per platemap. Use <code>-n</code> to specify number of replicate plates to be used to create the sample.</p>
+<p>Samples are created for both, normalized and unnormalized data, because the variable selection techniques may require both.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../parameters/<span class="va">${BATCH_ID}</span>/sample/
+
+<span class="co"># sample normalized data</span>
+<span class="ex">./sample.R</span> \
+  -b <span class="va">${BATCH_ID}</span> \
+  -f <span class="st">&quot;_normalized.csv$&quot;</span> \
+  -n 2 \
+  -o ../../parameters/<span class="va">${BATCH_ID}</span>/sample/<span class="va">${BATCH_ID}</span>_normalized_sample.feather
+
+<span class="co"># sample unnormalized data</span>
+<span class="ex">./sample.R</span> \
+  -b <span class="va">${BATCH_ID}</span> \
+  -f <span class="st">&quot;_augmented.csv$&quot;</span> \
+  -n 2 \
+  -o ../../parameters/<span class="va">${BATCH_ID}</span>/sample/<span class="va">${BATCH_ID}</span>_augmented_sample.feather</code></pre></div>
+<p>Make a list of variables to be preserved after <code>replicate_correlation</code> variable selection is performed.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">./preselect.R</span> \
+  -b <span class="va">${BATCH_ID}</span> \
+  -i ../../parameters/<span class="va">${BATCH_ID}</span>/sample/<span class="va">${BATCH_ID}</span>_normalized_sample.feather \
+  -r replicate_correlation \
+  -s <span class="st">&quot;Metadata_broad_sample_type == &#39;&#39;&#39;trt&#39;&#39;&#39;&quot;</span> \
+  -n 2</code></pre></div>
+<p>Make a list of variables to be preserved after <code>correlation_threshold</code> variable selection is performed.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">./preselect.R</span> \
+  -b <span class="va">${BATCH_ID}</span> \
+  -i ../../parameters/<span class="va">${BATCH_ID}</span>/sample/<span class="va">${BATCH_ID}</span>_normalized_sample.feather \
+  -r correlation_threshold</code></pre></div>
+<p>Make a list of variables to be preserved after <code>variance_threshold</code> variable selection is performed.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">./preselect.R</span> \
+  -b <span class="va">${BATCH_ID}</span> \
+  -i ../../parameters/<span class="va">${BATCH_ID}</span>/sample/<span class="va">${BATCH_ID}</span>_augmented_sample.feather \
+  -r variance_threshold \
+  -s <span class="st">&quot;Metadata_broad_sample_type == &#39;&#39;&#39;control&#39;&#39;&#39;&quot;</span></code></pre></div>
+<p>Some variables have previously identified as being noisy or non-informative. Create a list of variables that excludes these variables.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="co"># manually remove some features</span>
+<span class="bu">echo</span> <span class="st">&quot;variable&quot;</span> <span class="op">&gt;</span> ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/manual.txt
+
+<span class="fu">head</span> -1 \
+  ../../backend/<span class="va">${BATCH_ID}</span>/<span class="va">${SAMPLE_PLATE_ID}</span>/<span class="va">${SAMPLE_PLATE_ID}</span>.csv \
+  <span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot;,&quot;</span> <span class="st">&quot;\n&quot;</span><span class="kw">|</span><span class="fu">grep</span> -v Meta<span class="kw">|</span><span class="fu">grep</span> -E -v <span class="st">&#39;Granularity_14|Granularity_15|Granularity_16|Manders|RWC&#39;</span> <span class="op">&gt;&gt;</span> \
+  ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/manual.txt</code></pre></div>
+<p>ALTERNATIVE: You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/
+
+<span class="va">REFERENCE_BATCH_ID=</span>2018_02_23_LKCP_DBG
+
+<span class="ex">aws</span> s3 sync \
+  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/parameters/<span class="va">${REFERENCE_BATCH_ID}</span>/ \
+  ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/parameters/<span class="va">${REFERENCE_BATCH_ID}</span>/
+
+<span class="fu">rsync</span> -arzv ../../parameters/<span class="va">${REFERENCE_BATCH_ID}</span>/variable_selection/ ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/</code></pre></div>
+<p>The previous steps only create a list of variable to be preserved for each variable selection method. To actually apply variable selection, we compute the intersection of all these variable lists, then preserve only those columns of the normalized per-well data.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/select.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/select \
+  --files \
+  --keep-order \
+  ./select.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  -p <span class="dt">{1}</span> \
+  -r variance_threshold,replicate_correlation,correlation_threshold,manual :::: <span class="va">${PLATES}</span></code></pre></div>
+<p>This is the resulting structure of <code>backend</code> on EFS (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
+<pre><code>└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167_augmented.csv
+            ├── SQ00015167.csv
+            ├── SQ00015167_normalized.csv
+            └── SQ00015167_normalized_variable_selected.csv</code></pre>
+<p><code>SQ00015167_normalized_variable_selected.csv</code> is the variable-selected version of the normalized per-well data.</p>
+<p>Do a quick check to view how many rows are present in each of the normalized per-well data.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}</span>_normalized_variable_selected.csv :::: <span class="va">${PLATES}</span></code></pre></div>
 </div>
-<div id="aggregate-perturbations" class="section level2">
-<h2><span class="header-section-number">7.5</span> Aggregate perturbations</h2>
+<div id="aggregate-replicates" class="section level2">
+<h2><span class="header-section-number">7.5</span> Aggregate replicates</h2>
+<p>Combine replicate plates of each plate map by averaging (mean).</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../collated/<span class="va">${BATCH_ID}</span>/
+
+<span class="va">PLATE_MAPS=</span>../../scratch/<span class="va">${BATCH_ID}</span>/plate_maps.txt
+
+<span class="ex">csvcut</span> -c Plate_Map_Name \
+  ../../metadata/<span class="va">${BATCH_ID}</span>/barcode_platemap.csv <span class="kw">|</span> <span class="kw">\</span>
+  <span class="fu">tail</span> -n +2<span class="kw">|</span><span class="fu">sort</span><span class="kw">|</span><span class="fu">uniq</span> <span class="op">&gt;</span> \
+  <span class="va">${PLATE_MAPS}</span>
+
+<span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/collapse.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/collapse \
+  --keep-order \
+  ./collapse.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  -m <span class="dt">{1}</span> \
+  -f _normalized_variable_selected.csv \
+  -o ../../collated/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_collapsed.csv :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
+<p>This is the resulting structure of <code>collated</code> on EFS (one level below <code>workspace</code>) for <code>2016_04_01_a549_48hr_batch1</code>:</p>
+<pre><code>└── collated
+    └── 2016_04_01_a549_48hr_batch1
+        └── C-7161-01-LM6-006_collapsed.csv</code></pre>
+<p><code>C-7161-01-LM6-006_collapsed.csv</code> is the replicate averaged data for plate map C-7161-01-LM6-006.</p>
+<p>Do a quick check to view how many rows are present in the replicate averaged data of each plate map.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../collated/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_collapsed.csv :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
+<p>Combine all averaged profiles in the batch into a single file.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">csvstack</span> \
+  ../../collated/<span class="va">${BATCH_ID}</span>/*_collapsed.csv <span class="op">&gt;</span> \
+  ../../collated/<span class="va">${BATCH_ID}</span>/<span class="va">${BATCH_ID}</span>_collapsed.csv</code></pre></div>
 </div>
 <div id="audit" class="section level2">
 <h2><span class="header-section-number">7.6</span> Audit</h2>
+<p>Audit each plate map for replicate reproducibility</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../audit/<span class="va">${BATCH_ID}</span>/</code></pre></div>
+<p>Audit only treated wells</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/audit.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/audit \
+  --files \
+  --keep-order \
+  ./audit.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  -m <span class="dt">{1}</span> \
+  -f _normalized_variable_selected.csv \
+  -s <span class="dt">\&quot;</span>Metadata_broad_sample_type == <span class="dt">\&#39;\&#39;\&#39;</span>trt<span class="dt">\&#39;\&#39;\&#39;\&quot;</span> \
+  -o ../../audit/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_audit.csv \
+  -l ../../audit/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_audit_detailed.csv \
+  -p Metadata_Plate_Map_Name,Metadata_moa,Metadata_pert_id,Metadata_broad_sample,Metadata_mmoles_per_liter,Metadata_Well :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
+<p>Audit only control wells, i.e., how well do control wells in the same position correlate?</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/audit_control.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/audit_control \
+  --files \
+  --keep-order \
+  ./audit.R \
+  -b <span class="va">${BATCH_ID}</span> \
+  -m <span class="dt">{1}</span> \
+  -f _normalized_variable_selected.csv \
+  -s <span class="dt">\&quot;</span>Metadata_broad_sample_type == <span class="dt">\&#39;\&#39;\&#39;</span>control<span class="dt">\&#39;\&#39;\&#39;\&quot;</span> \
+  -o ../../audit/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_audit_control.csv \
+  -l ../../audit/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_audit_control_detailed.csv \
+  -p Metadata_Well :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
 </div>
 <div id="convert-to-other-formats" class="section level2">
 <h2><span class="header-section-number">7.7</span> Convert to other formats</h2>
+<p>Convert per-plate CSV files to GCT</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/csv2gct_backend.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/csv2gct_backend \
+  --files \
+  --keep-order \
+  ./csv2gct.R \
+  ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}_{2}</span>.csv \
+  -o ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}_{2}</span>.gct :::: <span class="va">${PLATES}</span> ::: augmented normalized normalized_variable_selected </code></pre></div>
+<p>Convert per-plate map CSV files to GCT</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/<span class="va">${BATCH_ID}</span>/csv2gct_collapsed.log \
+  --results ../../log/<span class="va">${BATCH_ID}</span>/csv2gct_collapsed \
+  --files \
+  --keep-order \
+  ./csv2gct.R \
+  ../../collated/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_collapsed.csv \
+  -o ../../collated/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_collapsed.gct :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
+<p>Convert collapsed to gct</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">./csv2gct.R</span> \
+  ../../collated/<span class="va">${BATCH_ID}</span>/<span class="va">${BATCH_ID}</span>_collapsed.csv \
+  -o ../../collated/<span class="va">${BATCH_ID}</span>/<span class="va">${BATCH_ID}</span>_collapsed.gct</code></pre></div>
 </div>
 <div id="upload-data" class="section level2">
 <h2><span class="header-section-number">7.8</span> Upload data</h2>
 <div id="sync-to-s3" class="section level3">
 <h3><span class="header-section-number">7.8.1</span> Sync to S3</h3>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  aws s3 sync \
+  ../../<span class="dt">{1}/${BATCH_ID}</span>/ \
+  s3://imaging-platform-dev/projects/<span class="va">${PROJECT_NAME}</span>/workspace/<span class="dt">{1}/${BATCH_ID}</span>/ ::: audit backend batchfiles collated load_data_csv log metadata parameters scratch</code></pre></div>
 </div>
-<div id="sync-from-s3-to-another-machine" class="section level3">
-<h3><span class="header-section-number">7.8.2</span> Sync from S3 to another machine</h3>
+<div id="sync-down-from-s3-onto-a-machine" class="section level3">
+<h3><span class="header-section-number">7.8.2</span> Sync down from S3 onto a machine</h3>
+<p>Specify location for syncing</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">BROAD_NFS=</span>/cmap/imaging</code></pre></div>
+<p>Set variables</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">PROJECT_NAME=</span>2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad
+
+<span class="va">BATCH_ID=</span>2016_04_01_a549_48hr_batch1</code></pre></div>
+<p>Sync the files</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">echo</span> audit backend batchfiles collated load_data_csv log metadata parameters scratch <span class="kw">|</span> <span class="kw">\</span>
+  <span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="kw">|</span>
+  <span class="fu">xargs</span> -I % \
+  aws s3 sync \
+  --exclude <span class="st">&quot;*.sqlite&quot;</span> \
+  s3://imaging-platform-dev/projects/<span class="va">${PROJECT_NAME}</span>/workspace/%/<span class="va">${BATCH_ID}</span>/ \
+  <span class="va">${BROAD_NFS}</span>/<span class="va">${PROJECT_NAME}</span>/workspace/%/<span class="va">${BATCH_ID}</span>/ </code></pre></div>
 
 </div>
 </div>
