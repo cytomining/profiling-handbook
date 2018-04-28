@@ -1,4 +1,46 @@
 # (PART) Images to measurements  {-}
 # Configure tools to process images
 ## Download software
+
+You may need to authenticate your GitHub account to be able to clone these:
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/
+mkdir software
+cd software
+git clone git@github.com:broadinstitute/cellpainting_scripts.git
+git clone git@github.com:broadinstitute/pe2loaddata.git
+git clone git@github.com:broadinstitute/cytominer_scripts.git
+cd ..
+```
+
+To authenticate your GitHub account, follow instructions to setup SSH keys here https://help.github.com/articles/connecting-to-github-with-ssh/.
+
+You can also clone these repos by following the structure below and inputting your OAuth token as necessary.
+
+```sh
+git clone https://username@github.com/broadinstitute/cytominer_scripts.git
+```
+
+If these repos have already been cloned, `git pull` to make sure they are up to date.
+
+This is the resulting structure of `software` on EFS (one level below `workspace`):
+```
+└── software
+    ├── cellpainting_scripts
+    ├── cytominer_scripts
+    └── pe2loaddata
+```
+
+
 ## Setup Distributed CellProfiler
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/Distributed-CellProfiler/
+
+pyenv shell 2.7.12
+
+pip install -r files/requirements.txt
+
+```
+

@@ -1,4 +1,134 @@
 # Setup jobs 
+
+For each of the pipelines, we create the following
+
+- a CellProfiler batchfile
+- a configuration file for running using Distributed-CellProfiler
+- a docker commands file that can be run directly on the EC2 node
+
 ## Illumination correction 
+
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/cellpainting_scripts/
+pyenv shell 3.5.1
+TMPDIR=/tmp # change this to ~/ebs_tmp if CellProfiler will be run directly on this node.
+
+parallel \
+  --max-procs ${MAXPROCS} \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/create_batch_files_illum.log \
+  --results ../../log/${BATCH_ID}/create_batch_files_illum \
+  --files \
+  --keep-order \
+  ./create_batch_files.sh \
+  -b ${BATCH_ID} \
+  --plate {1} \
+  --datafile_filename load_data.csv \
+  --output_dir ../../../${BATCH_ID}/illum \
+  --pipeline ../../pipelines/${PIPELINE_SET}/illum.cppipe \
+  --cp_docker_image shntnu/cellprofiler:2.2.1 \
+  --create_dcp_config \
+  --s3_bucket imaging-platform-dev \
+  --tmpdir ${TMPDIR} :::: ${PLATES}
+cd ../../
+```
+
+This is the resulting structure of `batchfiles` on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
+```
+└── batchfiles/
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            └── illum
+                ├── Batch_data.h5
+                ├── dcp_config.json
+                ├── cp_docker_commands.txt
+                └── cpgroups.csv
+```
+
+`dcp_config.json` is the configuration file for running Distributed-CellProfiler. Here it is for `SQ00015167`:
+
+```json
+{
+  "pipeline": "projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/github/imaging-platform-pipelines/cellpainting_a549_20x_phenix_bin1/illum_without_batchfile.cppipe",
+  "data_file": "projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/load_data_csv/2016_04_01_a549_48hr_batch1/SQ00015167/load_data.csv",
+  "input": "dummy",
+  "output": "/home/ubuntu/bucket/projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/illum/SQ00015167",
+  "groups": [
+    {
+      "Metadata": "Metadata_Plate=SQ00015167"
+    }
+  ]
+}
+```
+
+`cp_docker_commands.txt` contains the command to compute the illumination functions on the current EC2 instance. The content of `cp_docker_commands.txt` for `SQ00015167` is:
+
+```sh
+docker run --rm --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/github/imaging-platform-pipelines/cellpainting_20x_phenix_bin1:/pipeline_dir --volume=/2016_04_01_a549_48hr_batch1/SQ00015167:/filelist_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/load_data_csv/2016_04_01_a549_48hr_batch1/SQ00015167:/datafile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/batchfiles/2016_04_01_a549_48hr_batch1/SQ00015167/illum:/batchfile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/illum/SQ00015167:/output_dir --volume=/tmp:/tmp_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/status/2016_04_01_a549_48hr_batch1/SQ00015167/illum:/status_dir --volume=/home/ubuntu/bucket/:/home/ubuntu/bucket/ --log-driver=awslogs --log-opt awslogs-group=SQ00015167 --log-opt awslogs-stream=SQ00015167 shntnu/cellprofiler -p /batchfile_dir/Batch_data.h5 -g Metadata_Plate=SQ00015167 --data-file=/datafile_dir/load_data.csv -o /output_dir -t /tmp_dir -d /status_dir/SQ00015167.txt
+```
+
 ## Quality control 
+
 ## Analysis 
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/cellpainting_scripts/
+pyenv shell 3.5.1
+TMPDIR=/tmp # change this to ~/ebs_tmp if CellProfiler will be run directly on this node.
+
+parallel \
+  --max-procs ${MAXPROCS} \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/create_batch_files_analysis.log \
+  --results ../../log/${BATCH_ID}/create_batch_files_analysis \
+  --files \
+  --keep-order \
+  ./create_batch_files.sh -b ${BATCH_ID} \
+  --plate {1} \
+  --datafile_filename load_data_with_illum.csv \
+  --pipeline ../../pipelines/${PIPELINE_SET}/analysis.cppipe \
+  --cp_docker_image shntnu/cellprofiler:2.2.1 \
+  --create_dcp_config \
+  --s3_bucket imaging-platform-dev \
+  --tmpdir ${TMPDIR} :::: ${PLATES}
+cd ../../
+```
+
+This is the resulting structure of `batchfiles` on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
+```
+└── batchfiles/
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            └── analysis
+                ├── Batch_data.h5
+                ├── dcp_config.json
+                ├── cp_docker_commands.txt
+                └── cpgroups.csv
+```
+
+`dcp_config.json` is the configuration file for running Distributed-CellProfiler. Here it is for `SQ00015167`:
+
+```json
+{
+  "pipeline": "projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/github/imaging-platform-pipelines/cellpainting_a549_20x_phenix_bin1/analysis_without_batchfile.cppipe",
+  "data_file": "projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/load_data_csv/2016_04_01_a549_48hr_batch1/SQ00015167/load_data_with_illum.csv",
+  "input": "dummy",
+  "output": "/home/ubuntu/bucket/projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/analysis/2016_04_01_a549_48hr_batch1/SQ00015167/analysis",
+  "groups": [
+    {
+      "Metadata": "Metadata_Plate=SQ00015167,Metadata_Well=A01,Metadata_Site=1"
+    }, ...
+   ]
+}
+```
+
+Note that, as with illumination correction, this assumes that the pipeline has a `_without_batchfile` version of it in the same directory.
+
+`cp_docker_commands.txt` contains the commands to run the analysis pipeline on the current EC2 instance. In this example, the images were grouped by Plate, Well, and Site, and therefore each command processes a single site (=1 image). The first line of `cp_docker_commands.txt` for `SQ00015167` is:
+
+```sh
+docker run --rm --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/github/imaging-platform-pipelines/cellpainting_a549_20x_phenix_bin1:/pipeline_dir --volume=/2016_04_01_a549_48hr_batch1/SQ00015167:/filelist_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/load_data_csv/2016_04_01_a549_48hr_batch1/SQ00015167:/datafile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/batchfiles/2016_04_01_a549_48hr_batch1/SQ00015167/analysis:/batchfile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/analysis/2016_04_01_a549_48hr_batch1/SQ00015167/analysis:/output_dir --volume=/home/ubuntu/efs/tmp/:/tmp_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/status/2016_04_01_a549_48hr_batch1/SQ00015167/analysis:/status_dir --volume=/home/ubuntu/bucket/:/home/ubuntu/bucket/ --log-driver=awslogs --log-opt awslogs-group=SQ00015167 --log-opt awslogs-stream=SQ00015167-A01-1 shntnu/cellprofiler:2.2.1 -p /batchfile_dir/Batch_data.h5 -g Metadata_Plate=SQ00015167,Metadata_Well=A01,Metadata_Site=1 --data-file=/datafile_dir/load_data_with_illum.csv -o /output_dir -t /tmp_dir -d /status_dir/SQ00015167-A01-1.txt
+```
+
+

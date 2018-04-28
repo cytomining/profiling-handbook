@@ -1,3 +1,85 @@
 # (APPENDIX) Appendix {-} 
 # Appendix A
 ## Directory structure
+
+```
+├── 2016_04_01_a549_48hr_batch1
+│   ├── illum
+│   │   └── SQ00015167
+│   │       ├── SQ00015167_IllumAGP.mat
+│   │       ├── SQ00015167_IllumDNA.mat
+│   │       ├── SQ00015167_IllumER.mat
+│   │       ├── SQ00015167_IllumMito.mat
+│   │       ├── SQ00015167_IllumRNA.mat
+│   │       └── SQ00015167.stderr
+│   └── images
+│       └── SQ00015167__2016-04-21T03_34_00-Measurement1
+│         ├── Assaylayout
+│         ├── FFC_Profile
+│         └── Images
+│             ├── r01c01f01p01-ch1sk1fk1fl1.tiff
+│             ├── r01c01f01p01-ch2sk1fk1fl1.tiff
+│             ├── r01c01f01p01-ch3sk1fk1fl1.tiff
+│             ├── r01c01f01p01-ch4sk1fk1fl1.tiff
+│             └── r01c01f01p01-ch5sk1fk1fl1.tiff
+└── workspace
+    ├── audit
+    │    └── 2016_04_01_a549_48hr_batch1
+    ├── analysis
+    │    └── 2016_04_01_a549_48hr_batch1
+    │        └── SQ00015167
+    │            └── analysis
+    │                └── A01-1
+    │                    ├── Cells.csv
+    │                    ├── Cytoplasm.csv
+    │                    ├── Experiment.csv
+    │                    ├── Image.csv
+    │                    ├── Nuclei.csv
+    │                    └── outlines
+    │                        └── SQ00015167
+    │                            ├── A01_s1--cell_outlines.png
+    │                            └── A01_s1--nuclei_outlines.png
+    ├── backend
+    │   └── 2016_04_01_a549_48hr_batch1
+    │       └── SQ00015167
+    │           ├── SQ00015167.csv
+    │           └── SQ00015167.sqlite
+    ├── batchfiles
+    │   └── 2016_04_01_a549_48hr_batch1
+    │       └── SQ00015167
+    │           ├── analysis
+    │           │   ├── Batch_data.h5
+    │           │   ├── dcp_config.json
+    │           │   ├── cp_docker_commands.txt
+    │           │   └── cpgroups.csv
+    │           └── illum
+    │               ├── Batch_data.h5
+    │               ├── dcp_config.json
+    │               ├── cp_docker_commands.txt
+    │               └── cpgroups.csv
+    ├── github
+    │   └── imaging-platform-pipelines
+    ├── images
+    │   └── 2016_04_01_a549_48hr_batch1 -> /home/ubuntu/bucket/projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/images/
+    ├── load_data_csv
+    │   └── 2016_04_01_a549_48hr_batch1
+    │       └── SQ00015167
+    │           ├── load_data.csv
+    │           └── load_data_with_illum.csv
+    ├── log 
+    │   ├── create_batch_files_analysis
+    │   ├── create_batch_files_illum
+    │   ├── create_csv_from_xml
+    │   └── collate       
+    ├── metadata
+    │   └── 2016_04_01_a549_48hr_batch1
+    │       ├── barcode_platemap.csv
+    │       └── platemap
+    │           └── C-7161-01-LM6-006.txt
+    ├── pipelines -> github/imaging-platform-pipelines
+    ├── status
+    └── software
+        ├── cellpainting_scripts
+        ├── cytominer_scripts
+        └── pe2loaddata
+```

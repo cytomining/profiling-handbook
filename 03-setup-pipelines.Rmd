@@ -1,6 +1,118 @@
 # Setup pipelines and images
 ## Get CellProfiler pipelines
+
+Cell Painting pipelines are stored in a GitHub repo. If you are using a new pipeline, be sure to add it to the repo first. Follow instructions on https://github.com/broadinstitute/imaging-platform-pipelines for adding new pipelines.
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/
+mkdir github
+cd github/
+git clone git@github.com:broadinstitute/imaging-platform-pipelines.git
+cd ..
+ln -s github/imaging-platform-pipelines pipelines
+```
+
+This is the resulting structure of `github` and `pipelines` on EFS (one level below `workspace`):
+```
+├── github
+│    └── imaging-platform-pipelines
+└── pipelines -> github/imaging-platform-pipelines
+```
+
 ## Specify pipeline set
+
+```
+PIPELINE_SET=cellpainting_a549_20x_with_bf_phenix_bin1
+```
+
+Ensure that, both, `analysis.cppipe` as well as `illum.cppipe` are present for this set. As well, each pipeline should have a `_without_batchfile` version of it in the same directory. It's easy to create such a version of the pipeline - simply copy it and set `enabled=False` for the `CreateBatchFiles` module (like [here](https://github.com/broadinstitute/imaging-platform-pipelines/blob/master/cellpainting_u2os_20x_imagexpress/illum_without_batchfile.cppipe#L384)).
+
+
 ## Prepare images
+
+Create soft link to the image folder, which should be uploaded on S3.
+Note that the relevant S3 bucket has been mounted at `/home/ubuntu/bucket/`.
+
+*Troublshooting tip:* The folder structure for `images` differs between `S3` and `EFS`. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when `pe2loaddata` is run (later in the process, via `create_csv_from_xml.sh`) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the `images` folder have a similar structure as the others (e.g. `load_data_csv`, `metadata`, `analysis`).
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/
+mkdir images
+cd images
+ln -s ~/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/images/ ${BATCH_ID}
+cd ..
+```
+
+This is the resulting structure of the image folder on EFS (one level below `workspace`):
+```
+└── images
+    └── 2016_04_01_a549_48hr_batch1 -> /home/ubuntu/bucket/projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/images/
+```
+
+This is the structure of the image folder on S3 (one level above `workspace`, under the folder `2016_04_01_a549_48hr_batch1`.)
+Here, only one plate (`SQ00015167__2016-04-21T03_34_00-Measurement1`) is show but there are often many more.
+
+```
+└── images
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167__2016-04-21T03_34_00-Measurement1
+            ├── Assaylayout
+            ├── FFC_Profile
+            └── Images
+                ├── r01c01f01p01-ch1sk1fk1fl1.tiff
+                ├── r01c01f01p01-ch2sk1fk1fl1.tiff
+                ├── r01c01f01p01-ch3sk1fk1fl1.tiff
+                ├── r01c01f01p01-ch4sk1fk1fl1.tiff
+                └── r01c01f01p01-ch5sk1fk1fl1.tiff
+```
+
+`SQ00015167__2016-04-21T03_34_00-Measurement1` is the typical nomenclature followed by Broad Chemical Biology Platform for plate names.
+`Measurement1` indicates the first attempt to image the plate. `Measurement2` indicates second attempt and so on.
+Ensure that there's only one folder corresponding to a plate before running `create_csv_from_xml.sh` below
+(it gracefully exits if not).
+
 ## Create list of plates
+
+Create a text file with one plate id per line.
+
+```sh
+mkdir -p scratch/${BATCH_ID}/
+
+PLATES=$(readlink -f ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/plates_to_process.txt)
+
+echo "SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165"|tr " " "\n" > ${PLATES}
+```
+
 ## Create LoadData CSVs
+
+The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines (2) metadata to extract from `Index.idx.xml`. Ensure that all the metadata fields defined in `config.yml` are present in the `Index.idx.xml`.
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/cellpainting_scripts/
+pyenv shell 2.7.12
+parallel \
+  --max-procs ${MAXPROCS} \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/create_csv_from_xml.log \
+  --results ../../log/${BATCH_ID}/create_csv_from_xml \
+  --files \
+  --keep-order \
+  ./create_csv_from_xml.sh \
+  -b ${BATCH_ID} \
+  --plate {1} :::: ${PLATES}
+cd ../../
+```
+
+This is the resulting structure of `load_data_csv` on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
+```
+└── load_data_csv
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── load_data.csv
+            └── load_data_with_illum.csv
+```
+
+`load_data.csv` will be used by `illum.cppipe`.
+`load_data_with_illum.csv` will be used by `analysis.cppipe`.
+When creating `load_data_with_illum.csv`, the script assumes a specific location for the output folder, discussed below (see discussion on ``--illum_pipeline_name`` option).
+

@@ -1,10 +1,226 @@
 # Run jobs
+
 ## Illumination correction
 ### Single node
+To compute illumination functions directly on the EC2 node, run the contents of `cp_docker_commands.txt` for each plate
+
+```sh
+for PLATE_ID in $(cat ${PLATES}); do 
+  parallel -a ../../batchfiles/${BATCH_ID}/${PLATE_ID}/illum/cp_docker_commands.txt
+done
+```
+
+If this is run on the current node, this is the resulting structure of `analysis`, containing the output of `illum.cppipe`, on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
+
+```
+└── 2016_04_01_a549_48hr_batch1
+    └── illum
+        └── SQ00015167
+            ├── SQ00015167_IllumAGP.mat
+            ├── SQ00015167_IllumDNA.mat
+            ├── SQ00015167_IllumER.mat
+            ├── SQ00015167_IllumMito.mat
+            ├── SQ00015167_IllumRNA.mat
+            └── SQ00015167.stderr
+```
+
+Sync this folder to S3, maintaining the same structure. If you used DCP to run this pipeline (discussed below), the files will have been stored directly on S3, in which case there's no need to do a sync.
+
+```sh
+cd ~/efs/${PROJECT_NAME}/
+
+aws s3 sync ${BATCH_ID}/illum/${PLATE_ID}  s3://${BUCKET}/projects/${PROJECT_NAME}/${BATCH_ID}/illum/${PLATE_ID}
+```
+
 ### DCP
+Edit the config files `illum_config.py` and `illum_config.json` in `cellpainting_scripts/dcp_config_files/` as needed. Then copy to the DCP directory and setup the compute environment
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/Distributed-CellProfiler/
+
+pyenv shell 2.7.12
+
+cp ../cellpainting_scripts/dcp_config_files/illum_config.py config.py
+
+fab setup
+```
+
+Submit jobs and start the cluster, then monitor:
+
+```sh
+parallel \
+  python run.py submitJob \
+  ~/efs/${PROJECT_NAME}/workspace/batchfiles/${BATCH_ID}/{1}/illum/dcp_config.json :::: ${PLATES}
+
+python run.py \
+  startCluster \
+  ../cellpainting_scripts/dcp_config_files/illum_config.json
+
+# do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `illum_config.py`
+python run.py monitor files/APP_NAMESpotFleetRequestId.json
+```
+
+
 ## Quality control
 ### Process QC results into a database for CPA
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/
+git clone https://username@github.com/cytomining/cytominer-database
+cd cytominer-database
+
+pyenv shell 3.5.1
+pip install -e .
+
+cd ~/efs/${PROJECT_NAME}/workspace
+mkdir qc
+
+cytominer-database ingest ~/bucket/projects/${PROJECT_NAME}/workspace/qc/${BATCH_ID}/results sqlite:///qc/${BATCH_ID}_QC.sqlite -c software/cytominer-database/cytominer_database/config/config_default.ini --no-munge
+
+rsync qc/${BATCH_ID}_QC.sqlite ~/bucket/projects/${PROJECT_NAME}/workspace/qc/${BATCH_ID}_QC.sqlite
+```
+
+You can then download the database to your local machine; to update the S3 image paths to your local image paths 
+you'll need to configure and execute the following SQL statement (DB Browser for SQLite, for example, allows you 
+to do this easily in the GUI).  You need only specify the parts of the paths that are different, not the whole path.
+
+```sql
+UPDATE Image
+SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
+WHERE PathName_OrigBrightfield LIKE '%/home/ubuntu/bucket/projects/%';
+UPDATE Image
+SET PathName_OrigAGP= REPLACE(PathName_OrigAGP, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
+WHERE PathName_OrigAGP LIKE '%/home/ubuntu/bucket/projects/%';
+UPDATE Image
+SET PathName_OrigDNA= REPLACE(PathName_OrigDNA, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
+WHERE PathName_OrigDNA LIKE '%/home/ubuntu/bucket/projects/%';
+UPDATE Image
+SET PathName_OrigER= REPLACE(PathName_OrigER, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
+WHERE PathName_OrigER LIKE '%/home/ubuntu/bucket/projects/%';
+UPDATE Image
+SET PathName_OrigMito= REPLACE(PathName_OrigMito, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
+WHERE PathName_OrigMito LIKE '%/home/ubuntu/bucket/projects/%';
+UPDATE Image
+SET PathName_OrigRNA= REPLACE(PathName_OrigRNA, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
+WHERE PathName_OrigRNA LIKE '%/home/ubuntu/bucket/projects/%'
+```
+
+Windows users must also then execute the following statements to change the direction of any slashes in the path.
+
+```sql
+UPDATE Image
+SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, '/', '\')
+WHERE PathName_OrigBrightfield LIKE '%/%';
+UPDATE Image
+SET PathName_OrigAGP= REPLACE(PathName_OrigAGP, '/', '\')
+WHERE PathName_OrigAGP LIKE '%/%';
+UPDATE Image
+SET PathName_OrigDNA= REPLACE(PathName_OrigDNA, '/', '\')
+WHERE PathName_OrigDNA LIKE '%/%';
+UPDATE Image
+SET PathName_OrigER= REPLACE(PathName_OrigER, '/', '\')
+WHERE PathName_OrigER LIKE '%/%';
+UPDATE Image
+SET PathName_OrigMito= REPLACE(PathName_OrigMito, '/', '\')
+WHERE PathName_OrigMito LIKE '%/%';
+UPDATE Image
+SET PathName_OrigRNA= REPLACE(PathName_OrigRNA, '/', '\')
+WHERE PathName_OrigRNA LIKE '%/%'
+```
+
+You can now configure your CPA properties file with the name of your new database and perform the QC.
+For more information on this process, see the CellProfiler/tutorials repo.
+
+
 ## Analysis 
 ### Single node
+To run the analysis pipeline directly on the EC2 node, run the contents of `cp_docker_commands.txt` for each plate
+
+```sh
+for PLATE_ID in $(cat ${PLATES}); do 
+  parallel -a ../../batchfiles/${BATCH_ID}/${PLATE_ID}/analysis/cp_docker_commands.txt
+done
+
+```
+
+If this is run on the EC2 node, this is the resulting structure of `analysis`, containing the output of `analysis.cppipe`, on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
+
+
+```
+└── analysis
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            └── analysis
+              └── A01-1
+                  ├── Cells.csv
+                  ├── Cytoplasm.csv
+                  ├── Experiment.csv
+                  ├── Image.csv
+                  ├── Nuclei.csv
+                  └── outlines
+                        ├── A01_s1--cell_outlines.png
+                        └── A01_s1--nuclei_outlines.png
+```
+
+`A01-1` is site 1 of well A01. In a 384-well plate, there will be 384\*9 such folders.
+Note that the file `Experiment.csv` may get created one level above, i.e., under `A01-1` (see https://github.com/CellProfiler/CellProfiler/issues/1110)
+
+Sync this folder to S3, maintaining the same structure. If you used DCP to run this pipeline (discussed below), the files will have been stored directly on S3, in which case there's no need to do a sync.
+
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/
+
+aws s3 sync analysis/${BATCH_ID}/${PLATE_ID}/analysis  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/analysis/${BATCH_ID}/${PLATE_ID}/analysis/
+```
+
 ### DCP
+
+Edit the config files `analysis_config.py` and `analysis_config.json` in `cellpainting_scripts/dcp_config_files/` as needed.
+
+At the very least, replace the strings VAR_AWS_ACCOUNT_NUMBER,VAR_AWS_BUCKET,VAR_SUBNET_ID,VAR_GROUP_ID,VAR_KEYNAME with appropriate values. 
+
+You do so using sed:
+
+```sh
+cd cellpainting_scripts/dcp_config_files/
+
+for CONFIG_FILE in analysis_config.py analysis_config.json illum_config.py illum_config.json; do 
+    sed -i ${CONFIG_FILE} "s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g"
+    sed -i ${CONFIG_FILE} "s/VAR_AWS_BUCKET/name-of-s3-bucket/g"
+    sed -i ${CONFIG_FILE} "s/VAR_SUBNET_ID/subnet-NNNNNNNN/g"
+    sed -i ${CONFIG_FILE} "s/VAR_GROUP_ID/sg-NNNNNNNN/g"
+    sed -i ${CONFIG_FILE} "s/VAR_KEYNAME/filename-of-key-file-without-extension/g"
+done
+
+cd ..
+```
+
+Copy the analysis_config.py to the DCP directory and setup the compute environment.
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/Distributed-CellProfiler/
+
+pyenv shell 2.7.12
+
+cp ../cellpainting_scripts/dcp_config_files/analysis_config.py config.py
+
+fab setup
+```
+
+
+Submit jobs and start the cluster, then monitor:
+
+```sh
+parallel \
+  python run.py submitJob \
+  ~/efs/${PROJECT_NAME}/workspace/batchfiles/${BATCH_ID}/{1}/analysis/dcp_config.json :::: ${PLATES}
+
+python run.py \
+  startCluster \
+  ../cellpainting_scripts/dcp_config_files/analysis_config.json
+
+# do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `analysis_config.py`
+python run.py monitor files/APP_NAMESpotFleetRequestId.json
+```
 
