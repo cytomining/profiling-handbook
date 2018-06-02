@@ -214,11 +214,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> cellpainting_scripts/dcp_config_files/
 
 <span class="kw">for</span> <span class="ex">CONFIG_FILE</span> in analysis_config.py analysis_config.json illum_config.py illum_config.json<span class="kw">;</span> <span class="kw">do</span> 
-    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g&quot;</span>
-    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_AWS_BUCKET/name-of-s3-bucket/g&quot;</span>
-    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_SUBNET_ID/subnet-NNNNNNNN/g&quot;</span>
-    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_GROUP_ID/sg-NNNNNNNN/g&quot;</span>
-    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_KEYNAME/filename-of-key-file-without-extension/g&quot;</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_AWS_BUCKET/name-of-s3-bucket/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_SUBNET_ID/subnet-NNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_GROUP_ID/sg-NNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_KEYNAME/filename-of-key-file-without-extension/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
 <span class="kw">done</span>
 
 <span class="bu">cd</span> ..</code></pre></div>
