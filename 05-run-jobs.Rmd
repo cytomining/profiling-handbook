@@ -43,11 +43,11 @@ You do so using `sed`. The script below replaces the strings for both, `analysis
 cd cellpainting_scripts/dcp_config_files/
 
 for CONFIG_FILE in analysis_config.py analysis_config.json illum_config.py illum_config.json; do 
-    sed -i ${CONFIG_FILE} "s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g"
-    sed -i ${CONFIG_FILE} "s/VAR_AWS_BUCKET/name-of-s3-bucket/g"
-    sed -i ${CONFIG_FILE} "s/VAR_SUBNET_ID/subnet-NNNNNNNN/g"
-    sed -i ${CONFIG_FILE} "s/VAR_GROUP_ID/sg-NNNNNNNN/g"
-    sed -i ${CONFIG_FILE} "s/VAR_KEYNAME/filename-of-key-file-without-extension/g"
+    sed -i "s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g" ${CONFIG_FILE}
+    sed -i "s/VAR_AWS_BUCKET/name-of-s3-bucket/g" ${CONFIG_FILE}
+    sed -i "s/VAR_SUBNET_ID/subnet-NNNNNNNN/g" ${CONFIG_FILE}
+    sed -i "s/VAR_GROUP_ID/sg-NNNNNNNN/g" ${CONFIG_FILE}
+    sed -i "s/VAR_KEYNAME/filename-of-key-file-without-extension/g" ${CONFIG_FILE}
 done
 
 cd ..
