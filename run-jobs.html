@@ -340,17 +340,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="fu">cp</span> ../cellpainting_scripts/dcp_config_files/analysis_config.py config.py
 
 <span class="ex">fab</span> setup</code></pre></div>
-<p>Submit jobs and start the cluster:</p>
+<p>Submit jobs and start the cluster, then monitor:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
   python run.py submitJob \
   ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/batchfiles/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>/analysis/dcp_config.json :::: <span class="va">${PLATES}</span>
 
 <span class="ex">python</span> run.py \
   startCluster \
-  ../cellpainting_scripts/dcp_config_files/analysis_config.json</code></pre></div>
-<p>Start the monitor. Do this in a tmux session. Replace <code>APP_NAME</code> the value of APP_NAME in <code>analysis_config.py</code></p>
-<p><strong>Note:</strong> Unless you run the monitor, the fleet will never be killed!</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">python</span> run.py monitor files/APP_NAMESpotFleetRequestId.json</code></pre></div>
+  ../cellpainting_scripts/dcp_config_files/analysis_config.json
+
+<span class="co"># do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `analysis_config.py`</span>
+<span class="ex">python</span> run.py monitor files/APP_NAMESpotFleetRequestId.json</code></pre></div>
 
 </div>
 </div>
