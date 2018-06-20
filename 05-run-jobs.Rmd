@@ -210,7 +210,7 @@ cp ../cellpainting_scripts/dcp_config_files/analysis_config.py config.py
 fab setup
 ```
 
-Submit jobs and start the cluster, then monitor:
+Submit jobs and start the cluster:
 
 ```sh
 parallel \
@@ -220,8 +220,14 @@ parallel \
 python run.py \
   startCluster \
   ../cellpainting_scripts/dcp_config_files/analysis_config.json
+```
 
-# do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `analysis_config.py`
+Start the monitor.  Do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `analysis_config.py`
+
+**Note:** Unless you run the monitor, the fleet will never be killed!
+
+```sh
 python run.py monitor files/APP_NAMESpotFleetRequestId.json
 ```
+
 
