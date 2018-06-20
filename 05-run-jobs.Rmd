@@ -32,8 +32,28 @@ cd ~/efs/${PROJECT_NAME}/
 aws s3 sync ${BATCH_ID}/illum/${PLATE_ID}  s3://${BUCKET}/projects/${PROJECT_NAME}/${BATCH_ID}/illum/${PLATE_ID}
 ```
 
-### DCP
-Edit the config files `illum_config.py` and `illum_config.json` in `cellpainting_scripts/dcp_config_files/` as needed. Then copy to the DCP directory and setup the compute environment
+### DCP {#run-illum-dcp}
+Edit the config files `illum_config.py` and `illum_config.json` in `cellpainting_scripts/dcp_config_files/` as needed. 
+
+At the very least, replace the strings `VAR_AWS_ACCOUNT_NUMBER`,`VAR_AWS_BUCKET`,`VAR_SUBNET_ID`,`VAR_GROUP_ID`,`VAR_KEYNAME` with appropriate values. 
+
+You do so using `sed`. The script below replaces the strings for both, `analysis_*` as well as `illum_*` config files.
+
+```sh
+cd cellpainting_scripts/dcp_config_files/
+
+for CONFIG_FILE in analysis_config.py analysis_config.json illum_config.py illum_config.json; do 
+    sed -i "s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g" ${CONFIG_FILE}
+    sed -i "s/VAR_AWS_BUCKET/name-of-s3-bucket/g" ${CONFIG_FILE}
+    sed -i "s/VAR_SUBNET_ID/subnet-NNNNNNNN/g" ${CONFIG_FILE}
+    sed -i "s/VAR_GROUP_ID/sg-NNNNNNNN/g" ${CONFIG_FILE}
+    sed -i "s/VAR_KEYNAME/filename-of-key-file-without-extension/g" ${CONFIG_FILE}
+done
+
+cd ..
+```
+
+Copy to the DCP directory and setup the compute environment
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/software/Distributed-CellProfiler/
@@ -176,25 +196,7 @@ aws s3 sync analysis/${BATCH_ID}/${PLATE_ID}/analysis  s3://${BUCKET}/projects/$
 
 ### DCP
 
-Edit the config files `analysis_config.py` and `analysis_config.json` in `cellpainting_scripts/dcp_config_files/` as needed.
-
-At the very least, replace the strings VAR_AWS_ACCOUNT_NUMBER,VAR_AWS_BUCKET,VAR_SUBNET_ID,VAR_GROUP_ID,VAR_KEYNAME with appropriate values. 
-
-You do so using sed:
-
-```sh
-cd cellpainting_scripts/dcp_config_files/
-
-for CONFIG_FILE in analysis_config.py analysis_config.json illum_config.py illum_config.json; do 
-    sed -i ${CONFIG_FILE} "s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g"
-    sed -i ${CONFIG_FILE} "s/VAR_AWS_BUCKET/name-of-s3-bucket/g"
-    sed -i ${CONFIG_FILE} "s/VAR_SUBNET_ID/subnet-NNNNNNNN/g"
-    sed -i ${CONFIG_FILE} "s/VAR_GROUP_ID/sg-NNNNNNNN/g"
-    sed -i ${CONFIG_FILE} "s/VAR_KEYNAME/filename-of-key-file-without-extension/g"
-done
-
-cd ..
-```
+Edit the config files `analysis_config.py` and `analysis_config.json` in `cellpainting_scripts/dcp_config_files/` as needed (see \@ref(run-illum-dcp)).
 
 Copy the analysis_config.py to the DCP directory and setup the compute environment.
 
@@ -207,7 +209,6 @@ cp ../cellpainting_scripts/dcp_config_files/analysis_config.py config.py
 
 fab setup
 ```
-
 
 Submit jobs and start the cluster, then monitor:
 
