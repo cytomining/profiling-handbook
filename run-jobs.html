@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer">
-  <meta name="generator" content="bookdown 0.7.12 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.13 and GitBook 2.6.7">
 
   <meta property="og:title" content="Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-06-02">
+<meta name="date" content="2018-06-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -130,14 +130,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run jobs</a><ul>
 <li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination correction</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single node</a></li>
-<li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
+<li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality control</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC results into a database for CPA</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single node</a></li>
-<li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
+<li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp-1"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III Measurements to profiles</b></span></li>
@@ -206,23 +206,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="ex">aws</span> s3 sync <span class="va">${BATCH_ID}</span>/illum/<span class="va">${PLATE_ID}</span>  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/<span class="va">${BATCH_ID}</span>/illum/<span class="va">${PLATE_ID}</span></code></pre></div>
 </div>
-<div id="run-illum-dcp" class="section level3">
+<div id="dcp" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> DCP</h3>
-<p>Edit the config files <code>illum_config.py</code> and <code>illum_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed.</p>
-<p>At the very least, replace the strings <code>VAR_AWS_ACCOUNT_NUMBER</code>,<code>VAR_AWS_BUCKET</code>,<code>VAR_SUBNET_ID</code>,<code>VAR_GROUP_ID</code>,<code>VAR_KEYNAME</code> with appropriate values.</p>
-<p>You do so using <code>sed</code>. The script below replaces the strings for both, <code>analysis_*</code> as well as <code>illum_*</code> config files.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> cellpainting_scripts/dcp_config_files/
-
-<span class="kw">for</span> <span class="ex">CONFIG_FILE</span> in analysis_config.py analysis_config.json illum_config.py illum_config.json<span class="kw">;</span> <span class="kw">do</span> 
-    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
-    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_AWS_BUCKET/name-of-s3-bucket/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
-    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_SUBNET_ID/subnet-NNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
-    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_GROUP_ID/sg-NNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
-    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_KEYNAME/filename-of-key-file-without-extension/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
-<span class="kw">done</span>
-
-<span class="bu">cd</span> ..</code></pre></div>
-<p>Copy to the DCP directory and setup the compute environment</p>
+<p>Edit the config files <code>illum_config.py</code> and <code>illum_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed. Then copy to the DCP directory and setup the compute environment</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/Distributed-CellProfiler/
 
 <span class="ex">pyenv</span> shell 2.7.12
@@ -329,9 +315,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="ex">aws</span> s3 sync analysis/<span class="va">${BATCH_ID}</span>/<span class="va">${PLATE_ID}</span>/analysis  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/analysis/<span class="va">${BATCH_ID}</span>/<span class="va">${PLATE_ID}</span>/analysis/</code></pre></div>
 </div>
-<div id="dcp" class="section level3">
+<div id="dcp-1" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> DCP</h3>
-<p>Edit the config files <code>analysis_config.py</code> and <code>analysis_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed (see <a href="run-jobs.html#run-illum-dcp">5.1.2</a>).</p>
+<p>Edit the config files <code>analysis_config.py</code> and <code>analysis_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed.</p>
+<p>At the very least, replace the strings VAR_AWS_ACCOUNT_NUMBER,VAR_AWS_BUCKET,VAR_SUBNET_ID,VAR_GROUP_ID,VAR_KEYNAME with appropriate values.</p>
+<p>You do so using sed:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> cellpainting_scripts/dcp_config_files/
+
+<span class="kw">for</span> <span class="ex">CONFIG_FILE</span> in analysis_config.py analysis_config.json illum_config.py illum_config.json<span class="kw">;</span> <span class="kw">do</span> 
+    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g&quot;</span>
+    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_AWS_BUCKET/name-of-s3-bucket/g&quot;</span>
+    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_SUBNET_ID/subnet-NNNNNNNN/g&quot;</span>
+    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_GROUP_ID/sg-NNNNNNNN/g&quot;</span>
+    <span class="fu">sed</span> -i <span class="va">${CONFIG_FILE}</span> <span class="st">&quot;s/VAR_KEYNAME/filename-of-key-file-without-extension/g&quot;</span>
+<span class="kw">done</span>
+
+<span class="bu">cd</span> ..</code></pre></div>
 <p>Copy the analysis_config.py to the DCP directory and setup the compute environment.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/Distributed-CellProfiler/
 
@@ -351,6 +350,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="co"># do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `analysis_config.py`</span>
 <span class="ex">python</span> run.py monitor files/APP_NAMESpotFleetRequestId.json</code></pre></div>
+
+<div class="rmdcaution">
+
+</div>
+
 
 </div>
 </div>
