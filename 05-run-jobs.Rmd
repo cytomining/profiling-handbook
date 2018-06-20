@@ -224,3 +224,6 @@ python run.py \
 python run.py monitor files/APP_NAMESpotFleetRequestId.json
 ```
 
+
+```{block2, note-text, type='rmdcaution'}
+```
