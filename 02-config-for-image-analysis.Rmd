@@ -11,6 +11,7 @@ cd software
 git clone git@github.com:broadinstitute/cellpainting_scripts.git
 git clone git@github.com:broadinstitute/pe2loaddata.git
 git clone git@github.com:broadinstitute/cytominer_scripts.git
+git clone git@github.com:CellProfiler/Distributed-CellProfiler.git
 cd ..
 ```
 
