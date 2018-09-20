@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-09-19">
+<meta name="date" content="2018-09-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -210,7 +210,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   --pipeline ../../pipelines/<span class="va">${PIPELINE_SET}</span>/illum.cppipe \
   --cp_docker_image shntnu/cellprofiler:2.2.1 \
   --create_dcp_config \
-  --s3_bucket imaging-platform-dev \
+  --s3_bucket <span class="va">${BUCKET}</span> \
   --tmpdir <span class="va">${TMPDIR}</span> :::: <span class="va">${PLATES}</span>
 <span class="bu">cd</span> ../../</code></pre></div>
 <p>This is the resulting structure of <code>batchfiles</code> on EFS (one level below <code>workspace</code>). Files for only <code>SQ00015167</code> are shown.</p>
@@ -259,7 +259,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   --pipeline ../../pipelines/<span class="va">${PIPELINE_SET}</span>/analysis.cppipe \
   --cp_docker_image shntnu/cellprofiler:2.2.1 \
   --create_dcp_config \
-  --s3_bucket imaging-platform-dev \
+  --s3_bucket <span class="va">${BUCKET}</span> \
   --tmpdir <span class="va">${TMPDIR}</span> :::: <span class="va">${PLATES}</span>
 <span class="bu">cd</span> ../../</code></pre></div>
 <p>This is the resulting structure of <code>batchfiles</code> on EFS (one level below <code>workspace</code>). Files for only <code>SQ00015167</code> are shown.</p>

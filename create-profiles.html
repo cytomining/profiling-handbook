@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-09-19">
+<meta name="date" content="2018-09-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -214,7 +214,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   --tmpdir ~/ebs_tmp \
   -d \
   -r s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace :::: <span class="va">${PLATES}</span></code></pre></div>
-<p>*Troublshooting <a href="tip:*" class="uri">tip:*</a> For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: <code>expected X columns but found Y - filling the rest with NULL</code>. This is expected behavior.</p>
+<p>Troubleshooting: For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: <code>expected X columns but found Y - filling the rest with NULL</code>. This is expected behavior.</p>
 <p>This is the resulting structure of <code>backend</code> on S3 (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
 <pre><code>└── backend
     └── 2016_04_01_a549_48hr_batch1
@@ -477,7 +477,7 @@ C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.1111111111
   --keep-order \
   ./csv2gct.R \
   ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}_{2}</span>.csv \
-  -o ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}_{2}</span>.gct :::: <span class="va">${PLATES}</span> ::: augmented normalized normalized_variable_selected </code></pre></div>
+  -o ../../backend/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}/{1}_{2}</span>.gct :::: <span class="va">${PLATES}</span> ::: augmented normalized normalized_variable_selected</code></pre></div>
 <p>Convert per-plate map CSV files to GCT</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
   --no-run-if-empty \
@@ -501,7 +501,7 @@ C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.1111111111
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
   aws s3 sync \
   ../../<span class="dt">{1}/${BATCH_ID}</span>/ \
-  s3://imaging-platform-dev/projects/<span class="va">${PROJECT_NAME}</span>/workspace/<span class="dt">{1}/${BATCH_ID}</span>/ ::: audit backend batchfiles collated load_data_csv log metadata parameters scratch</code></pre></div>
+  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/<span class="dt">{1}/${BATCH_ID}</span>/ ::: audit backend batchfiles collated load_data_csv log metadata parameters scratch</code></pre></div>
 </div>
 <div id="sync-down-from-s3-onto-a-machine" class="section level3">
 <h3><span class="header-section-number">7.8.2</span> Sync down from S3 onto a machine</h3>
@@ -517,8 +517,8 @@ C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.1111111111
   <span class="fu">xargs</span> -I % \
   aws s3 sync \
   --exclude <span class="st">&quot;*.sqlite&quot;</span> \
-  s3://imaging-platform-dev/projects/<span class="va">${PROJECT_NAME}</span>/workspace/%/<span class="va">${BATCH_ID}</span>/ \
-  <span class="va">${BROAD_NFS}</span>/<span class="va">${PROJECT_NAME}</span>/workspace/%/<span class="va">${BATCH_ID}</span>/ </code></pre></div>
+  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/%/<span class="va">${BATCH_ID}</span>/ \
+  <span class="va">${BROAD_NFS}</span>/<span class="va">${PROJECT_NAME}</span>/workspace/%/<span class="va">${BATCH_ID}</span>/</code></pre></div>
 
 </div>
 </div>
