@@ -58,7 +58,7 @@ MAXPROCS=3 # m4.xlarge has 4 cores; keep 1 free
 
 ## Create directories
 
-*Troublshooting tip:* See note above about EFS - that it can only be mounted from us-east-1a or 1b.
+Troubleshooting: See note above about EFS - that it can only be mounted from us-east-1a or 1b.
 
 ```sh
 mkdir -p ~/efs/${PROJECT_NAME}/workspace/

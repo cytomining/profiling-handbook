@@ -44,7 +44,7 @@ parallel \
 ```
 
 
-*Troublshooting tip:* For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: `expected X columns but found Y - filling the rest with NULL`. This is expected behavior.
+Troubleshooting: For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: `expected X columns but found Y - filling the rest with NULL`. This is expected behavior.
 
 This is the resulting structure of `backend` on S3 (one level below `workspace`) for `SQ00015167`:
 
@@ -64,7 +64,7 @@ Copy these files from S3 to EFS to continue with the rest of the processing
 aws s3 sync --exclude "*.sqlite" s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/ ~/efs/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/
 ```
 
-Do a quick check to view how many rows are present in each of the aggregated per-well data. 
+Do a quick check to view how many rows are present in each of the aggregated per-well data.
 
 ```sh
 parallel \
@@ -91,7 +91,7 @@ This is the resulting structure of the metadata folder on EFS (one level below `
 ```
 `2016_04_01_a549_48hr_batch1` is the batch name – the plates (and all related data) are arranged under batches, as seen below.
 
-`barcode_platemap.csv` is structured as shown below. `Assay_Plate_Barcode` and `Plate_Map_Name` are currently the only mandatory columns (they are used to join the metadata of the plate map with each assay plate). 
+`barcode_platemap.csv` is structured as shown below. `Assay_Plate_Barcode` and `Plate_Map_Name` are currently the only mandatory columns (they are used to join the metadata of the plate map with each assay plate).
 Each unique entry in the `Plate_Map_Name` should have a corresponding tab-separated file `.txt` file under `platemap` (e.g. `C-7161-01-LM6-006.txt`)
 
 ```
@@ -109,12 +109,12 @@ C-7161-01-LM6-006 A08 BRD-K18895904-001-16-1  1.04143999999919895 3.333333333330
 C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.11111111111538462 DMSO
 ```
 
-NOTE: 
+NOTE:
 - `plate_map_name` should be identical to the name of the file (without extension).
 - `plate_map_name` and `well_position` are mandatory columns.
 - If you have two sets of plates that have the same platemap but are plated with different cell lines, then create one plate map file for each cell line, e.g. `C-7161-01-LM6-006_A549.txt`, rename the `plate_map_name` to the name of the file (without extension), add a column `cell_id`, and populate it with the name of the cell line (e.g. `A549`). This should also be reflected in the `barcode_platemap.csv` file.
 
-Next, append the metadata to the aggregated per-well data. You may choose to additionally append columns from another source ("EXTERNAL_METADATA" below), which you can specify using the `-j` flag. 
+Next, append the metadata to the aggregated per-well data. You may choose to additionally append columns from another source ("EXTERNAL_METADATA" below), which you can specify using the `-j` flag.
 
 ```sh
 cd  ~/efs/${PROJECT_NAME}/workspace/software/cytominer_scripts
@@ -148,7 +148,7 @@ This is the resulting structure of `backend` on EFS (one level below `workspace`
 
 `SQ00015167_augmented.csv` is the aggregated per-well data, annotated with metadata.
 
-Do a quick check to view how many rows are present in each of the annotated per-well data. 
+Do a quick check to view how many rows are present in each of the annotated per-well data.
 
 ```sh
 parallel \
@@ -176,7 +176,7 @@ parallel \
   -s \"Metadata_broad_sample_type != \'\'\'dummy\'\'\'\" :::: ${PLATES}
 ```
 
-NOTE: 
+NOTE:
 - don't escape quotes if not using parallel i.e. use `-s "Metadata_broad_sample_type != '''dummy'''"` if not using within parallel.
 - to use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the `-s` flag.
 
@@ -193,7 +193,7 @@ This is the resulting structure of `backend` on EFS (one level below `workspace`
 
 `SQ00015167_normalized.csv` is the robust z-scored (normalized) per-well data.
 
-Do a quick check to view how many rows are present in each of the normalized per-well data. 
+Do a quick check to view how many rows are present in each of the normalized per-well data.
 
 ```sh
 parallel \
@@ -204,7 +204,7 @@ parallel \
 
 ## Select variables
 
-Create samples to do variable selection. Sample some wells from each replicate. Below, this is done by sample 2 entire replicate plates per platemap. Use `-n` to specify number of replicate plates to be used to create the sample. 
+Create samples to do variable selection. Sample some wells from each replicate. Below, this is done by sample 2 entire replicate plates per platemap. Use `-n` to specify number of replicate plates to be used to create the sample.
 
 Samples are created for both, normalized and unnormalized data, because the variable selection techniques may require both.
 
@@ -286,7 +286,7 @@ rsync -arzv ../../parameters/${REFERENCE_BATCH_ID}/variable_selection/ ../../par
 
 ```
 
-The previous steps only create a list of variable to be preserved for each variable selection method. 
+The previous steps only create a list of variable to be preserved for each variable selection method.
 To actually apply variable selection, we compute the intersection of all these variable lists, then preserve only those columns of the normalized per-well data.
 
 ```sh
@@ -317,7 +317,7 @@ This is the resulting structure of `backend` on EFS (one level below `workspace`
 
 `SQ00015167_normalized_variable_selected.csv` is the variable-selected version of the normalized per-well data.
 
-Do a quick check to view how many rows are present in each of the normalized per-well data. 
+Do a quick check to view how many rows are present in each of the normalized per-well data.
 
 ```sh
 parallel \
@@ -327,7 +327,7 @@ parallel \
 ```
 
 ## Aggregate replicates
-Combine replicate plates of each plate map by averaging (mean). 
+Combine replicate plates of each plate map by averaging (mean).
 
 ```sh
 mkdir -p ../../collated/${BATCH_ID}/
@@ -364,7 +364,7 @@ This is the resulting structure of `collated` on EFS (one level below `workspace
 
 `C-7161-01-LM6-006_collapsed.csv` is the replicate averaged data for plate map C-7161-01-LM6-006.
 
-Do a quick check to view how many rows are present in the replicate averaged data of each plate map. 
+Do a quick check to view how many rows are present in the replicate averaged data of each plate map.
 
 ```sh
 parallel \
@@ -445,7 +445,7 @@ parallel \
   --keep-order \
   ./csv2gct.R \
   ../../backend/${BATCH_ID}/{1}/{1}_{2}.csv \
-  -o ../../backend/${BATCH_ID}/{1}/{1}_{2}.gct :::: ${PLATES} ::: augmented normalized normalized_variable_selected 
+  -o ../../backend/${BATCH_ID}/{1}/{1}_{2}.gct :::: ${PLATES} ::: augmented normalized normalized_variable_selected
 ```
 
 Convert per-plate map CSV files to GCT
@@ -477,12 +477,12 @@ Convert collapsed to gct
 parallel \
   aws s3 sync \
   ../../{1}/${BATCH_ID}/ \
-  s3://imaging-platform-dev/projects/${PROJECT_NAME}/workspace/{1}/${BATCH_ID}/ ::: audit backend batchfiles collated load_data_csv log metadata parameters scratch
+  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/{1}/${BATCH_ID}/ ::: audit backend batchfiles collated load_data_csv log metadata parameters scratch
 ```
 
 ### Sync down from S3 onto a machine
 
-Specify location for syncing 
+Specify location for syncing
 
 ```sh
 BROAD_NFS=/cmap/imaging
@@ -504,7 +504,7 @@ echo audit backend batchfiles collated load_data_csv log metadata parameters scr
   xargs -I % \
   aws s3 sync \
   --exclude "*.sqlite" \
-  s3://imaging-platform-dev/projects/${PROJECT_NAME}/workspace/%/${BATCH_ID}/ \
-  ${BROAD_NFS}/${PROJECT_NAME}/workspace/%/${BATCH_ID}/ 
+  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/%/${BATCH_ID}/ \
+  ${BROAD_NFS}/${PROJECT_NAME}/workspace/%/${BATCH_ID}/
 ```
 

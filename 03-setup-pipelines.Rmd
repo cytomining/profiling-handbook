@@ -33,7 +33,7 @@ Ensure that, both, `analysis.cppipe` as well as `illum.cppipe` are present for t
 Create soft link to the image folder, which should be uploaded on S3.
 Note that the relevant S3 bucket has been mounted at `/home/ubuntu/bucket/`.
 
-*Troublshooting tip:* The folder structure for `images` differs between `S3` and `EFS`. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when `pe2loaddata` is run (later in the process, via `create_csv_from_xml.sh`) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the `images` folder have a similar structure as the others (e.g. `load_data_csv`, `metadata`, `analysis`).
+Troubleshooting: The folder structure for `images` differs between `S3` and `EFS`. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when `pe2loaddata` is run (later in the process, via `create_csv_from_xml.sh`) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the `images` folder have a similar structure as the others (e.g. `load_data_csv`, `metadata`, `analysis`).
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/
