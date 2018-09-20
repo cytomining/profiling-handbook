@@ -28,6 +28,7 @@ If these repos have already been cloned, `git pull` to make sure they are up to 
 This is the resulting structure of `software` on EFS (one level below `workspace`):
 ```
 └── software
+    ├── Distributed-CellProfiler
     ├── cellpainting_scripts
     ├── cytominer_scripts
     └── pe2loaddata
