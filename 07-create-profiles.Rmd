@@ -134,7 +134,7 @@ parallel \
   -d \
   -j ${EXTERNAL_METADATA} \
   -m chemical :::: ${PLATES}
-  ```
+```
 
 This is the resulting structure of `backend` on EFS (one level below `workspace`) for `SQ00015167`:
 
