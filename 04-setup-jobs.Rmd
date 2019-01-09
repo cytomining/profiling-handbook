@@ -62,6 +62,8 @@ This is the resulting structure of `batchfiles` on EFS (one level below `workspa
 }
 ```
 
+Troubleshooting: Check the `pipeline` and `data_file` variables in the `dcp_config.json` file to ensure that they look right. They should be assigned relative paths e.g. `projects/XXX/XXX/...`, not absolute paths. This can happen if the `PIPELINE_SET` variable is not set correctly.
+
 `cp_docker_commands.txt` contains the command to compute the illumination functions on the current EC2 instance. The content of `cp_docker_commands.txt` for `SQ00015167` is:
 
 ```sh
@@ -122,6 +124,8 @@ This is the resulting structure of `batchfiles` on EFS (one level below `workspa
    ]
 }
 ```
+
+Troubleshooting: Check the `pipeline` and `data_file` variables in the `dcp_config.json` file to ensure that they look right. They should be assigned relative paths e.g. `projects/XXX/XXX/...`, not absolute paths. This can happen if the `PIPELINE_SET` variable is not set correctly.
 
 Note that, as with illumination correction, this assumes that the pipeline has a `_without_batchfile` version of it in the same directory.
 
