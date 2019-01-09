@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Image-based Profiling Handbook</title>
+  <title>Chapter 7 Create profiles | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Image-based Profiling Handbook" />
+  <meta property="og:title" content="Chapter 7 Create profiles | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Image-based Profiling Handbook" />
+  <meta name="twitter:title" content="Chapter 7 Create profiles | Image-based Profiling Handbook" />
   
   <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2018-09-20">
+<meta name="date" content="2019-01-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="appendix-a.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -267,11 +268,13 @@ C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.1111111111
   -p <span class="dt">{1}</span> \
   -d \
   -j <span class="va">${EXTERNAL_METADATA}</span> \
-  -m chemical :::: <span class="va">${PLATES}</span>
-  <span class="kw">```</span>
-
-<span class="ex">This</span> is the resulting structure of <span class="kw">`</span><span class="ex">backend</span><span class="kw">`</span> <span class="ex">on</span> EFS (one level below <span class="kw">`</span>workspace<span class="kw">`</span>) <span class="kw">for</span> <span class="kw">`</span>SQ00015167<span class="kw">`</span><span class="bu">:</span></code></pre></div>
-<p>└── backend    └── 2016_04_01_a549_48hr_batch1 └── SQ00015167 ├── SQ00015167_augmented.csv └── SQ00015167.csv ```</p>
+  -m chemical :::: <span class="va">${PLATES}</span></code></pre></div>
+<p>This is the resulting structure of <code>backend</code> on EFS (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
+<pre><code>└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167_augmented.csv
+            └── SQ00015167.csv</code></pre>
 <p><code>SQ00015167_augmented.csv</code> is the aggregated per-well data, annotated with metadata.</p>
 <p>Do a quick check to view how many rows are present in each of the annotated per-well data.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
@@ -552,7 +555,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -564,6 +567,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/cytomining/profiling-handbook/edit/master/07-create-profiles.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
 "toc": {
