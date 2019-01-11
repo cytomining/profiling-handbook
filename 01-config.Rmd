@@ -10,8 +10,8 @@ Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-
 
 After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`. If not, do `sudo mount -a`
 
-```{block2, note-text, type='rmdcaution'}
-Troubleshooting: Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`. This can be changed by appropriately editing the EFS configuration via Terraform.
+```{block2, type='rmdcaution'}
+Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`. This can be changed by appropriately editing the EFS configuration via Terraform.
 ```
 
 Log in to the EC2 instance.
@@ -60,8 +60,8 @@ MAXPROCS=3 # m4.xlarge has 4 cores; keep 1 free
 
 ## Create directories
 
-```{block2, note-text, type='rmdcaution'}
-Troubleshooting: See note above about EFS - that it can only be mounted from us-east-1a or 1b.
+```{block2, type='rmdcaution'}
+See note above about EFS - that it can only be mounted from us-east-1a or 1b.
 ```
 
 ```sh
@@ -81,8 +81,8 @@ This is also useful if you decide to run CellProfiler directly on this node â€“Â
 mkdir ~/ebs_tmp
 ```
 
-```{block2, note-text, type='rmdcaution'}
-Troubleshooting: If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -h`), create and attach an EBS volume, and then mount it.
+```{block2, type='rmdcaution'}
+If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -h`), create and attach an EBS volume, and then mount it.
 ```
 
 ```sh
