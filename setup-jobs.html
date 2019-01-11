@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2019-01-09">
+<meta name="date" content="2019-01-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -235,7 +235,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     <span class="fu">}</span>
   <span class="ot">]</span>
 <span class="fu">}</span></code></pre></div>
-<p>Troubleshooting: Check the <code>pipeline</code> and <code>data_file</code> variables in the <code>dcp_config.json</code> file to ensure that they look right. They should be assigned relative paths e.g. <code>projects/XXX/XXX/...</code>, not absolute paths. This can happen if the <code>PIPELINE_SET</code> variable is not set correctly.</p>
+
+<div class="rmdcaution">
+Check the <code>pipeline</code> and <code>data_file</code> variables in the <code>dcp_config.json</code> file to ensure that they look right. They should be assigned relative paths e.g. <code>projects/XXX/XXX/...</code>, not absolute paths. This can happen if the <code>PIPELINE_SET</code> variable is not set correctly.
+</div>
+
 <p><code>cp_docker_commands.txt</code> contains the command to compute the illumination functions on the current EC2 instance. The content of <code>cp_docker_commands.txt</code> for <code>SQ00015167</code> is:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker</span> run --rm --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/github/imaging-platform-pipelines/cellpainting_20x_phenix_bin1:/pipeline_dir --volume=/2016_04_01_a549_48hr_batch1/SQ00015167:/filelist_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/load_data_csv/2016_04_01_a549_48hr_batch1/SQ00015167:/datafile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/batchfiles/2016_04_01_a549_48hr_batch1/SQ00015167/illum:/batchfile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/illum/SQ00015167:/output_dir --volume=/tmp:/tmp_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/status/2016_04_01_a549_48hr_batch1/SQ00015167/illum:/status_dir --volume=/home/ubuntu/bucket/:/home/ubuntu/bucket/ --log-driver=awslogs --log-opt awslogs-group=SQ00015167 --log-opt awslogs-stream=SQ00015167 shntnu/cellprofiler -p /batchfile_dir/Batch_data.h5 -g Metadata_Plate=SQ00015167 --data-file=/datafile_dir/load_data.csv -o /output_dir -t /tmp_dir -d /status_dir/SQ00015167.txt</code></pre></div>
 </div>
@@ -285,7 +289,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     <span class="fu">}</span><span class="ot">,</span> <span class="er">...</span>
    <span class="ot">]</span>
 <span class="fu">}</span></code></pre></div>
-<p>Troubleshooting: Check the <code>pipeline</code> and <code>data_file</code> variables in the <code>dcp_config.json</code> file to ensure that they look right. They should be assigned relative paths e.g. <code>projects/XXX/XXX/...</code>, not absolute paths. This can happen if the <code>PIPELINE_SET</code> variable is not set correctly.</p>
+
+<div class="rmdcaution">
+Check the <code>pipeline</code> and <code>data_file</code> variables in the <code>dcp_config.json</code> file to ensure that they look right. They should be assigned relative paths e.g. <code>projects/XXX/XXX/...</code>, not absolute paths. This can happen if the <code>PIPELINE_SET</code> variable is not set correctly.
+</div>
+
 <p>Note that, as with illumination correction, this assumes that the pipeline has a <code>_without_batchfile</code> version of it in the same directory.</p>
 <p><code>cp_docker_commands.txt</code> contains the commands to run the analysis pipeline on the current EC2 instance. In this example, the images were grouped by Plate, Well, and Site, and therefore each command processes a single site (=1 image). The first line of <code>cp_docker_commands.txt</code> for <code>SQ00015167</code> is:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker</span> run --rm --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/github/imaging-platform-pipelines/cellpainting_a549_20x_phenix_bin1:/pipeline_dir --volume=/2016_04_01_a549_48hr_batch1/SQ00015167:/filelist_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/load_data_csv/2016_04_01_a549_48hr_batch1/SQ00015167:/datafile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/batchfiles/2016_04_01_a549_48hr_batch1/SQ00015167/analysis:/batchfile_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/analysis/2016_04_01_a549_48hr_batch1/SQ00015167/analysis:/output_dir --volume=/home/ubuntu/efs/tmp/:/tmp_dir --volume=/home/ubuntu/efs/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/workspace/status/2016_04_01_a549_48hr_batch1/SQ00015167/analysis:/status_dir --volume=/home/ubuntu/bucket/:/home/ubuntu/bucket/ --log-driver=awslogs --log-opt awslogs-group=SQ00015167 --log-opt awslogs-stream=SQ00015167-A01-1 shntnu/cellprofiler:2.2.1 -p /batchfile_dir/Batch_data.h5 -g Metadata_Plate=SQ00015167,Metadata_Well=A01,Metadata_Site=1 --data-file=/datafile_dir/load_data_with_illum.csv -o /output_dir -t /tmp_dir -d /status_dir/SQ00015167-A01-1.txt</code></pre></div>

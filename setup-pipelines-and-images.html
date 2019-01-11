@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2019-01-09">
+<meta name="date" content="2019-01-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -206,7 +206,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prepare-images" class="section level2">
 <h2><span class="header-section-number">3.3</span> Prepare images</h2>
 <p>Create soft link to the image folder, which should be uploaded on S3. Note that the relevant S3 bucket has been mounted at <code>/home/ubuntu/bucket/</code>.</p>
-<p>Troubleshooting: The folder structure for <code>images</code> differs between <code>S3</code> and <code>EFS</code>. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when <code>pe2loaddata</code> is run (later in the process, via <code>create_csv_from_xml.sh</code>) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the <code>images</code> folder have a similar structure as the others (e.g. <code>load_data_csv</code>, <code>metadata</code>, <code>analysis</code>).</p>
+
+<div class="rmdcaution">
+The folder structure for <code>images</code> differs between <code>S3</code> and <code>EFS</code>. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when <code>pe2loaddata</code> is run (later in the process, via <code>create_csv_from_xml.sh</code>) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the <code>images</code> folder have a similar structure as the others (e.g. <code>load_data_csv</code>, <code>metadata</code>, <code>analysis</code>).
+</div>
+
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
 <span class="fu">mkdir</span> images
 <span class="bu">cd</span> images
