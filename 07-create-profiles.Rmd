@@ -44,7 +44,9 @@ parallel \
 ```
 
 
+```{block2, note-text, type='rmdcaution'}
 Troubleshooting: For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: `expected X columns but found Y - filling the rest with NULL`. This is expected behavior.
+```
 
 This is the resulting structure of `backend` on S3 (one level below `workspace`) for `SQ00015167`:
 
