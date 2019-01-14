@@ -7,7 +7,7 @@ Cell Painting pipelines are stored in a GitHub repo. If you are using a new pipe
 cd ~/efs/${PROJECT_NAME}/workspace/
 mkdir github
 cd github/
-git clone git@github.com:broadinstitute/imaging-platform-pipelines.git
+git clone https://github.com/broadinstitute/imaging-platform-pipelines.git
 cd ..
 ln -s github/imaging-platform-pipelines pipelines
 ```
