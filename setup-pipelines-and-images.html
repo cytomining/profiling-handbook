@@ -265,6 +265,10 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
             ├── load_data.csv
             └── load_data_with_illum.csv</code></pre>
 <p><code>load_data.csv</code> will be used by <code>illum.cppipe</code>. <code>load_data_with_illum.csv</code> will be used by <code>analysis.cppipe</code>. When creating <code>load_data_with_illum.csv</code>, the script assumes a specific location for the output folder, discussed below (see discussion on <code>--illum_pipeline_name</code> option).</p>
+<p>Copy the load data files to S3</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 sync \
+  ../../load_data_csv/<span class="va">${BATCH_ID}</span>/ \
+  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/load_data_csv/<span class="va">${BATCH_ID}</span>/ </code></pre></div>
 
 </div>
 </div>
