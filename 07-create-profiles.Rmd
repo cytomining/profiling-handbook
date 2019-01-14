@@ -430,16 +430,6 @@ parallel \
   wc -l ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}
 ```
 
-Is something amiss? Check the error logs.
-
-```sh
-step=collapse
-parallel \
-  --no-run-if-empty \
-  --keep-order \
-  head ../../log/${BATCH_ID}/${step}/1/{1}/stderr :::: ${PLATES}
-```
-
 Combine all averaged profiles in the batch into a single file.
 
 ```sh
