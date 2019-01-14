@@ -118,3 +118,10 @@ This is the resulting structure of `load_data_csv` on EFS (one level below `work
 `load_data_with_illum.csv` will be used by `analysis.cppipe`.
 When creating `load_data_with_illum.csv`, the script assumes a specific location for the output folder, discussed below (see discussion on ``--illum_pipeline_name`` option).
 
+Copy the load data files to S3
+
+```sh
+aws s3 sync \
+  ../../load_data_csv/${BATCH_ID}/ \
+  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/ 
+```
