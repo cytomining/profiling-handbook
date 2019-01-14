@@ -211,9 +211,10 @@ parallel \
   -s \"Metadata_broad_sample_type != \'\'\'dummy\'\'\'\" :::: ${PLATES}
 ```
 
-NOTE:
+```{block2, type='rmdnote'}
 - don't escape quotes if not using parallel i.e. use `-s "Metadata_broad_sample_type != '''dummy'''"` if not using within parallel.
 - to use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the `-s` flag.
+```
 
 This is the resulting structure of `backend` on EFS (one level below `workspace`) for `SQ00015167`:
 
@@ -312,10 +313,11 @@ head -1 \
   ../../backend/${BATCH_ID}/${SAMPLE_PLATE_ID}/${SAMPLE_PLATE_ID}.csv \
   |tr "," "\n"|grep -v Meta|grep -E -v 'Granularity_14|Granularity_15|Granularity_16|Manders|RWC' >> \
   ../../parameters/${BATCH_ID}/variable_selection/manual.txt
-
 ```
 
-ALTERNATIVE: You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch:
+```{block2, type='rmdnote'}
+ALTERNATIVE: You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch. Here's how you'd copy these files.
+```
 
 ```sh
 mkdir -p ../../parameters/${BATCH_ID}/variable_selection/
