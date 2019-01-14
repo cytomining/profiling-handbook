@@ -63,6 +63,8 @@ This is the resulting structure of `backend` on S3 (one level below `workspace`)
 Copy these files from S3 to EFS to continue with the rest of the processing
 
 ```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/cytominer_scripts
+
 aws s3 sync --exclude "*.sqlite" s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/ ~/efs/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/
 ```
 
