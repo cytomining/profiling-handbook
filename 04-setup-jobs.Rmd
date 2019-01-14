@@ -27,7 +27,7 @@ parallel \
   --datafile_filename load_data.csv \
   --output_dir ../../../${BATCH_ID}/illum \
   --pipeline ../../pipelines/${PIPELINE_SET}/illum.cppipe \
-  --cp_docker_image shntnu/cellprofiler:2.2.1 \
+  --cp_docker_image cellprofiler/cellprofiler:2.3.1 \
   --create_dcp_config \
   --s3_bucket ${BUCKET} \
   --tmpdir ${TMPDIR} :::: ${PLATES}
@@ -92,7 +92,7 @@ parallel \
   --plate {1} \
   --datafile_filename load_data_with_illum.csv \
   --pipeline ../../pipelines/${PIPELINE_SET}/analysis.cppipe \
-  --cp_docker_image shntnu/cellprofiler:2.2.1 \
+  --cp_docker_image cellprofiler/cellprofiler:2.3.1 \
   --create_dcp_config \
   --s3_bucket ${BUCKET} \
   --tmpdir ${TMPDIR} :::: ${PLATES}
