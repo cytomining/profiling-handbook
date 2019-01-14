@@ -323,7 +323,14 @@ Use the <code>-c</code> flag to optionally specify the cell type.
   -b <span class="va">${BATCH_ID}</span> \
   -p <span class="dt">{1}</span> \
   -s <span class="dt">\&quot;</span>Metadata_broad_sample_type != <span class="dt">\&#39;\&#39;\&#39;</span>dummy<span class="dt">\&#39;\&#39;\&#39;\&quot;</span> :::: <span class="va">${PLATES}</span></code></pre></div>
-<p>NOTE: - don’t escape quotes if not using parallel i.e. use <code>-s &quot;Metadata_broad_sample_type != '''dummy'''&quot;</code> if not using within parallel. - to use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the <code>-s</code> flag.</p>
+
+<div class="rmdnote">
+<ul>
+<li>don’t escape quotes if not using parallel i.e. use <code>-s &quot;Metadata_broad_sample_type != '''dummy'''&quot;</code> if not using within parallel.</li>
+<li>to use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the <code>-s</code> flag.
+</div>
+</li>
+</ul>
 <p>This is the resulting structure of <code>backend</code> on EFS (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
 <pre><code>└── backend
     └── 2016_04_01_a549_48hr_batch1
@@ -389,7 +396,11 @@ Use the <code>-c</code> flag to optionally specify the cell type.
   ../../backend/<span class="va">${BATCH_ID}</span>/<span class="va">${SAMPLE_PLATE_ID}</span>/<span class="va">${SAMPLE_PLATE_ID}</span>.csv \
   <span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot;,&quot;</span> <span class="st">&quot;\n&quot;</span><span class="kw">|</span><span class="fu">grep</span> -v Meta<span class="kw">|</span><span class="fu">grep</span> -E -v <span class="st">&#39;Granularity_14|Granularity_15|Granularity_16|Manders|RWC&#39;</span> <span class="op">&gt;&gt;</span> \
   ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/manual.txt</code></pre></div>
-<p>ALTERNATIVE: You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch:</p>
+
+<div class="rmdnote">
+ALTERNATIVE: You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch. Here’s how you’d copy these files.
+</div>
+
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/
 
 <span class="va">REFERENCE_BATCH_ID=</span>2018_02_23_LKCP_DBG
