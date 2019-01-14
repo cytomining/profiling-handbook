@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2019-01-11">
+<meta name="date" content="2019-01-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -228,7 +228,9 @@ For pipelines that use FlagImage to skip the measurements modules if the image f
             └── SQ00015167.sqlite</code></pre>
 <p><code>SQ00015167.sqlite</code> is the per cell data and <code>SQ00015167.csv</code> is the aggregated per-well data.</p>
 <p>Copy these files from S3 to EFS to continue with the rest of the processing</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 sync --exclude <span class="st">&quot;*.sqlite&quot;</span> s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/backend/<span class="va">${BATCH_ID}</span>/ ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/backend/<span class="va">${BATCH_ID}</span>/</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/cytominer_scripts
+
+<span class="ex">aws</span> s3 sync --exclude <span class="st">&quot;*.sqlite&quot;</span> s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/backend/<span class="va">${BATCH_ID}</span>/ ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/backend/<span class="va">${BATCH_ID}</span>/</code></pre></div>
 <p>Do a quick check to view how many rows are present in each of the aggregated per-well data.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
   --no-run-if-empty \
