@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json" class="uri">https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json</a>. You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. See <code>module &quot;ec2_login&quot;</code> in the Terraform <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/main.tf">configuration</a> for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to <code>ec2_login</code>, which is set up in this infrastructure. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume.</p>
 <p>After starting the instance, ensure that the S3 bucket is mounted on <code>~/bucket</code>. If not, do <code>sudo mount -a</code></p>
 
-<div class="rmdcaution">
+<div class="rmdnote">
 Note that given this configuration in this AMI, EFS can only be mounted from <code>us-east-1a</code> or <code>us-east-1b</code>. This can be changed by appropriately editing the EFS configuration via Terraform.
 </div>
 
@@ -230,7 +230,7 @@ See note above about EFS - that it can only be mounted from us-east-1a or 1b.
 <p>Create a temp directory which is required when creating the database backed using <code>cytominer-database</code> (discussed later). This is also useful if you decide to run CellProfiler directly on this node – running the Cell Painting analysis spipeline results in large temporary files.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> ~/ebs_tmp</code></pre></div>
 
-<div class="rmdcaution">
+<div class="rmdnote">
 If at this point you realize that the ec2 instance does not have enough space (which you can check using <code>du -h</code>), create and attach an EBS volume, and then mount it.
 </div>
 
