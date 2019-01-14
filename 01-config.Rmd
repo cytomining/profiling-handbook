@@ -10,7 +10,7 @@ Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-
 
 After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`. If not, do `sudo mount -a`
 
-```{block2, type='rmdcaution'}
+```{block2, type='rmdnote'}
 Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`. This can be changed by appropriately editing the EFS configuration via Terraform.
 ```
 
@@ -81,7 +81,7 @@ This is also useful if you decide to run CellProfiler directly on this node â€“Â
 mkdir ~/ebs_tmp
 ```
 
-```{block2, type='rmdcaution'}
+```{block2, type='rmdnote'}
 If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -h`), create and attach an EBS volume, and then mount it.
 ```
 
