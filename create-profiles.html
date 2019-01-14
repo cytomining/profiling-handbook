@@ -476,12 +476,6 @@ ALTERNATIVE: You may have already performed these steps for a different batch of
   --no-run-if-empty \
   --keep-order \
   wc -l ../../collated/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_collapsed.csv :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
-<p>Is something amiss? Check the error logs.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">step=</span>collapse
-<span class="ex">parallel</span> \
-  --no-run-if-empty \
-  --keep-order \
-  head ../../log/<span class="va">${BATCH_ID}</span>/<span class="va">${step}</span>/1/<span class="dt">{1}</span>/stderr :::: <span class="va">${PLATES}</span></code></pre></div>
 <p>Combine all averaged profiles in the batch into a single file.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">csvstack</span> \
   ../../collated/<span class="va">${BATCH_ID}</span>/*_collapsed.csv <span class="op">&gt;</span> \
