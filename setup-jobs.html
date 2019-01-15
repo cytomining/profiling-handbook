@@ -25,7 +25,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh">
 
 
-<meta name="date" content="2019-01-14">
+<meta name="date" content="2019-01-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -209,7 +209,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   --datafile_filename load_data.csv \
   --output_dir ../../../<span class="va">${BATCH_ID}</span>/illum \
   --pipeline ../../pipelines/<span class="va">${PIPELINE_SET}</span>/illum.cppipe \
-  --cp_docker_image shntnu/cellprofiler:2.2.1 \
+  --cp_docker_image cellprofiler/cellprofiler:2.3.1 \
   --create_dcp_config \
   --s3_bucket <span class="va">${BUCKET}</span> \
   --tmpdir <span class="va">${TMPDIR}</span> :::: <span class="va">${PLATES}</span>
@@ -263,7 +263,7 @@ Check the <code>pipeline</code> and <code>data_file</code> variables in the <cod
   --plate <span class="dt">{1}</span> \
   --datafile_filename load_data_with_illum.csv \
   --pipeline ../../pipelines/<span class="va">${PIPELINE_SET}</span>/analysis.cppipe \
-  --cp_docker_image shntnu/cellprofiler:2.2.1 \
+  --cp_docker_image cellprofiler/cellprofiler:2.3.1 \
   --create_dcp_config \
   --s3_bucket <span class="va">${BUCKET}</span> \
   --tmpdir <span class="va">${TMPDIR}</span> :::: <span class="va">${PLATES}</span>
