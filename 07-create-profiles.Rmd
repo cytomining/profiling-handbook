@@ -434,8 +434,8 @@ Combine all averaged profiles in the batch into a single file.
 
 ```sh
 csvstack \
-  ../../collated/${BATCH_ID}/*_collapsed.csv > \
-  ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.csv
+  `parallel echo ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}` > \
+   ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.csv
 ```
 
 ## Audit
