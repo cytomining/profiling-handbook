@@ -244,7 +244,63 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
 </div>
 <div id="create-loaddata-csvs" class="section level2">
 <h2><span class="header-section-number">3.5</span> Create LoadData CSVs</h2>
-<p>The script below works only for Phenix microscopes – it reads a standard XML file (<code>Index.idx.xml</code>) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires <code>config.yml</code>, which specifies (1) the mapping between channel names in <code>Index.idx.xml</code> and the channel names in the CellProfiler pipelines (2) metadata to extract from <code>Index.idx.xml</code>. Ensure that all the metadata fields defined in <code>config.yml</code> are present in the <code>Index.idx.xml</code>.</p>
+<p>The script below works only for Phenix microscopes – it reads a standard XML file (<code>Index.idx.xml</code>) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires <code>config.yml</code>, which specifies (1) the mapping between channel names in <code>Index.idx.xml</code> and the channel names in the CellProfiler pipelines (2) metadata to extract from <code>Index.idx.xml</code>.</p>
+<p>Here’s a sample <code>config.yml</code></p>
+<pre><code>channels:
+    HOECHST 33342: OrigDNA
+    Alexa 568: OrigAGP
+    Alexa 647: OrigMito
+    Alexa 488: OrigER
+    488 long: OrigRNA
+    Brightfieldlow: OrigBrightfield
+metadata:
+    Row: Row
+    Col: Col
+    FieldID: FieldID
+    ChannelID: ChannelID
+    ChannelName: ChannelName
+    ImageResolutionX: ImageResolutionX
+    ImageResolutionY: ImageResolutionY
+    ImageSizeX: ImageSizeX
+    ImageSizeY: ImageSizeY
+    BinningX: BinningX
+    BinningY: BinningY
+    MaxIntensity: MaxIntensity
+    PositionX: PositionX
+    PositionY: PositionY
+    PositionZ: PositionZ
+    AbsPositionZ: AbsPositionZ
+    AbsTime: AbsTime
+    MainExcitationWavelength: MainExcitationWavelength
+    MainEmissionWavelength: MainEmissionWavelength
+    ObjectiveMagnification: ObjectiveMagnification
+    ObjectiveNA: ObjectiveNA
+    ExposureTime: ExposureTime</code></pre>
+<p>Often, the values of the keys for channels are different in <code>Index.idx.xml</code>, so for example, above, we have <code>Brightfieldlow: OrigBrightfield</code> but the keys for channels could be different in <code>Index.idx.xml</code>:</p>
+<pre><code>$ tail -n 500 Index.idx.xml|grep ChannelName|sort -u
+
+      &lt;ChannelName&gt;488 long&lt;/ChannelName&gt;
+      &lt;ChannelName&gt;Alexa 488&lt;/ChannelName&gt;
+      &lt;ChannelName&gt;Alexa 568&lt;/ChannelName&gt;
+      &lt;ChannelName&gt;Alexa 647&lt;/ChannelName&gt;
+      &lt;ChannelName&gt;Brightfield CP&lt;/ChannelName&gt;
+      &lt;ChannelName&gt;HOECHST 33342&lt;/ChannelName&gt;</code></pre>
+<p>The brighfield channel is tagged <code>Brightfield CP</code> in <code>Index.idx.xml</code>. Fix this discrepancy by editing <code>config.xml</code>:</p>
+<pre><code>    HOECHST 33342: OrigDNA
+    Alexa 568: OrigAGP
+    Alexa 647: OrigMito
+    Alexa 488: OrigER
+    488 long: OrigRNA
+    Brightfield CP: OrigBrightfield</code></pre>
+
+<div class="rmdnote">
+<ul>
+<li>Ensure that all the metadata fields defined in <code>config.yml</code> are present in the <code>Index.idx.xml</code>.</li>
+<li>Ensure that the channel names are the same in <code>config.yml</code> and <code>Index.idx.xml</code></li>
+<li>Ensure that the LoadData csv files don’t already exist; if they do, delete them.
+</div>
+</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/cellpainting_scripts/
 <span class="ex">pyenv</span> shell 2.7.12
 <span class="ex">parallel</span> \

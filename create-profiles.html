@@ -264,7 +264,15 @@ SQ00015167,C-7161-01-LM6-006</code></pre>
 C-7161-01-LM6-006 A07 BRD-K18895904-001-16-1  3.12432000000000016 9.99999999999999999 DMSO
 C-7161-01-LM6-006 A08 BRD-K18895904-001-16-1  1.04143999999919895 3.33333333333076923 DMSO
 C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.11111111111538462 DMSO</code></pre>
-<p>NOTE: - <code>plate_map_name</code> should be identical to the name of the file (without extension). - <code>plate_map_name</code> and <code>well_position</code> are mandatory columns. - If you have two sets of plates that have the same platemap but are plated with different cell lines, then create one plate map file for each cell line, e.g. <code>C-7161-01-LM6-006_A549.txt</code>, rename the <code>plate_map_name</code> to the name of the file (without extension), add a column <code>cell_id</code>, and populate it with the name of the cell line (e.g. <code>A549</code>). This should also be reflected in the <code>barcode_platemap.csv</code> file.</p>
+
+<div class="rmdnote">
+<ul>
+<li><code>plate_map_name</code> should be identical to the name of the file (without extension).</li>
+<li><code>plate_map_name</code> and <code>well_position</code> are mandatory columns.</li>
+<li>If you have two sets of plates that have the same platemap but are plated with different cell lines, then create one plate map file for each cell line, e.g. <code>C-7161-01-LM6-006_A549.txt</code>, rename the <code>plate_map_name</code> to the name of the file (without extension), add a column <code>cell_id</code>, and populate it with the name of the cell line (e.g. <code>A549</code>). This should also be reflected in the <code>barcode_platemap.csv</code> file.</li>
+</ul>
+</div>
+
 <p>Next, append the metadata to the aggregated per-well data.</p>
 
 <div class="rmdnote">
