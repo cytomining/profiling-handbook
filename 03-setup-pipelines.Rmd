@@ -87,7 +87,72 @@ echo "SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165"|tr " " "\n" > ${PL
 
 ## Create LoadData CSVs
 
-The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines (2) metadata to extract from `Index.idx.xml`. Ensure that all the metadata fields defined in `config.yml` are present in the `Index.idx.xml`.
+The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines (2) metadata to extract from `Index.idx.xml`. 
+
+Here's a sample `config.yml`
+
+```
+channels:
+    HOECHST 33342: OrigDNA
+    Alexa 568: OrigAGP
+    Alexa 647: OrigMito
+    Alexa 488: OrigER
+    488 long: OrigRNA
+    Brightfieldlow: OrigBrightfield
+metadata:
+    Row: Row
+    Col: Col
+    FieldID: FieldID
+    ChannelID: ChannelID
+    ChannelName: ChannelName
+    ImageResolutionX: ImageResolutionX
+    ImageResolutionY: ImageResolutionY
+    ImageSizeX: ImageSizeX
+    ImageSizeY: ImageSizeY
+    BinningX: BinningX
+    BinningY: BinningY
+    MaxIntensity: MaxIntensity
+    PositionX: PositionX
+    PositionY: PositionY
+    PositionZ: PositionZ
+    AbsPositionZ: AbsPositionZ
+    AbsTime: AbsTime
+    MainExcitationWavelength: MainExcitationWavelength
+    MainEmissionWavelength: MainEmissionWavelength
+    ObjectiveMagnification: ObjectiveMagnification
+    ObjectiveNA: ObjectiveNA
+    ExposureTime: ExposureTime
+```
+
+Often, the values of the keys for channels are different in `Index.idx.xml`, so for example, above, we have `Brightfieldlow: OrigBrightfield` but the keys for channels could be different in `Index.idx.xml`:
+
+```
+$ tail -n 500 Index.idx.xml|grep ChannelName|sort -u
+
+      <ChannelName>488 long</ChannelName>
+      <ChannelName>Alexa 488</ChannelName>
+      <ChannelName>Alexa 568</ChannelName>
+      <ChannelName>Alexa 647</ChannelName>
+      <ChannelName>Brightfield CP</ChannelName>
+      <ChannelName>HOECHST 33342</ChannelName>
+```
+
+The brighfield channel is tagged `Brightfield CP` in `Index.idx.xml`. Fix this discrepancy by editing `config.xml`:
+
+```
+    HOECHST 33342: OrigDNA
+    Alexa 568: OrigAGP
+    Alexa 647: OrigMito
+    Alexa 488: OrigER
+    488 long: OrigRNA
+    Brightfield CP: OrigBrightfield
+```
+
+```{block2, type='rmdnote'}
+- Ensure that all the metadata fields defined in `config.yml` are present in the `Index.idx.xml`.
+- Ensure that the channel names are the same in `config.yml` and `Index.idx.xml`
+- Ensure that the LoadData csv files don't already exist; if they do, delete them. 
+```
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/software/cellpainting_scripts/
