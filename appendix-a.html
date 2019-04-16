@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   
 
-<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh" />
+<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
 
 
-<meta name="date" content="2019-03-24" />
+<meta name="date" content="2019-04-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,7 +159,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
-<li class="chapter" data-level="A.1" data-path="appendix-a.html"><a href="appendix-a.html#directory-structure"><i class="fa fa-check"></i><b>A.1</b> Directory structure</a></li>
+<li class="chapter" data-level="A.1" data-path="appendix-a.html"><a href="appendix-a.html#project-folder-structure-guidance"><i class="fa fa-check"></i><b>A.1</b> Project folder structure guidance</a></li>
+<li class="chapter" data-level="A.2" data-path="appendix-a.html"><a href="appendix-a.html#directory-structure"><i class="fa fa-check"></i><b>A.2</b> Directory structure</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -183,8 +184,103 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="appendix-a" class="section level1">
 <h1><span class="header-section-number">A</span> Appendix A</h1>
+<div id="project-folder-structure-guidance" class="section level2">
+<h2><span class="header-section-number">A.1</span> Project folder structure guidance</h2>
+<p>The guidances notes provide an overview of the folder structure used in this handbook</p>
+<ul>
+<li>All projects live in an S3 bucket</li>
+<li>The directory structure is always <code>&lt;bucket-name&gt;/projects/&lt;project_name&gt;</code></li>
+<li>In the <code>&lt;project_name&gt;</code> folder there are sub directories
+<ul>
+<li>The first subdirectory is <code>workspace</code></li>
+<li>Other subdirectories are batches of data</li>
+</ul></li>
+<li>The batches of data are labeled by date and include <code>images</code> and <code>illum</code> folders
+<ul>
+<li>In the <code>images</code> folder there exist different plates storing raw image data</li>
+<li>The <code>illum</code> folder is identical to the <code>images</code> folder in terms of structure
+<ul>
+<li><code>illum</code> is an output of the first stage of cell profiler pipeline that stores a function to adjust the plates in <code>images</code></li>
+</ul></li>
+</ul></li>
+<li><code>workspace</code> also has subdirectories
+<ul>
+<li><code>analysis</code> - includes subfolders mirroring the <code>Batch</code> nesting
+<ul>
+<li><p>Within each <code>batch</code> folder, the CellProfiler results are stored in <code>plate_id</code></p>
+<ul>
+<li>Within each <code>plate folder</code> there is an <code>analysis</code> folder
+<ul>
+<li>Inside this <code>analysis</code> folder, each well has its own folder (e.g. <code>A01-1</code>)
+<ul>
+<li><code>A</code> and <code>01</code> refer to the row and column of the plate, 1 refer to sites per well</li>
+<li>If the grouping was done by well instead of by site, this would be <code>A01</code>, without the suffix of <code>-1</code></li>
+</ul></li>
+<li>Note that this <code>analysis</code> folder is customizable
+<ul>
+<li>There are typically 384 (# of wells) x 9 (# of sites per well) subfolders
+<ul>
+<li>384 well plate</li>
+<li>9 different pictures</li>
+</ul></li>
+</ul></li>
+<li>Within the site folder (e.g. <code>A01-1</code>) there are five csv files
+<ul>
+<li><code>Cells.csv</code>
+<ul>
+<li>Each row are measurements of one cell</li>
+</ul></li>
+<li><code>Cytoplasm.csv</code>
+<ul>
+<li>Another object similar to Cells.csv</li>
+</ul></li>
+<li><code>Nuclei.csv</code>
+<ul>
+<li>Another object similar to Cells.csv</li>
+<li>These three object files can be concatenated by column <code>Objects.csv</code></li>
+</ul></li>
+<li><code>Experiment.csv</code>
+<ul>
+<li>Stores metadata for the CellProfiler run, including the CellProfiler pipeline itself</li>
+</ul></li>
+<li><code>Image.csv</code></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><code>backend</code> - also includes “batch” nesting</p>
+<ul>
+<li>“batch” nesting
+<ul>
+<li>“plate” nesting - stores summaries of each plate (all .csv files also have .gct formats (for input into <a href="https://software.broadinstitute.org/morpheus/">Morpheus</a>)
+<ul>
+<li><code>&lt;plate_id&gt;.sqlite</code> - inner join of all objects in a well, and then stacked (so all data for each well in a single plate)</li>
+<li><code>&lt;plate_id&gt;.csv</code> - per well <a href="https://github.com/broadinstitute/cytominer_scripts/blob/master/aggregate.R#L44">means</a> for each well on the plate</li>
+<li><code>&lt;plate_id&gt;.augmented.csv</code> - same as .csv except it includes the metadata</li>
+<li><code>&lt;plate_id&gt;._normalized.csv</code> - some z scored version of augmented</li>
+<li><code>&lt;plate_id&gt;._normalized_variable_selected.csv</code> - across all the plates in the batch
+<ul>
+<li>Three feature selection steps
+<ul>
+<li>Variance threshold</li>
+<li>Correlation threshold (decorrelate feature set)</li>
+<li>Replicate correlation filter (&gt;0.6)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><code>parameters</code> - same structure as <code>backend</code> but with metadata results (e.g. the features selected in variable selection)</li>
+<li><code>software</code>
+<ul>
+<li>This is where the project’s github repository lives.</li>
+<li>The scripts in the handbook assume that this be named as the same name as the Project folder. To rename it, pay careful attention to paths when executing the commands in the handbook.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 <div id="directory-structure" class="section level2">
-<h2><span class="header-section-number">A.1</span> Directory structure</h2>
+<h2><span class="header-section-number">A.2</span> Directory structure</h2>
 <pre><code>├── 2016_04_01_a549_48hr_batch1
 │   ├── illum
 │   │   └── SQ00015167
