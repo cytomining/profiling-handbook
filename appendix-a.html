@@ -207,7 +207,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><code>analysis</code> - includes subfolders mirroring the <code>Batch</code> nesting
 <ul>
-<li><p>Within each <code>batch</code> folder, the CellProfiler results are stored in <code>plate_id</code></p>
+<li>Within each <code>batch</code> folder, the CellProfiler results are stored in <code>plate_id</code>
 <ul>
 <li>Within each <code>plate folder</code> there is an <code>analysis</code> folder
 <ul>
@@ -248,11 +248,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 </ul></li>
-<li><p><code>backend</code> - also includes “batch” nesting</p>
+<li><code>backend</code> - also includes <code>batch</code> nesting
 <ul>
-<li>“batch” nesting
+<li><code>batch</code> nesting
 <ul>
-<li>“plate” nesting - stores summaries of each plate (all .csv files also have .gct formats (for input into <a href="https://software.broadinstitute.org/morpheus/">Morpheus</a>)
+<li><code>plate</code> nesting - stores summaries of each plate (all .csv files also have .gct formats (for input into <a href="https://software.broadinstitute.org/morpheus/">Morpheus</a>)
 <ul>
 <li><code>&lt;plate_id&gt;.sqlite</code> - inner join of all objects in a well, and then stacked (so all data for each well in a single plate)</li>
 <li><code>&lt;plate_id&gt;.csv</code> - per well <a href="https://github.com/broadinstitute/cytominer_scripts/blob/master/aggregate.R#L44">means</a> for each well on the plate</li>
