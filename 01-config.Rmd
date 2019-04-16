@@ -6,7 +6,7 @@
 
 This example assumes that AWS infrastructure has been set up using https://github.com/broadinstitute/aws-infrastructure-cellpainting
 
-Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json. You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. See `module "ec2_login"` in the Terraform [configuration](https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/main.tf) for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to  `ec2_login`, which is set up in this infrastructure. We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume.
+Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json. You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific. See `module "ec2_login"` in the Terraform [configuration](https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf) for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to  `ec2_login`, which is set up in this infrastructure. We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume.
 
 After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`. If not, do `sudo mount -a`
 
