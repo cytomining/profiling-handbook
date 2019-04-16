@@ -1,6 +1,6 @@
 --- 
 title: "Image-based Profiling Handbook"
-author: "Tim Becker, Beth Cimini, Shantanu Singh"
+author: "Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
