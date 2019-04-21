@@ -3,7 +3,7 @@ cache: packages
 pandoc_version: 1.19.2.1
 deploy:
   provider: script
-  script: _deploy.sh
+  script: chmod +x _deploy.sh && _deploy.sh
   on:
     branch: master
 before_script:
