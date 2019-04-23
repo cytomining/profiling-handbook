@@ -2,6 +2,7 @@ language: r
 cache: packages
 pandoc_version: 1.19.2.1
 deploy:
+  before_script: chmod +x _build.sh && bash _build.sh
   provider: script
   script: chmod +x _deploy.sh && bash _deploy.sh
   on:
