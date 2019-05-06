@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
 
 
-<meta name="date" content="2019-04-23" />
+<meta name="date" content="2019-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -187,7 +187,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="set-up-a-virtual-machine" class="section level2">
 <h2><span class="header-section-number">1.1</span> Set up a virtual machine</h2>
 <p>This example assumes that AWS infrastructure has been set up using <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting" class="uri">https://github.com/broadinstitute/aws-infrastructure-cellpainting</a></p>
-<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json" class="uri">https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json</a>. You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific. See <code>module &quot;ec2_login&quot;</code> in the Terraform <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf">configuration</a> for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to <code>ec2_login</code>, which is set up in this infrastructure. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume.</p>
+<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json" class="uri">https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json</a>. Note that the region must be set to <code>US East (N. Virginia)</code>. To use a different region, modify the <code>vpc</code> module in the AWS infrastructure setup.</p>
+<p>You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific. See <code>module &quot;ec2_login&quot;</code> in the Terraform <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf">configuration</a> for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to <code>ec2_login</code>, which is set up in this infrastructure. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume.</p>
 <p>After starting the instance, ensure that the S3 bucket is mounted on <code>~/bucket</code>. If not, do <code>sudo mount -a</code></p>
 
 <div class="rmdnote">
@@ -197,7 +198,7 @@ Note that given this configuration in this AMI, EFS can only be mounted from <co
 <p>Log in to the EC2 instance.</p>
 <p>Check available space on the instance</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">df</span> -h</code></pre></div>
-<p>Ensure that the <code>Available</code> column is at least 30Gb x <code>p</code>, where <code>p</code> is the number of plates you will process in parallel when creating the database backend. We recommend <code>p</code> to be one less than the number of cores (<code>p</code> = 3 for <code>m4.xlarge</code>, so 60Gb should be available) If you don’t have sufficient space, mount an EBS volume (below).</p>
+<p>Ensure that the <code>Available</code> column is at least 30Gb x <code>p</code>, where <code>p</code> is the number of plates you will process in parallel when creating the database backend. We recommend <code>p</code> to be one less than the number of cores (<code>p</code> = 3 for <code>m4.xlarge</code>, so 60Gb should be available). If you don’t have sufficient space, mount an EBS volume (below).</p>
 <p>Enter your AWS credentials</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> configure</code></pre></div>
 <p>The infrastructure is configure with one S3 bucket. Mount this S3 bucket (if it is not automatically mounted)</p>
