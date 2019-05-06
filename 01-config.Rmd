@@ -6,12 +6,20 @@
 
 This example assumes that AWS infrastructure has been set up using https://github.com/broadinstitute/aws-infrastructure-cellpainting
 
-Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json. You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific. See `module "ec2_login"` in the Terraform [configuration](https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf) for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to  `ec2_login`, which is set up in this infrastructure. We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume.
+Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json.
+Note that the region must be set to `US East (N. Virginia)`.
 
-After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`. If not, do `sudo mount -a`
+You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific.
+See `module "ec2_login"` in the Terraform [configuration](https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf) for how to configure the security groups and IAM roles for this instance.
+The simplest approach is to launch another node identical to  `ec2_login`, which is set up in this infrastructure.
+We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume.
+
+After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`.
+If not, do `sudo mount -a`
 
 ```{block2, type='rmdnote'}
-Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`. This can be changed by appropriately editing the EFS configuration via Terraform.
+Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`.
+This can be changed by appropriately editing the EFS configuration via Terraform.
 ```
 
 Log in to the EC2 instance.
@@ -23,7 +31,7 @@ df -h
 ```
 
 Ensure that the `Available` column is at least 30Gb x `p`, where `p` is the number of plates you will process in parallel when creating the database backend.
-We recommend `p` to be one less than the number of cores (`p` = 3 for `m4.xlarge`, so 60Gb should be available)
+We recommend `p` to be one less than the number of cores (`p` = 3 for `m4.xlarge`, so 60Gb should be available).
 If you don't have sufficient space, mount an EBS volume (below).
 
 Enter your AWS credentials
@@ -32,13 +40,15 @@ Enter your AWS credentials
 aws configure
 ```
 
-The infrastructure is configure with one S3 bucket. Mount this S3 bucket (if it is not automatically mounted)
+The infrastructure is configure with one S3 bucket.
+Mount this S3 bucket (if it is not automatically mounted)
 
 ```sh
 sudo mount -a
 ```
 
-Check that the bucket was was mounted. This path should exist:
+Check that the bucket was was mounted.
+This path should exist:
 
 ```sh
 ls ~/bucket/projects
@@ -108,4 +118,3 @@ sudo mount /dev/xvdf /home/ubuntu/ebs_tmp/
 # change perm
 sudo chmod 777 ~/ebs_tmp/
 ```
-
