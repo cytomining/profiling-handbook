@@ -8,6 +8,7 @@ This example assumes that AWS infrastructure has been set up using https://githu
 
 Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json.
 Note that the region must be set to `US East (N. Virginia)`.
+To use a different region, modify the `vpc` module in the AWS infrastructure setup.
 
 You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific.
 See `module "ec2_login"` in the Terraform [configuration](https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf) for how to configure the security groups and IAM roles for this instance.
