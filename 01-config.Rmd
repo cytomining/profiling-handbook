@@ -94,6 +94,8 @@ mkdir ~/ebs_tmp
 
 ```{block2, type='rmdnote'}
 If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -h`), create and attach an EBS volume, and then mount it.
+Make sure that the EBS is created in the same region and availability zone as the ec2 instance.
+For more information about mounting the EBS see https://devopscube.com/mount-ebs-volume-ec2-instance/.
 ```
 
 ```sh
