@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Configure environment | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.9.15 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.10.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Configure environment | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
 
 
-<meta name="date" content="2019-05-08" />
+<meta name="date" content="2019-05-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -189,6 +189,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This example assumes that AWS infrastructure has been set up using <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting" class="uri">https://github.com/broadinstitute/aws-infrastructure-cellpainting</a></p>
 <p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json" class="uri">https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json</a>. Note that the region must be set to <code>US East (N. Virginia)</code>. To use a different region, modify the <code>vpc</code> module in the AWS infrastructure setup.</p>
 <p>You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific. See <code>module &quot;ec2_login&quot;</code> in the Terraform <a href="https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf">configuration</a> for how to configure the security groups and IAM roles for this instance. The simplest approach is to launch another node identical to <code>ec2_login</code>, which is set up in this infrastructure. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume.</p>
+
+<div class="rmdnote">
+Note: Proper configuration is essential to mount the <code>imaging_platform</code> S3 bucket. The following configuration provides an example to set this up properly. Some modifications may be necessary. * Launch an ec2 instance on AWS * AMI: cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-1529668435 * Instance Type: m4.xlarge * Network: vpc-35149752 - Subnet: Default (imaging platform terraform) * IAM role: <code>s3-imaging-platform-role   * Add New Volume (if necessary):</code>EBS<code>with 110 GiB   * No Tags   * Select Existing Security Group:</code>SSH_HTTP<code>* Review and Launch   * ssh -i &lt;USER&gt;.pem ubuntu@&lt;Public DNS IPv4&gt;   * Inside AWS terminal:</code>aws configure` and input security credentials
+</div>
+
 <p>After starting the instance, ensure that the S3 bucket is mounted on <code>~/bucket</code>. If not, do <code>sudo mount -a</code></p>
 
 <div class="rmdnote">
