@@ -15,6 +15,23 @@ See `module "ec2_login"` in the Terraform [configuration](https://github.com/bro
 The simplest approach is to launch another node identical to  `ec2_login`, which is set up in this infrastructure.
 We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume.
 
+```{block2, type='rmdnote'}
+Note: Proper configuration is essential to mount the `imaging_platform` S3 bucket.
+The following configuration provides an example to set this up properly.
+Some modifications may be necessary.
+  * Launch an ec2 instance on AWS
+  * AMI: cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-1529668435
+  * Instance Type: m4.xlarge
+  * Network: vpc-35149752 - Subnet: Default (imaging platform terraform)
+  * IAM role: `s3-imaging-platform-role
+  * Add New Volume (if necessary): `EBS` with 110 GiB
+  * No Tags
+  * Select Existing Security Group: `SSH_HTTP`
+  * Review and Launch
+  * ssh -i <USER>.pem ubuntu@<Public DNS IPv4>
+  * Inside AWS terminal: `aws configure` and input security credentials
+```
+
 After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`.
 If not, do `sudo mount -a`
 
