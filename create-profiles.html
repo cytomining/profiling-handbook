@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Create profiles | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.10.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Create profiles | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
 
 
-<meta name="date" content="2019-05-17" />
+<meta name="date" content="2019-06-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -199,7 +199,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="bu">cd</span> cytominer_scripts
 
 <span class="ex">pyenv</span> local 3.5.1</code></pre></div>
-<p>The command below first calls <code>cytominer-database ingest</code> to create the sqlite backend, and then <code>aggregate.R</code> to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache is deleted.</p>
+<p>The command below first calls <code>cytominer-database ingest</code> to create the SQLite backend, and then <code>aggregate.R</code> to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache is deleted.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p  ../../log/<span class="va">${BATCH_ID}</span>/
 <span class="ex">parallel</span> \
   --max-procs <span class="va">${MAXPROCS}</span> \
@@ -215,6 +215,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   --tmpdir ~/ebs_tmp \
   -d \
   -r s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace :::: <span class="va">${PLATES}</span></code></pre></div>
+
+<div class="rmdnote">
+<code>collate.R</code> does not recreate the SQLite backend if it already exists in the local cache. Use <code>--overwrite_backend_cache</code> to recreate.
+</div>
+
 
 <div class="rmdnote">
 For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: <code>expected X columns but found Y - filling the rest with NULL</code>. This is expected behavior.
