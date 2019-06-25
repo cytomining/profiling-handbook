@@ -22,7 +22,7 @@ pyenv local 3.5.1
 ```
 
 The command below
-first calls `cytominer-database ingest` to create the sqlite backend, and then `aggregate.R`
+first calls `cytominer-database ingest` to create the SQLite backend, and then `aggregate.R`
 to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache is deleted.
 
 ```sh
@@ -43,6 +43,10 @@ parallel \
   -r s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
 ```
 
+```{block2, type='rmdnote'}
+`collate.R` does not recreate the SQLite backend if it already exists in the local cache.
+Use `--overwrite_backend_cache` to recreate.
+```
 
 ```{block2, type='rmdnote'}
 For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent). The ingest command will show a warning related to sqlite: `expected X columns but found Y - filling the rest with NULL`. This is expected behavior.
