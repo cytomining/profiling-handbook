@@ -75,7 +75,8 @@ Ensure that there's only one folder corresponding to a plate before running `cre
 
 ## Create list of plates
 
-Create a text file with one plate id per line.
+Create a text file with one plate id per line. 
+You may choose to use only the first few characters of the plate name (e.g. `SQ00015167` instead of `SQ00015167__2016-04-21T03_34_00-Measurement1` to keep the names compact. However, this may not always be possible. E.g. if you have image folders named `Replicate_1` and `Replicate_10`, you'd need to use the full name to avoid ambiguity (see note below on using the `--match_full_plate_id` flag).
 
 ```sh
 mkdir -p scratch/${BATCH_ID}/
@@ -152,6 +153,7 @@ The brighfield channel is tagged `Brightfield CP` in `Index.idx.xml`. Fix this d
 - Ensure that all the metadata fields defined in `config.yml` are present in the `Index.idx.xml`.
 - Ensure that the channel names are the same in `config.yml` and `Index.idx.xml`
 - Ensure that the LoadData csv files don't already exist; if they do, delete them. 
+- Use the `--match_full_plate_id` below if needed; by default, `create_csv_from_xml` allows left substring match by default.
 ```
 
 ```sh
