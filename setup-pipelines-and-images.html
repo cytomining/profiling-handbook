@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Setup pipelines and images | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.11.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Setup pipelines and images | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
 
 
-<meta name="date" content="2019-06-25" />
+<meta name="date" content="2019-07-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -235,7 +235,7 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
 </div>
 <div id="create-list-of-plates" class="section level2">
 <h2><span class="header-section-number">3.4</span> Create list of plates</h2>
-<p>Create a text file with one plate id per line.</p>
+<p>Create a text file with one plate id per line. You may choose to use only the first few characters of the plate name (e.g. <code>SQ00015167</code> instead of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> to keep the names compact. However, this may not always be possible. E.g. if you have image folders named <code>Replicate_1</code> and <code>Replicate_10</code>, you’d need to use the full name to avoid ambiguity (see note below on using the <code>--match_full_plate_id</code> flag).</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p scratch/<span class="va">${BATCH_ID}</span>/
 
 <span class="va">PLATES=$(</span><span class="fu">readlink</span> -f ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/plates_to_process.txt<span class="va">)</span>
@@ -297,7 +297,8 @@ metadata:
 <ul>
 <li>Ensure that all the metadata fields defined in <code>config.yml</code> are present in the <code>Index.idx.xml</code>.</li>
 <li>Ensure that the channel names are the same in <code>config.yml</code> and <code>Index.idx.xml</code></li>
-<li>Ensure that the LoadData csv files don’t already exist; if they do, delete them.
+<li>Ensure that the LoadData csv files don’t already exist; if they do, delete them.</li>
+<li>Use the <code>--match_full_plate_id</code> below if needed; by default, <code>create_csv_from_xml</code> allows left substring match by default.
 </div>
 </li>
 </ul>
