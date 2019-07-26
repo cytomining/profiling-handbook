@@ -1,8 +1,12 @@
 # (PART) Images to measurements  {-}
-# Configure tools to process images
-## Download software
+
+# Configure Tools to Process Images
+
+## Download Software
 
 You may need to authenticate your GitHub account to be able to clone these:
+
+(Note that cellpainting_scripts is currently a private repository; contact our team for access)
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/
@@ -45,4 +49,3 @@ pyenv shell 2.7.12
 pip install -r files/requirements.txt
 
 ```
-
