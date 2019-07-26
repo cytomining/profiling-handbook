@@ -198,9 +198,9 @@ Files for only `SQ00015167` are shown.
 
 `load_data.csv` will be used by `illum.cppipe` and, optionally, `qc.cppipe`.
 `load_data_with_illum.csv` will be used by `analysis.cppipe`.
-When creating `load_data_with_illum.csv`, the script assumes a specific location for the output folder, discussed below (see discussion on ``--illum_pipeline_name`` option).
+When creating `load_data_with_illum.csv`, the script assumes a specific location for the folder containing the illumination correction files.
 
-Copy the load data files to S3
+Copy the load data files to S3:
 
 ```sh
 aws s3 sync \
