@@ -102,12 +102,16 @@ The plate IDs, if using `pe2loaddata`, must match the plate IDs given when opera
 Otherwise, they should match CellProfiler's understanding of the `Plate` grouping variable, whether that is explicitly stated in a loaddata CSV OR produced from the Metadata module if the CSVs and/or batch files are created using CellProfiler's input modules.
 For downstream purposes, i.e. `cytominer`, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. `SQ00015167` instead of `SQ00015167__2016-04-21T03_34_00-Measurement1` to keep the names compact.
 
+We'll also set the SAMPLE_PLATE_ID variable, which is used in the profiling steps when a single plate name is required
+
 ```sh
 mkdir -p scratch/${BATCH_ID}/
 
 PLATES=$(readlink -f ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/plates_to_process.txt)
 
 echo "SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165"|tr " " "\n" > ${PLATES}
+
+SAMPLE_PLATE_ID=SQ00015130
 ```
 
 ## Create LoadData CSVs
