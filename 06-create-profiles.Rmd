@@ -1,0 +1,693 @@
+# Create Profiles
+
+## Confirm Environment Configuration
+
+If you are starting from here, make sure the following steps have been completed on your ec2 instance and/or session before proceeding
+
+* [Configure environment]
+* [Download software]
+* [Create list of plates]
+
+## Create Database Backend
+
+Run creation of sqlite backend as well as aggregation of measurements into per-well profiles.
+This process can be very slow since the files are read from s3fs/EFS.
+We recommend first downloading the CSVs files locally on an EBS volume attached to the ec2 instance you are running on, and then ingesting.
+
+To do so, first recreate the analysis output folder structure on the EBS volume:
+
+```sh
+mkdir -p ~/ebs_tmp/${PROJECT_NAME}/workspace/software
+
+cd ~/ebs_tmp/${PROJECT_NAME}/workspace/software
+
+if [ -d cytominer_scripts ]; then rm -rf cytominer_scripts; fi
+
+git clone https://github.com/broadinstitute/cytominer_scripts.git
+
+cd cytominer_scripts
+```
+
+The command below first calls `cytominer-database ingest` to create the SQLite backend, and then `aggregate.R` to create per-well profiles.
+Once complete, all files are uploaded to S3 and the local cache are deleted.
+
+[collate.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/collate.R) ingests the database and then calls `aggregate.R`.
+
+```sh
+pyenv shell 3.5.1
+
+mkdir -p  ../../log/${BATCH_ID}/
+parallel \
+  --max-procs ${MAXPROCS} \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/collate.log \
+  --results ../../log/${BATCH_ID}/collate \
+  --files \
+  --keep-order \
+  ./collate.R \
+  --batch_id ${BATCH_ID} \
+  --plate {1} \
+  --config ingest_config.ini \
+  --tmpdir ~/ebs_tmp \
+  --download \
+  --remote_base_dir s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
+```
+
+```{block2, type='rmdnote'}
+`collate.R` does not recreate the SQLite backend if it already exists in the local cache.
+Add `--overwrite_backend_cache` flag to recreate.
+```
+
+```{block2, type='rmdnote'}
+For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent).
+The ingest command will show a warning related to sqlite: `expected X columns but found Y - filling the rest with NULL`.
+This is expected behavior.
+```
+
+```{block2, type='rmdnote'}
+There is a known [issue](https://github.com/cytomining/cytominer-database/issues/100) where if the alphabetically-first CSV failed QC in a pipeline where "Skip image if flagged" is turned on, the databases will not be created.
+We are working to fix this, but in the meantime we recommend either not skipping processing of your flagged images (and removing them from your data downstream) or deleting the alphabetically-first CSVs until you come to one where the pipeline ran completely.
+```
+
+This is the resulting structure of `backend` on S3 (one level below `workspace`) for `SQ00015167`:
+
+```
+└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167.csv
+            └── SQ00015167.sqlite
+```
+
+`SQ00015167.sqlite` is the per cell data and `SQ00015167.csv` is the aggregated per-well data.
+
+### Copy Files from S3 to EFS
+
+Copy these files from S3 to EFS to continue with the rest of the processing
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/cytominer_scripts
+
+aws s3 sync --exclude "*.sqlite" \
+  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/ \
+  ~/efs/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/
+
+rsync -arzv ~/ebs_tmp/${PROJECT_NAME}/workspace/log/ ../../log
+```
+
+### Quick Check Rows
+
+Do a quick check to view how many rows are present in each of the aggregated per-well data.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/${BATCH_ID}/{1}/{1}.csv :::: ${PLATES}
+```
+
+### Something Amiss?
+
+Check the error logs.
+
+```sh
+step=collate
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  head ../../log/${BATCH_ID}/${step}/1/{1}/stderr :::: ${PLATES}
+```
+
+## Annotate
+
+First, get metadata for the plates.
+This should be created beforehand and be made available in S3.
+
+We use [annotate.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/annotate.R) for this procedure.
+
+```sh
+aws s3 sync \
+  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/metadata/${BATCH_ID}/ \
+  ~/efs/${PROJECT_NAME}/workspace/metadata/${BATCH_ID}/
+```
+
+This is the resulting structure of the metadata folder on EFS (one level below `workspace`):
+Be super careful about matching names!
+
+```
+└── metadata
+    └── 2016_04_01_a549_48hr_batch1
+        ├── barcode_platemap.csv
+        └── platemap
+            └── C-7161-01-LM6-006.txt
+```
+
+`2016_04_01_a549_48hr_batch1` is the batch name – the plates (and all related data) are arranged under batches, as seen below.
+
+`barcode_platemap.csv` is structured as shown below.
+`Assay_Plate_Barcode` and `Plate_Map_Name` are currently the only mandatory columns (they are used to join the metadata of the plate map with each assay plate).
+Each unique entry in the `Plate_Map_Name` should have a corresponding tab-separated file `.txt` file under `platemap` (e.g. `C-7161-01-LM6-006.txt`).
+
+```
+Assay_Plate_Barcode,Plate_Map_Name
+SQ00015167,C-7161-01-LM6-006
+```
+
+The tab-separated files are plate maps and are structured like this:
+(This is the typical format followed by Broad Chemical Biology Platform)
+
+```
+plate_map_name  well_position broad_sample  mg_per_ml mmoles_per_liter  solvent
+C-7161-01-LM6-006 A07 BRD-K18895904-001-16-1  3.12432000000000016 9.99999999999999999 DMSO
+C-7161-01-LM6-006 A08 BRD-K18895904-001-16-1  1.04143999999919895 3.33333333333076923 DMSO
+C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.11111111111538462 DMSO
+```
+
+```{block2, type='rmdnote'}
+
+- `plate_map_name` should be identical to the name of the file (without extension).
+- `plate_map_name` and `well_position` are currently the only mandatory columns.
+- If your experiment has two or more cell lines, but the same plate map, create one plate map file for each cell line, e.g. `C-7161-01-LM6-006_A549.txt`, rename the `plate_map_name` to the name of the file without extension (e.g. `C-7161-01-LM6-006_A549`), add a column `cell_id`, and populate it with the name of the cell line (e.g. `A549`). Make sure the plate maps for all lines are reflected in the `barcode_platemap.csv` file.
+```
+
+Next, append the metadata to the aggregated per-well data.
+
+### Example 1: Simple Metadata
+
+```sh
+cd  ~/efs/${PROJECT_NAME}/workspace/software/cytominer_scripts
+
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/annotate.log \
+  --results ../../log/${BATCH_ID}/annotate \
+  --files \
+  --keep-order \
+  ./annotate.R \
+  --batch_id ${BATCH_ID} \
+  --plate_id {1} :::: ${PLATES}
+```
+
+### Example 2: Complex Metadata
+
+This is an example coming from Broad chemical experiment.
+
+```{block2, type='rmdnote'}
+Use the `-j` flag to optionally append columns from another source (`EXTERNAL_METADATA` below).
+`EXTERNAL_METADATA` should be a CSV file.
+The columns that are in common with the aggregated CSV file will be used to join.
+See the `annotate` [source](https://github.com/broadinstitute/cytominer_scripts/blob/master/annotate.R) for details.
+
+Use the `-c` flag to optionally specify the cell type.
+```
+
+```sh
+cd  ~/efs/${PROJECT_NAME}/workspace/software/cytominer_scripts
+
+EXTERNAL_METADATA=../../metadata/${BATCH_ID}/cell_painting_dataset_cmap_annotations_moa.csv
+
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/annotate.log \
+  --results ../../log/${BATCH_ID}/annotate \
+  --files \
+  --keep-order \
+  ./annotate.R \
+  --batch_id ${BATCH_ID} \
+  --plate_id {1} \
+  --format_broad_cmap \
+  --cell_id A549 \
+  --external_metadata ${EXTERNAL_METADATA} \
+  --perturbation_mode chemical :::: ${PLATES}
+```
+
+### Expected Folder Structure
+
+This is the resulting structure of `backend` on EFS (one level below `workspace`) for `SQ00015167`:
+
+```
+└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167_augmented.csv
+            └── SQ00015167.csv
+```
+
+`SQ00015167_augmented.csv` is the aggregated per-well data, annotated with metadata.
+
+### Quick Check Rows
+
+Do a quick check to view how many rows are present in each of the annotated per-well data.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/${BATCH_ID}/{1}/{1}_augmented.csv :::: ${PLATES}
+```
+
+### Something Amiss?
+
+Check the error logs.
+
+```sh
+step=annotate
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  head ../../log/${BATCH_ID}/${step}/1/{1}/stderr :::: ${PLATES}
+```
+
+## Normalize
+
+Use all wells on the plate to normalize each feature.
+By default, this performs robust z-scoring per feature.
+The default input is the annotated per-well data.
+The column picked for normalization (e.g. "Metadata_Well") needs to be present in the CSV; if it was added in the augmentation step (e.g. "cell_id") it will now have the prefix "Metadata" prepended to it)
+
+We use [normalize.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/normalize.R) for this procedure.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/normalize.log \
+  --results ../../log/${BATCH_ID}/normalize \
+  --files \
+  --keep-order \
+  ./normalize.R \
+  --batch_id ${BATCH_ID} \
+  --plate_id {1} \
+  --subset \"Metadata_Well != \'\'\'dummy\'\'\'\" :::: ${PLATES}
+```
+
+```{block2, type='rmdnote'}
+- Don't escape quotes if not using parallel i.e. use `--subset "Metadata_Well != '''dummy'''"` if not using within parallel.
+- To use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the `--subset` flag.
+```
+
+### Expected Folder Structure
+
+This is the resulting structure of `backend` on EFS (one level below `workspace`) for `SQ00015167`:
+
+```
+└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167_augmented.csv
+            ├── SQ00015167.csv
+            └── SQ00015167_normalized.csv
+```
+
+`SQ00015167_normalized.csv` is the robust z-scored (normalized) per-well data.
+
+### Quick Check Rows
+
+Do a quick check to view how many rows are present in each of the normalized per-well data.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/${BATCH_ID}/{1}/{1}_normalized.csv :::: ${PLATES}
+```
+
+### Something Amiss?
+
+Check the error logs.
+
+```sh
+step=normalize
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  head ../../log/${BATCH_ID}/${step}/1/{1}/stderr :::: ${PLATES}
+```
+
+## Select Variables
+
+Create samples to do variable selection.
+Sample some wells from each replicate plate (if your experiment contains multiple copies of identical plates).
+Below, this is done by sample 2 entire replicate plates per platemap.
+Use `-n` (`--replicates`) to specify number of replicate **plates** to be used to create the sample (if you don't have identical replicate plates in your experiment, you can set this to 1).
+
+### Sample Data
+
+Samples are created for both, normalized and unnormalized data, because the variable selection techniques may require both.
+
+We use [sample.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/sample.R) for this procedure.
+
+```sh
+mkdir -p ../../parameters/${BATCH_ID}/sample/
+
+# sample normalized data
+./sample.R \
+  --batch_id ${BATCH_ID} \
+  --pattern "_normalized.csv$" \
+  --replicates 2 \
+  --output ../../parameters/${BATCH_ID}/sample/${BATCH_ID}_normalized_sample.feather
+
+# sample unnormalized data
+./sample.R \
+  --batch_id ${BATCH_ID} \
+  --pattern "_augmented.csv$" \
+  --replicates 2 \
+  --output ../../parameters/${BATCH_ID}/sample/${BATCH_ID}_augmented_sample.feather
+```
+
+### Preselect
+
+We use [preselect.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/preselect.R) for these procedures.
+
+#### Replicate Correlation
+
+Make a list of variables to be preserved after [`replicate_correlation`](https://cytomining.github.io/cytominer/reference/replicate_correlation.html) variable selection is performed.
+If you don't have replicate **plates** in this experiment, skip this step.
+
+To evaluate features for their replicability, use all the normalized profiles of treatments in the experiment (selected below using `Metadata_broad_sample_type == 'trt'`).
+
+```sh
+./preselect.R \
+  --batch_id ${BATCH_ID} \
+  --input ../../parameters/${BATCH_ID}/sample/${BATCH_ID}_normalized_sample.feather \
+  --operations replicate_correlation \
+  --subset "Metadata_broad_sample_type == '''trt'''" \
+  --replicates 2
+```
+
+#### Correlation Threshold
+
+Make a list of variables to be preserved after [`correlation_threshold`](https://cytomining.github.io/cytominer/reference/correlation_threshold.html) variable selection is performed.
+
+```sh
+./preselect.R \
+  --batch_id ${BATCH_ID} \
+  --input ../../parameters/${BATCH_ID}/sample/${BATCH_ID}_normalized_sample.feather \
+  --operations correlation_threshold
+```
+
+#### Variance Threshold
+
+Make a list of variables to be preserved after [`variance_threshold`](https://cytomining.github.io/cytominer/reference/variance_threshold.html) variable selection is performed.
+
+To evaluate the variance of features, use only the control wells the experiment (selected below using `Metadata_broad_sample_type == 'control'`).
+
+```sh
+./preselect.R \
+  --batch_id ${BATCH_ID} \
+  --input ../../parameters/${BATCH_ID}/sample/${BATCH_ID}_augmented_sample.feather \
+  --operations variance_threshold \
+  --subset "Metadata_broad_sample_type == '''control'''"
+```
+
+#### Noise Threshold
+
+Some variables have previously identified as being noisy or non-informative.
+Create a list of variables that excludes these variables.
+
+```sh
+# manually remove some features
+echo "variable" > ../../parameters/${BATCH_ID}/variable_selection/manual.txt
+
+head -1 \
+  ../../backend/${BATCH_ID}/${SAMPLE_PLATE_ID}/${SAMPLE_PLATE_ID}.csv \
+  |tr "," "\n"|grep -v Meta|grep -E -v 'Granularity_14|Granularity_15|Granularity_16|Manders|RWC' >> \
+  ../../parameters/${BATCH_ID}/variable_selection/manual.txt
+```
+
+### Alternate: Load previous preselect configuration
+
+You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch.
+Here's how you'd copy these files.
+
+```sh
+mkdir -p ../../parameters/${BATCH_ID}/variable_selection/
+
+REFERENCE_BATCH_ID=2018_02_23_LKCP_DBG
+
+aws s3 sync \
+  s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/parameters/${REFERENCE_BATCH_ID}/ \
+  ~/efs/${PROJECT_NAME}/workspace/parameters/${REFERENCE_BATCH_ID}/
+
+rsync -arzv ../../parameters/${REFERENCE_BATCH_ID}/variable_selection/ ../../parameters/${BATCH_ID}/variable_selection/
+```
+
+## Execute Feature Selection
+
+We use [select.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/select.R) for this procedures.
+
+The previous steps only create a list of variable to be preserved for each variable selection method.
+To actually apply variable selection, we compute the intersection of all these variable lists, then preserve only those columns of the normalized per-well data.
+In the `filters` argument, exclude the variable selection methods that you do not want to use.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/select.log \
+  --results ../../log/${BATCH_ID}/select \
+  --files \
+  --keep-order \
+  ./select.R \
+  --batch_id ${BATCH_ID} \
+  --plate_id {1} \
+  --filters variance_threshold,replicate_correlation,correlation_threshold,manual :::: ${PLATES}
+```
+
+### Expected Folder Structure
+
+This is the resulting structure of `backend` on EFS (one level below `workspace`) for `SQ00015167`:
+
+```
+└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167_augmented.csv
+            ├── SQ00015167.csv
+            ├── SQ00015167_normalized.csv
+            └── SQ00015167_normalized_variable_selected.csv
+```
+
+`SQ00015167_normalized_variable_selected.csv` is the variable-selected version of the normalized per-well data.
+
+### Quick Check Rows
+
+Do a quick check to view how many rows are present in each of the normalized per-well data.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../backend/${BATCH_ID}/{1}/{1}_normalized_variable_selected.csv :::: ${PLATES}
+```
+
+### Something Amiss?
+
+Check the error logs.
+
+```sh
+step=select
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  head ../../log/${BATCH_ID}/${step}/1/{1}/stderr :::: ${PLATES}
+```
+
+## Aggregate Replicates
+
+Combine replicate plates of each plate map by [averaging](https://github.com/broadinstitute/cytominer_scripts/blob/master/collapse.R) (default is mean).
+
+```sh
+mkdir -p ../../collated/${BATCH_ID}/
+
+PLATE_MAPS=../../scratch/${BATCH_ID}/plate_maps.txt
+
+csvcut -c Plate_Map_Name \
+  ../../metadata/${BATCH_ID}/barcode_platemap.csv | \
+  tail -n +2|sort|uniq > \
+  ${PLATE_MAPS}
+
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/collapse.log \
+  --results ../../log/${BATCH_ID}/collapse \
+  --keep-order \
+  ./collapse.R \
+  --batch_id ${BATCH_ID} \
+  --plate_map_name {1} \
+  --suffix _normalized_variable_selected.csv \
+  --output ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}
+```
+
+### Expected Folder Structure
+
+This is the resulting structure of `collated` on EFS (one level below `workspace`) for `2016_04_01_a549_48hr_batch1`:
+
+```
+└── collated
+    └── 2016_04_01_a549_48hr_batch1
+        └── C-7161-01-LM6-006_collapsed.csv
+```
+
+`C-7161-01-LM6-006_collapsed.csv` is the replicate averaged data for plate map `C-7161-01-LM6-006`.
+
+### Quick Check Rows
+
+Do a quick check to view how many rows are present in the replicate averaged data of each plate map.
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --keep-order \
+  wc -l ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}
+```
+
+### Combine Averaged Profiles
+
+Combine all averaged profiles in the batch into a single file.
+
+```sh
+csvstack \
+  `parallel echo ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}` > \
+   ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.csv
+```
+
+## Audit
+
+Audit each plate map for replicate reproducibility.
+We use [audit.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/audit.R) for these procedures.
+This will only work if your experiment contains multiple copies of identical **plates**; if it does not, you may skip this step.
+
+```sh
+mkdir -p ../../audit/${BATCH_ID}/
+```
+
+### Treatment Audit
+
+Audit only treated wells
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/audit.log \
+  --results ../../log/${BATCH_ID}/audit \
+  --files \
+  --keep-order \
+  ./audit.R \
+  --batch_id ${BATCH_ID} \
+  --plate_map_name {1} \
+  --suffix _normalized_variable_selected.csv \
+  --subset \"Metadata_broad_sample_type == \'\'\'trt\'\'\'\" \
+  --output ../../audit/${BATCH_ID}/{1}_audit.csv \
+  --output_detailed ../../audit/${BATCH_ID}/{1}_audit_detailed.csv \
+  --group_by Metadata_Plate_Map_Name,Metadata_moa,Metadata_pert_id,Metadata_broad_sample,Metadata_mmoles_per_liter,Metadata_Well :::: ${PLATE_MAPS}
+```
+
+### Control Audit
+
+Audit only control wells, i.e., how well do control wells in the same position correlate?
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/audit_control.log \
+  --results ../../log/${BATCH_ID}/audit_control \
+  --files \
+  --keep-order \
+  ./audit.R \
+  --batch_id ${BATCH_ID} \
+  --plate_map_name {1} \
+  --suffix _normalized_variable_selected.csv \
+  --subset \"Metadata_broad_sample_type == \'\'\'control\'\'\'\" \
+  --output ../../audit/${BATCH_ID}/{1}_audit_control.csv \
+  --output_detailed ../../audit/${BATCH_ID}/{1}_audit_control_detailed.csv \
+  --group_by Metadata_Well :::: ${PLATE_MAPS}
+```
+
+## Convert to Other Formats
+
+We use [csv2gct.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/csv2gct.R) for these procedures.
+
+These GCT files can be examined in many programs, though we routinely use [Morpheus](https://software.broadinstitute.org/morpheus/).
+
+### Convert per-plate CSV files to GCT
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/csv2gct_backend.log \
+  --results ../../log/${BATCH_ID}/csv2gct_backend \
+  --files \
+  --keep-order \
+  ./csv2gct.R \
+  ../../backend/${BATCH_ID}/{1}/{1}_{2}.csv \
+  --output ../../backend/${BATCH_ID}/{1}/{1}_{2}.gct :::: ${PLATES} ::: augmented normalized normalized_variable_selected
+```
+
+### Convert per-plate map CSV files to GCT
+
+```sh
+parallel \
+  --no-run-if-empty \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/csv2gct_collapsed.log \
+  --results ../../log/${BATCH_ID}/csv2gct_collapsed \
+  --files \
+  --keep-order \
+  ./csv2gct.R \
+  ../../collated/${BATCH_ID}/{1}_collapsed.csv \
+  --output ../../collated/${BATCH_ID}/{1}_collapsed.gct :::: ${PLATE_MAPS}
+```
+
+### Convert the replicate-collapsed CSV file to gct
+
+```sh
+./csv2gct.R \
+  ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.csv \
+  --output ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.gct
+```
+
+## Upload Data
+
+### Sync to S3
+
+```sh
+parallel \
+  aws s3 sync \
+    ../../{1}/${BATCH_ID}/ \
+    s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/{1}/${BATCH_ID}/ ::: audit backend batchfiles collated load_data_csv log metadata parameters scratch
+```
+
+### Sync Down from S3 onto a Machine
+
+Specify location for syncing
+
+```sh
+LOCAL_FS=/cmap/imaging
+```
+
+Set variables on your local machine matching those set on your EC2 instance
+
+```sh
+PROJECT_NAME=2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad
+
+BATCH_ID=2016_04_01_a549_48hr_batch1
+```
+
+### Sync the files
+
+```sh
+echo audit backend batchfiles collated load_data_csv log metadata parameters scratch | \
+  tr " " "\n" |
+  xargs -I % \
+  aws s3 sync \
+    --exclude "*.sqlite" \
+    s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/%/${BATCH_ID}/ \
+    ${LOCAL_FS}/${PROJECT_NAME}/workspace/%/${BATCH_ID}/
+```

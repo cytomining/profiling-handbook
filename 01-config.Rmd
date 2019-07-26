@@ -1,39 +1,32 @@
 # (PART) Configuration {-}
 
-# Configure environment
+# Configure Environment for Full Profiling Pipeline
 
-## Set up a virtual machine
+## Launch an AWS Virtual Machine
 
-This example assumes that AWS infrastructure has been set up using https://github.com/broadinstitute/aws-infrastructure-cellpainting
-
-Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/cytominer_ami.json.
-Note that the region must be set to `US East (N. Virginia)`.
+Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/ (currently private to Imaging Platform).
+Note that the region must be set to `US East (N. Virginia)` (`us-east-1a` or `us-east-1b`).
 To use a different region, modify the `vpc` module in the AWS infrastructure setup.
 
-You will need to create an AMI for your own infrastructure because the provisioning includes mounting S4 and EFS, which is account specific.
-See `module "ec2_login"` in the Terraform [configuration](https://github.com/broadinstitute/aws-infrastructure-cellpainting/blob/master/terraform/main.tf) for how to configure the security groups and IAM roles for this instance.
-The simplest approach is to launch another node identical to  `ec2_login`, which is set up in this infrastructure.
-We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume.
+You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific.
+We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume (roughly, EBS size should be ((number of cores -1) * 30)+20).
 
-```{block2, type='rmdnote'}
-Note: Proper configuration is essential to mount the `imaging_platform` S3 bucket.
-The following configuration provides an example to set this up properly.
-Some modifications may be necessary.
+Note: Proper configuration is essential to mount the S3 bucket.
+The following configuration provides an example, named `imaging_platform` (modifications will be necessary).
+
   * Launch an ec2 instance on AWS
-  * AMI: cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-1529668435
+  * AMI: `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-1529668435`
   * Instance Type: m4.xlarge
   * Network: vpc-35149752 - Subnet: Default (imaging platform terraform)
-  * IAM role: `s3-imaging-platform-role
+  * IAM role: `s3-imaging-platform-role`
   * Add New Volume (if necessary): `EBS` with 110 GiB
   * No Tags
   * Select Existing Security Group: `SSH_HTTP`
   * Review and Launch
-  * ssh -i <USER>.pem ubuntu@<Public DNS IPv4>
-  * Inside AWS terminal: `aws configure` and input security credentials
-```
+  * `ssh -i <USER>.pem ubuntu@<Public DNS IPv4>`
 
 After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`.
-If not, do `sudo mount -a`
+If not, run `sudo mount -a`.
 
 ```{block2, type='rmdnote'}
 Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`.
@@ -58,7 +51,7 @@ Enter your AWS credentials
 aws configure
 ```
 
-The infrastructure is configure with one S3 bucket.
+The infrastructure is configured with one S3 bucket.
 Mount this S3 bucket (if it is not automatically mounted)
 
 ```sh
@@ -72,9 +65,9 @@ This path should exist:
 ls ~/bucket/projects
 ```
 
+## Define Environment Variables
 
-## Define variables
-
+These variables will be used throughout the project to tag instances, logs etc so that you know which machines are working on what, which files to operate on, where your logs are, etc.
 
 ```sh
 PROJECT_NAME=2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad
@@ -83,10 +76,10 @@ BATCH_ID=2016_04_01_a549_48hr_batch1
 
 BUCKET=imaging-platform
 
-MAXPROCS=3 # m4.xlarge has 4 cores; keep 1 free
+MAXPROCS=3 # m4.xlarge has 4 cores; this should be # of cores on your instance - 1
 ```
 
-## Create directories
+## Create Directories
 
 ```{block2, type='rmdcaution'}
 See note above about EFS - that it can only be mounted from us-east-1a or 1b.
@@ -98,12 +91,10 @@ mkdir -p ~/efs/${PROJECT_NAME}/workspace/
 cd ~/efs/${PROJECT_NAME}/workspace/
 
 mkdir -p log/${BATCH_ID}
-
 ```
 
-
 Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
-This is also useful if you decide to run CellProfiler directly on this node – running the Cell Painting analysis spipeline results in large temporary files.
+This is also useful if you decide to run CellProfiler directly on this node – running the Cell Painting analysis pipeline results in large temporary files.
 
 ```sh
 mkdir ~/ebs_tmp
@@ -122,18 +113,18 @@ lsblk
 #> NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 #> xvda    202:0    0     8G  0 disk
 #> └─xvda1 202:1    0     8G  0 part /
-#> xvdf    202:80   0   100G  0 disk
+#> xvdba    202:80   0   100G  0 disk
 
 # check if it has a file system
-sudo file -s /dev/xvdf
+sudo file -s /dev/xvdba
 # ...likely not, in which case you get:
 #> /dev/xvdf: data
 
 # if no file system, then create it
-sudo mkfs -t ext4 /dev/xvdf
+sudo mkfs -t ext4 /dev/xvdba
 
 # mount it
-sudo mount /dev/xvdf /home/ubuntu/ebs_tmp/
+sudo mount /dev/xvdba /home/ubuntu/ebs_tmp/
 
 # change perm
 sudo chmod 777 ~/ebs_tmp/
