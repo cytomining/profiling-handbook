@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Setup pipelines and images | Image-based Profiling Handbook</title>
+  <title>Chapter 3 Setup Pipelines and Images | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Setup pipelines and images | Image-based Profiling Handbook" />
+  <meta property="og:title" content="Chapter 3 Setup Pipelines and Images | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
@@ -16,23 +16,23 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Setup pipelines and images | Image-based Profiling Handbook" />
+  <meta name="twitter:title" content="Chapter 3 Setup Pipelines and Images | Image-based Profiling Handbook" />
   
   <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   
 
-<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
+<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2019-07-15" />
+<meta name="date" content="2019-07-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="configure-tools-to-process-images.html">
-<link rel="next" href="setup-jobs.html">
+<link rel="prev" href="configure-tools-to-process-images.html"/>
+<link rel="next" href="setup-jobs.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -105,56 +105,89 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="part"><span><b>I Configuration</b></span></li>
-<li class="chapter" data-level="1" data-path="configure-environment.html"><a href="configure-environment.html"><i class="fa fa-check"></i><b>1</b> Configure environment</a><ul>
-<li class="chapter" data-level="1.1" data-path="configure-environment.html"><a href="configure-environment.html#set-up-a-virtual-machine"><i class="fa fa-check"></i><b>1.1</b> Set up a virtual machine</a></li>
-<li class="chapter" data-level="1.2" data-path="configure-environment.html"><a href="configure-environment.html#define-variables"><i class="fa fa-check"></i><b>1.2</b> Define variables</a></li>
-<li class="chapter" data-level="1.3" data-path="configure-environment.html"><a href="configure-environment.html#create-directories"><i class="fa fa-check"></i><b>1.3</b> Create directories</a></li>
+<li class="chapter" data-level="1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html"><i class="fa fa-check"></i><b>1</b> Configure Environment for Full Profiling Pipeline</a><ul>
+<li class="chapter" data-level="1.1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#launch-an-aws-virtual-machine"><i class="fa fa-check"></i><b>1.1</b> Launch an AWS Virtual Machine</a></li>
+<li class="chapter" data-level="1.2" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#define-environment-variables"><i class="fa fa-check"></i><b>1.2</b> Define Environment Variables</a></li>
+<li class="chapter" data-level="1.3" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#create-directories"><i class="fa fa-check"></i><b>1.3</b> Create Directories</a></li>
 </ul></li>
 <li class="part"><span><b>II Images to measurements</b></span></li>
-<li class="chapter" data-level="2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html"><i class="fa fa-check"></i><b>2</b> Configure tools to process images</a><ul>
-<li class="chapter" data-level="2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#download-software"><i class="fa fa-check"></i><b>2.1</b> Download software</a></li>
+<li class="chapter" data-level="2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html"><i class="fa fa-check"></i><b>2</b> Configure Tools to Process Images</a><ul>
+<li class="chapter" data-level="2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#download-software"><i class="fa fa-check"></i><b>2.1</b> Download Software</a></li>
 <li class="chapter" data-level="2.2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#setup-distributed-cellprofiler"><i class="fa fa-check"></i><b>2.2</b> Setup Distributed CellProfiler</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html"><i class="fa fa-check"></i><b>3</b> Setup pipelines and images</a><ul>
-<li class="chapter" data-level="3.1" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#get-cellprofiler-pipelines"><i class="fa fa-check"></i><b>3.1</b> Get CellProfiler pipelines</a></li>
-<li class="chapter" data-level="3.2" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#specify-pipeline-set"><i class="fa fa-check"></i><b>3.2</b> Specify pipeline set</a></li>
-<li class="chapter" data-level="3.3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#prepare-images"><i class="fa fa-check"></i><b>3.3</b> Prepare images</a></li>
-<li class="chapter" data-level="3.4" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-list-of-plates"><i class="fa fa-check"></i><b>3.4</b> Create list of plates</a></li>
-<li class="chapter" data-level="3.5" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-loaddata-csvs"><i class="fa fa-check"></i><b>3.5</b> Create LoadData CSVs</a></li>
+<li class="chapter" data-level="3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html"><i class="fa fa-check"></i><b>3</b> Setup Pipelines and Images</a><ul>
+<li class="chapter" data-level="3.1" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#get-cellprofiler-pipelines"><i class="fa fa-check"></i><b>3.1</b> Get CellProfiler Pipelines</a></li>
+<li class="chapter" data-level="3.2" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#specify-pipeline-set"><i class="fa fa-check"></i><b>3.2</b> Specify Pipeline Set</a></li>
+<li class="chapter" data-level="3.3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#upload-images"><i class="fa fa-check"></i><b>3.3</b> Upload Images</a></li>
+<li class="chapter" data-level="3.4" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#prepare-images"><i class="fa fa-check"></i><b>3.4</b> Prepare Images</a></li>
+<li class="chapter" data-level="3.5" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-list-of-plates"><i class="fa fa-check"></i><b>3.5</b> Create List of Plates</a></li>
+<li class="chapter" data-level="3.6" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-loaddata-csvs"><i class="fa fa-check"></i><b>3.6</b> Create LoadData CSVs</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setup-jobs.html"><a href="setup-jobs.html"><i class="fa fa-check"></i><b>4</b> Setup jobs</a><ul>
-<li class="chapter" data-level="4.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>4.1</b> Illumination correction</a></li>
-<li class="chapter" data-level="4.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>4.2</b> Quality control</a></li>
+<li class="chapter" data-level="4" data-path="setup-jobs.html"><a href="setup-jobs.html"><i class="fa fa-check"></i><b>4</b> Setup Jobs</a><ul>
+<li class="chapter" data-level="4.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>4.1</b> Illumination Correction</a></li>
+<li class="chapter" data-level="4.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>4.2</b> Quality Control</a></li>
 <li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination correction</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single node</a></li>
+<li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
+<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality control</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC results into a database for CPA</a></li>
+<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single node</a></li>
+<li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>III Measurements to profiles</b></span></li>
-<li class="chapter" data-level="6" data-path="configure-tools-to-create-profiles.html"><a href="configure-tools-to-create-profiles.html"><i class="fa fa-check"></i><b>6</b> Configure tools to create profiles</a><ul>
-<li class="chapter" data-level="6.1" data-path="configure-tools-to-create-profiles.html"><a href="configure-tools-to-create-profiles.html#download-software-1"><i class="fa fa-check"></i><b>6.1</b> Download software</a></li>
+<li class="chapter" data-level="6" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>6</b> Create Profiles</a><ul>
+<li class="chapter" data-level="6.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>6.1</b> Confirm Environment Configuration</a></li>
+<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.2</b> Create Database Backend</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="create-profiles.html"><a href="create-profiles.html#copy-files-from-s3-to-efs"><i class="fa fa-check"></i><b>6.2.1</b> Copy Files from S3 to EFS</a></li>
+<li class="chapter" data-level="6.2.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows"><i class="fa fa-check"></i><b>6.2.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.2.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss"><i class="fa fa-check"></i><b>6.2.3</b> Something Amiss?</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>7</b> Create profiles</a><ul>
-<li class="chapter" data-level="7.1" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>7.1</b> Create database backend</a></li>
-<li class="chapter" data-level="7.2" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>7.2</b> Annotate</a></li>
-<li class="chapter" data-level="7.3" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>7.3</b> Normalize</a></li>
-<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>7.4</b> Select variables</a></li>
-<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>7.5</b> Aggregate replicates</a></li>
-<li class="chapter" data-level="7.6" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>7.6</b> Audit</a></li>
-<li class="chapter" data-level="7.7" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>7.7</b> Convert to other formats</a></li>
-<li class="chapter" data-level="7.8" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>7.8</b> Upload data</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>7.8.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync down from S3 onto a machine</a></li>
+<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>6.3</b> Annotate</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="create-profiles.html"><a href="create-profiles.html#example-1-simple-metadata"><i class="fa fa-check"></i><b>6.3.1</b> Example 1: Simple Metadata</a></li>
+<li class="chapter" data-level="6.3.2" data-path="create-profiles.html"><a href="create-profiles.html#example-2-complex-metadata"><i class="fa fa-check"></i><b>6.3.2</b> Example 2: Complex Metadata</a></li>
+<li class="chapter" data-level="6.3.3" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure"><i class="fa fa-check"></i><b>6.3.3</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.3.4" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-1"><i class="fa fa-check"></i><b>6.3.4</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.3.5" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-1"><i class="fa fa-check"></i><b>6.3.5</b> Something Amiss?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>6.4</b> Normalize</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-1"><i class="fa fa-check"></i><b>6.4.1</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.4.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-2"><i class="fa fa-check"></i><b>6.4.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.4.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-2"><i class="fa fa-check"></i><b>6.4.3</b> Something Amiss?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>6.5</b> Select Variables</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="create-profiles.html"><a href="create-profiles.html#sample-data"><i class="fa fa-check"></i><b>6.5.1</b> Sample Data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="create-profiles.html"><a href="create-profiles.html#preselect"><i class="fa fa-check"></i><b>6.5.2</b> Preselect</a></li>
+<li class="chapter" data-level="6.5.3" data-path="create-profiles.html"><a href="create-profiles.html#alternate-load-previous-preselect-configuration"><i class="fa fa-check"></i><b>6.5.3</b> Alternate: Load previous preselect configuration</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="create-profiles.html"><a href="create-profiles.html#execute-feature-selection"><i class="fa fa-check"></i><b>6.6</b> Execute Feature Selection</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-2"><i class="fa fa-check"></i><b>6.6.1</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.6.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-3"><i class="fa fa-check"></i><b>6.6.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.6.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-3"><i class="fa fa-check"></i><b>6.6.3</b> Something Amiss?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>6.7</b> Aggregate Replicates</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-3"><i class="fa fa-check"></i><b>6.7.1</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.7.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-4"><i class="fa fa-check"></i><b>6.7.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.7.3" data-path="create-profiles.html"><a href="create-profiles.html#combine-averaged-profiles"><i class="fa fa-check"></i><b>6.7.3</b> Combine Averaged Profiles</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>6.8</b> Audit</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="create-profiles.html"><a href="create-profiles.html#treatment-audit"><i class="fa fa-check"></i><b>6.8.1</b> Treatment Audit</a></li>
+<li class="chapter" data-level="6.8.2" data-path="create-profiles.html"><a href="create-profiles.html#control-audit"><i class="fa fa-check"></i><b>6.8.2</b> Control Audit</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>6.9</b> Convert to Other Formats</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="create-profiles.html"><a href="create-profiles.html#convert-per-plate-csv-files-to-gct"><i class="fa fa-check"></i><b>6.9.1</b> Convert per-plate CSV files to GCT</a></li>
+<li class="chapter" data-level="6.9.2" data-path="create-profiles.html"><a href="create-profiles.html#convert-per-plate-map-csv-files-to-gct"><i class="fa fa-check"></i><b>6.9.2</b> Convert per-plate map CSV files to GCT</a></li>
+<li class="chapter" data-level="6.9.3" data-path="create-profiles.html"><a href="create-profiles.html#convert-the-replicate-collapsed-csv-file-to-gct"><i class="fa fa-check"></i><b>6.9.3</b> Convert the replicate-collapsed CSV file to gct</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>6.10</b> Upload Data</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>6.10.1</b> Sync to S3</a></li>
+<li class="chapter" data-level="6.10.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>6.10.2</b> Sync Down from S3 onto a Machine</a></li>
+<li class="chapter" data-level="6.10.3" data-path="create-profiles.html"><a href="create-profiles.html#sync-the-files"><i class="fa fa-check"></i><b>6.10.3</b> Sync the files</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -183,9 +216,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="setup-pipelines-and-images" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Setup pipelines and images</h1>
+<h1><span class="header-section-number">Chapter 3</span> Setup Pipelines and Images</h1>
 <div id="get-cellprofiler-pipelines" class="section level2">
-<h2><span class="header-section-number">3.1</span> Get CellProfiler pipelines</h2>
+<h2><span class="header-section-number">3.1</span> Get CellProfiler Pipelines</h2>
 <p>Cell Painting pipelines are stored in a GitHub repo. If you are using a new pipeline, be sure to add it to the repo first. Follow instructions on <a href="https://github.com/broadinstitute/imaging-platform-pipelines" class="uri">https://github.com/broadinstitute/imaging-platform-pipelines</a> for adding new pipelines.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
 <span class="fu">mkdir</span> github
@@ -199,13 +232,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 └── pipelines -&gt; github/imaging-platform-pipelines</code></pre>
 </div>
 <div id="specify-pipeline-set" class="section level2">
-<h2><span class="header-section-number">3.2</span> Specify pipeline set</h2>
+<h2><span class="header-section-number">3.2</span> Specify Pipeline Set</h2>
 <pre><code>PIPELINE_SET=cellpainting_a549_20x_with_bf_phenix_bin1</code></pre>
 <p>Ensure that, both, <code>analysis.cppipe</code> as well as <code>illum.cppipe</code> are present for this set. As well, each pipeline should have a <code>_without_batchfile</code> version of it in the same directory. It’s easy to create such a version of the pipeline - simply copy it and set <code>enabled=False</code> for the <code>CreateBatchFiles</code> module (like <a href="https://github.com/broadinstitute/imaging-platform-pipelines/blob/master/cellpainting_u2os_20x_imagexpress/illum_without_batchfile.cppipe#L384">here</a>).</p>
 </div>
+<div id="upload-images" class="section level2">
+<h2><span class="header-section-number">3.3</span> Upload Images</h2>
+<p>Your image files should be uploaded to AWS from your local compute environment via a tool like Cyberduck or the AWS CLI (<code>aws s3 sync /local/path s3://BUCKET/PROJECT_NAME/BATCH_ID/images</code>) (see also Appendix A.2 for more information on folder structures). Some important tips BEFORE uploading (these are much more difficult to fix once uploaded):</p>
+<ul>
+<li>Ensure your image sets are complete i.e. all image sets should have the same number of channels and z-planes, and that this is true across the entire batch of plates you are processing.</li>
+<li>Avoid folder names with spaces</li>
+<li>Plate names should not have leading 0’s (ie <code>123</code> not <code>000123</code>)</li>
+<li>VERY IMPORTANT- If using <code>pe2loaddata</code> (described later) to generate your image CSVs, please ensure the folder name contains the plate name given when imaging on the Phenix microscope (can be checked in the <code>Index.idx.xml</code>)</li>
+</ul>
+</div>
 <div id="prepare-images" class="section level2">
-<h2><span class="header-section-number">3.3</span> Prepare images</h2>
-<p>Create soft link to the image folder, which should be uploaded on S3. Note that the relevant S3 bucket has been mounted at <code>/home/ubuntu/bucket/</code>.</p>
+<h2><span class="header-section-number">3.4</span> Prepare Images</h2>
+<p>(if using <code>pe2loaddata</code> to create image sets)</p>
+<p>Create soft link to the image folder. Note that the relevant S3 bucket has been mounted at <code>/home/ubuntu/bucket/</code>.</p>
 
 <div class="rmdnote">
 The folder structure for <code>images</code> differs between <code>S3</code> and <code>EFS</code>. This can be potentially confusing. However note that the step below simply creates a soft link to the images in S3; no files are copied. Further, when <code>pe2loaddata</code> is run (later in the process, via <code>create_csv_from_xml.sh</code>) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3. Thus the step below (of creating a softlink) only serves the purpose of making the <code>images</code> folder have a similar structure as the others (e.g. <code>load_data_csv</code>, <code>metadata</code>, <code>analysis</code>).
@@ -234,18 +278,21 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
 <p><code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> is the typical nomenclature followed by Broad Chemical Biology Platform for plate names. <code>Measurement1</code> indicates the first attempt to image the plate. <code>Measurement2</code> indicates second attempt and so on. Ensure that there’s only one folder corresponding to a plate before running <code>create_csv_from_xml.sh</code> below (it gracefully exits if not).</p>
 </div>
 <div id="create-list-of-plates" class="section level2">
-<h2><span class="header-section-number">3.4</span> Create list of plates</h2>
-<p>Create a text file with one plate id per line. You may choose to use only the first few characters of the plate name (e.g. <code>SQ00015167</code> instead of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> to keep the names compact. However, this may not always be possible. E.g. if you have image folders named <code>Replicate_1</code> and <code>Replicate_10</code>, you’d need to use the full name to avoid ambiguity (see note below on using the <code>--match_full_plate_id</code> flag).</p>
+<h2><span class="header-section-number">3.5</span> Create List of Plates</h2>
+<p>Create a text file with one plate id per line. The plate IDs, if using <code>pe2loaddata</code>, must match the plate IDs given when operating the Phenix. Otherwise, they should match CellProfiler’s understanding of the <code>Plate</code> grouping variable, whether that is explicitly stated in a loaddata CSV OR produced from the Metadata module if the CSVs and/or batch files are created using CellProfiler’s input modules. For downstream purposes, i.e. <code>cytominer</code>, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. <code>SQ00015167</code> instead of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> to keep the names compact.</p>
+<p>We’ll also set the SAMPLE_PLATE_ID variable, which is used in the profiling steps when a single plate name is required</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p scratch/<span class="va">${BATCH_ID}</span>/
 
 <span class="va">PLATES=$(</span><span class="fu">readlink</span> -f ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/plates_to_process.txt<span class="va">)</span>
 
-<span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span></code></pre></div>
+<span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span>
+
+<span class="va">SAMPLE_PLATE_ID=</span>SQ00015130</code></pre></div>
 </div>
 <div id="create-loaddata-csvs" class="section level2">
-<h2><span class="header-section-number">3.5</span> Create LoadData CSVs</h2>
-<p>The script below works only for Phenix microscopes – it reads a standard XML file (<code>Index.idx.xml</code>) and writes a LoadData csv file. For other microscopes, you will have to roll your own. The script below requires <code>config.yml</code>, which specifies (1) the mapping between channel names in <code>Index.idx.xml</code> and the channel names in the CellProfiler pipelines (2) metadata to extract from <code>Index.idx.xml</code>.</p>
-<p>Here’s a sample <code>config.yml</code></p>
+<h2><span class="header-section-number">3.6</span> Create LoadData CSVs</h2>
+<p>The script below works only for Phenix microscopes – it reads a standard XML file (<code>Index.idx.xml</code>) and writes a LoadData csv file. For other microscopes, you will have to roll your own (see Appendix B). The script below requires <code>config.yml</code>, which specifies (1) the mapping between channel names in <code>Index.idx.xml</code> and the channel names in the CellProfiler pipelines and (2) metadata to extract from <code>Index.idx.xml</code>.</p>
+<p>Here’s a truncated sample <code>config.yml</code> (see the repository for the full file)</p>
 <pre><code>channels:
     HOECHST 33342: OrigDNA
     Alexa 568: OrigAGP
@@ -257,25 +304,11 @@ metadata:
     Row: Row
     Col: Col
     FieldID: FieldID
+    PlaneID: PlaneID
     ChannelID: ChannelID
     ChannelName: ChannelName
     ImageResolutionX: ImageResolutionX
-    ImageResolutionY: ImageResolutionY
-    ImageSizeX: ImageSizeX
-    ImageSizeY: ImageSizeY
-    BinningX: BinningX
-    BinningY: BinningY
-    MaxIntensity: MaxIntensity
-    PositionX: PositionX
-    PositionY: PositionY
-    PositionZ: PositionZ
-    AbsPositionZ: AbsPositionZ
-    AbsTime: AbsTime
-    MainExcitationWavelength: MainExcitationWavelength
-    MainEmissionWavelength: MainEmissionWavelength
-    ObjectiveMagnification: ObjectiveMagnification
-    ObjectiveNA: ObjectiveNA
-    ExposureTime: ExposureTime</code></pre>
+    [...]</code></pre>
 <p>Often, the values of the keys for channels are different in <code>Index.idx.xml</code>, so for example, above, we have <code>Brightfieldlow: OrigBrightfield</code> but the keys for channels could be different in <code>Index.idx.xml</code>:</p>
 <pre><code>$ tail -n 500 Index.idx.xml|grep ChannelName|sort -u
 
@@ -285,7 +318,7 @@ metadata:
       &lt;ChannelName&gt;Alexa 647&lt;/ChannelName&gt;
       &lt;ChannelName&gt;Brightfield CP&lt;/ChannelName&gt;
       &lt;ChannelName&gt;HOECHST 33342&lt;/ChannelName&gt;</code></pre>
-<p>The brighfield channel is tagged <code>Brightfield CP</code> in <code>Index.idx.xml</code>. Fix this discrepancy by editing <code>config.xml</code>:</p>
+<p>The brightfield channel is tagged <code>Brightfield CP</code> in <code>Index.idx.xml</code>. Fix this discrepancy by editing <code>config.yml</code>:</p>
 <pre><code>    HOECHST 33342: OrigDNA
     Alexa 568: OrigAGP
     Alexa 647: OrigMito
@@ -298,14 +331,14 @@ metadata:
 <li>Ensure that all the metadata fields defined in <code>config.yml</code> are present in the <code>Index.idx.xml</code>.</li>
 <li>Ensure that the channel names are the same in <code>config.yml</code> and <code>Index.idx.xml</code></li>
 <li>Ensure that the LoadData csv files don’t already exist; if they do, delete them.</li>
-<li>Use the <code>--match_full_plate_id</code> below if needed; by default, <code>create_csv_from_xml</code> allows left substring match by default.
+<li>The <code>max-procs</code> option is set as 1 because pe2loaddata accesses the image files on <code>s3fs</code>, which doesn’t handle multiple requests well.
 </div>
 </li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/cellpainting_scripts/
 <span class="ex">pyenv</span> shell 2.7.12
 <span class="ex">parallel</span> \
-  --max-procs <span class="va">${MAXPROCS}</span> \
+  --max-procs 1 \
   --eta \
   --joblog ../../log/<span class="va">${BATCH_ID}</span>/create_csv_from_xml.log \
   --results ../../log/<span class="va">${BATCH_ID}</span>/create_csv_from_xml \
@@ -321,11 +354,11 @@ metadata:
         └── SQ00015167
             ├── load_data.csv
             └── load_data_with_illum.csv</code></pre>
-<p><code>load_data.csv</code> will be used by <code>illum.cppipe</code>. <code>load_data_with_illum.csv</code> will be used by <code>analysis.cppipe</code>. When creating <code>load_data_with_illum.csv</code>, the script assumes a specific location for the output folder, discussed below (see discussion on <code>--illum_pipeline_name</code> option).</p>
-<p>Copy the load data files to S3</p>
+<p><code>load_data.csv</code> will be used by <code>illum.cppipe</code> and, optionally, <code>qc.cppipe</code>. <code>load_data_with_illum.csv</code> will be used by <code>analysis.cppipe</code>. When creating <code>load_data_with_illum.csv</code>, the script assumes a specific location for the folder containing the illumination correction files.</p>
+<p>Copy the load data files to S3:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 sync \
   ../../load_data_csv/<span class="va">${BATCH_ID}</span>/ \
-  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/load_data_csv/<span class="va">${BATCH_ID}</span>/ </code></pre></div>
+  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/load_data_csv/<span class="va">${BATCH_ID}</span>/</code></pre></div>
 
 </div>
 </div>

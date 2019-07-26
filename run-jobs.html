@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Run jobs | Image-based Profiling Handbook</title>
+  <title>Chapter 5 Run Jobs | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Run jobs | Image-based Profiling Handbook" />
+  <meta property="og:title" content="Chapter 5 Run Jobs | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
@@ -16,23 +16,23 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Run jobs | Image-based Profiling Handbook" />
+  <meta name="twitter:title" content="Chapter 5 Run Jobs | Image-based Profiling Handbook" />
   
   <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   
 
-<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way" />
+<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2019-07-15" />
+<meta name="date" content="2019-07-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="setup-jobs.html">
-<link rel="next" href="configure-tools-to-create-profiles.html">
+<link rel="prev" href="setup-jobs.html"/>
+<link rel="next" href="create-profiles.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -105,56 +105,89 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="part"><span><b>I Configuration</b></span></li>
-<li class="chapter" data-level="1" data-path="configure-environment.html"><a href="configure-environment.html"><i class="fa fa-check"></i><b>1</b> Configure environment</a><ul>
-<li class="chapter" data-level="1.1" data-path="configure-environment.html"><a href="configure-environment.html#set-up-a-virtual-machine"><i class="fa fa-check"></i><b>1.1</b> Set up a virtual machine</a></li>
-<li class="chapter" data-level="1.2" data-path="configure-environment.html"><a href="configure-environment.html#define-variables"><i class="fa fa-check"></i><b>1.2</b> Define variables</a></li>
-<li class="chapter" data-level="1.3" data-path="configure-environment.html"><a href="configure-environment.html#create-directories"><i class="fa fa-check"></i><b>1.3</b> Create directories</a></li>
+<li class="chapter" data-level="1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html"><i class="fa fa-check"></i><b>1</b> Configure Environment for Full Profiling Pipeline</a><ul>
+<li class="chapter" data-level="1.1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#launch-an-aws-virtual-machine"><i class="fa fa-check"></i><b>1.1</b> Launch an AWS Virtual Machine</a></li>
+<li class="chapter" data-level="1.2" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#define-environment-variables"><i class="fa fa-check"></i><b>1.2</b> Define Environment Variables</a></li>
+<li class="chapter" data-level="1.3" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#create-directories"><i class="fa fa-check"></i><b>1.3</b> Create Directories</a></li>
 </ul></li>
 <li class="part"><span><b>II Images to measurements</b></span></li>
-<li class="chapter" data-level="2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html"><i class="fa fa-check"></i><b>2</b> Configure tools to process images</a><ul>
-<li class="chapter" data-level="2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#download-software"><i class="fa fa-check"></i><b>2.1</b> Download software</a></li>
+<li class="chapter" data-level="2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html"><i class="fa fa-check"></i><b>2</b> Configure Tools to Process Images</a><ul>
+<li class="chapter" data-level="2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#download-software"><i class="fa fa-check"></i><b>2.1</b> Download Software</a></li>
 <li class="chapter" data-level="2.2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#setup-distributed-cellprofiler"><i class="fa fa-check"></i><b>2.2</b> Setup Distributed CellProfiler</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html"><i class="fa fa-check"></i><b>3</b> Setup pipelines and images</a><ul>
-<li class="chapter" data-level="3.1" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#get-cellprofiler-pipelines"><i class="fa fa-check"></i><b>3.1</b> Get CellProfiler pipelines</a></li>
-<li class="chapter" data-level="3.2" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#specify-pipeline-set"><i class="fa fa-check"></i><b>3.2</b> Specify pipeline set</a></li>
-<li class="chapter" data-level="3.3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#prepare-images"><i class="fa fa-check"></i><b>3.3</b> Prepare images</a></li>
-<li class="chapter" data-level="3.4" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-list-of-plates"><i class="fa fa-check"></i><b>3.4</b> Create list of plates</a></li>
-<li class="chapter" data-level="3.5" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-loaddata-csvs"><i class="fa fa-check"></i><b>3.5</b> Create LoadData CSVs</a></li>
+<li class="chapter" data-level="3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html"><i class="fa fa-check"></i><b>3</b> Setup Pipelines and Images</a><ul>
+<li class="chapter" data-level="3.1" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#get-cellprofiler-pipelines"><i class="fa fa-check"></i><b>3.1</b> Get CellProfiler Pipelines</a></li>
+<li class="chapter" data-level="3.2" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#specify-pipeline-set"><i class="fa fa-check"></i><b>3.2</b> Specify Pipeline Set</a></li>
+<li class="chapter" data-level="3.3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#upload-images"><i class="fa fa-check"></i><b>3.3</b> Upload Images</a></li>
+<li class="chapter" data-level="3.4" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#prepare-images"><i class="fa fa-check"></i><b>3.4</b> Prepare Images</a></li>
+<li class="chapter" data-level="3.5" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-list-of-plates"><i class="fa fa-check"></i><b>3.5</b> Create List of Plates</a></li>
+<li class="chapter" data-level="3.6" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-loaddata-csvs"><i class="fa fa-check"></i><b>3.6</b> Create LoadData CSVs</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setup-jobs.html"><a href="setup-jobs.html"><i class="fa fa-check"></i><b>4</b> Setup jobs</a><ul>
-<li class="chapter" data-level="4.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>4.1</b> Illumination correction</a></li>
-<li class="chapter" data-level="4.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>4.2</b> Quality control</a></li>
+<li class="chapter" data-level="4" data-path="setup-jobs.html"><a href="setup-jobs.html"><i class="fa fa-check"></i><b>4</b> Setup Jobs</a><ul>
+<li class="chapter" data-level="4.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>4.1</b> Illumination Correction</a></li>
+<li class="chapter" data-level="4.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>4.2</b> Quality Control</a></li>
 <li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination correction</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single node</a></li>
+<li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
+<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality control</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC results into a database for CPA</a></li>
+<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single node</a></li>
+<li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>III Measurements to profiles</b></span></li>
-<li class="chapter" data-level="6" data-path="configure-tools-to-create-profiles.html"><a href="configure-tools-to-create-profiles.html"><i class="fa fa-check"></i><b>6</b> Configure tools to create profiles</a><ul>
-<li class="chapter" data-level="6.1" data-path="configure-tools-to-create-profiles.html"><a href="configure-tools-to-create-profiles.html#download-software-1"><i class="fa fa-check"></i><b>6.1</b> Download software</a></li>
+<li class="chapter" data-level="6" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>6</b> Create Profiles</a><ul>
+<li class="chapter" data-level="6.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>6.1</b> Confirm Environment Configuration</a></li>
+<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.2</b> Create Database Backend</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="create-profiles.html"><a href="create-profiles.html#copy-files-from-s3-to-efs"><i class="fa fa-check"></i><b>6.2.1</b> Copy Files from S3 to EFS</a></li>
+<li class="chapter" data-level="6.2.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows"><i class="fa fa-check"></i><b>6.2.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.2.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss"><i class="fa fa-check"></i><b>6.2.3</b> Something Amiss?</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>7</b> Create profiles</a><ul>
-<li class="chapter" data-level="7.1" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>7.1</b> Create database backend</a></li>
-<li class="chapter" data-level="7.2" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>7.2</b> Annotate</a></li>
-<li class="chapter" data-level="7.3" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>7.3</b> Normalize</a></li>
-<li class="chapter" data-level="7.4" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>7.4</b> Select variables</a></li>
-<li class="chapter" data-level="7.5" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>7.5</b> Aggregate replicates</a></li>
-<li class="chapter" data-level="7.6" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>7.6</b> Audit</a></li>
-<li class="chapter" data-level="7.7" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>7.7</b> Convert to other formats</a></li>
-<li class="chapter" data-level="7.8" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>7.8</b> Upload data</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>7.8.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="7.8.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>7.8.2</b> Sync down from S3 onto a machine</a></li>
+<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>6.3</b> Annotate</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="create-profiles.html"><a href="create-profiles.html#example-1-simple-metadata"><i class="fa fa-check"></i><b>6.3.1</b> Example 1: Simple Metadata</a></li>
+<li class="chapter" data-level="6.3.2" data-path="create-profiles.html"><a href="create-profiles.html#example-2-complex-metadata"><i class="fa fa-check"></i><b>6.3.2</b> Example 2: Complex Metadata</a></li>
+<li class="chapter" data-level="6.3.3" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure"><i class="fa fa-check"></i><b>6.3.3</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.3.4" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-1"><i class="fa fa-check"></i><b>6.3.4</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.3.5" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-1"><i class="fa fa-check"></i><b>6.3.5</b> Something Amiss?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>6.4</b> Normalize</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-1"><i class="fa fa-check"></i><b>6.4.1</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.4.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-2"><i class="fa fa-check"></i><b>6.4.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.4.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-2"><i class="fa fa-check"></i><b>6.4.3</b> Something Amiss?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>6.5</b> Select Variables</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="create-profiles.html"><a href="create-profiles.html#sample-data"><i class="fa fa-check"></i><b>6.5.1</b> Sample Data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="create-profiles.html"><a href="create-profiles.html#preselect"><i class="fa fa-check"></i><b>6.5.2</b> Preselect</a></li>
+<li class="chapter" data-level="6.5.3" data-path="create-profiles.html"><a href="create-profiles.html#alternate-load-previous-preselect-configuration"><i class="fa fa-check"></i><b>6.5.3</b> Alternate: Load previous preselect configuration</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="create-profiles.html"><a href="create-profiles.html#execute-feature-selection"><i class="fa fa-check"></i><b>6.6</b> Execute Feature Selection</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-2"><i class="fa fa-check"></i><b>6.6.1</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.6.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-3"><i class="fa fa-check"></i><b>6.6.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.6.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-3"><i class="fa fa-check"></i><b>6.6.3</b> Something Amiss?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>6.7</b> Aggregate Replicates</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-3"><i class="fa fa-check"></i><b>6.7.1</b> Expected Folder Structure</a></li>
+<li class="chapter" data-level="6.7.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-4"><i class="fa fa-check"></i><b>6.7.2</b> Quick Check Rows</a></li>
+<li class="chapter" data-level="6.7.3" data-path="create-profiles.html"><a href="create-profiles.html#combine-averaged-profiles"><i class="fa fa-check"></i><b>6.7.3</b> Combine Averaged Profiles</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>6.8</b> Audit</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="create-profiles.html"><a href="create-profiles.html#treatment-audit"><i class="fa fa-check"></i><b>6.8.1</b> Treatment Audit</a></li>
+<li class="chapter" data-level="6.8.2" data-path="create-profiles.html"><a href="create-profiles.html#control-audit"><i class="fa fa-check"></i><b>6.8.2</b> Control Audit</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>6.9</b> Convert to Other Formats</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="create-profiles.html"><a href="create-profiles.html#convert-per-plate-csv-files-to-gct"><i class="fa fa-check"></i><b>6.9.1</b> Convert per-plate CSV files to GCT</a></li>
+<li class="chapter" data-level="6.9.2" data-path="create-profiles.html"><a href="create-profiles.html#convert-per-plate-map-csv-files-to-gct"><i class="fa fa-check"></i><b>6.9.2</b> Convert per-plate map CSV files to GCT</a></li>
+<li class="chapter" data-level="6.9.3" data-path="create-profiles.html"><a href="create-profiles.html#convert-the-replicate-collapsed-csv-file-to-gct"><i class="fa fa-check"></i><b>6.9.3</b> Convert the replicate-collapsed CSV file to gct</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>6.10</b> Upload Data</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>6.10.1</b> Sync to S3</a></li>
+<li class="chapter" data-level="6.10.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>6.10.2</b> Sync Down from S3 onto a Machine</a></li>
+<li class="chapter" data-level="6.10.3" data-path="create-profiles.html"><a href="create-profiles.html#sync-the-files"><i class="fa fa-check"></i><b>6.10.3</b> Sync the files</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -183,13 +216,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="run-jobs" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Run jobs</h1>
+<h1><span class="header-section-number">Chapter 5</span> Run Jobs</h1>
 <div id="illumination-correction-1" class="section level2">
-<h2><span class="header-section-number">5.1</span> Illumination correction</h2>
+<h2><span class="header-section-number">5.1</span> Illumination Correction</h2>
 <div id="single-node" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Single node</h3>
+<h3><span class="header-section-number">5.1.1</span> Single Node</h3>
 <p>To compute illumination functions directly on the EC2 node, run the contents of <code>cp_docker_commands.txt</code> for each plate</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">PLATE_ID</span> in <span class="va">$(</span><span class="fu">cat</span> <span class="va">${PLATES})</span><span class="kw">;</span> <span class="kw">do</span> 
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">PLATE_ID</span> in <span class="va">$(</span><span class="fu">cat</span> <span class="va">${PLATES})</span><span class="kw">;</span> <span class="kw">do</span>
   <span class="ex">parallel</span> -a ../../batchfiles/<span class="va">${BATCH_ID}</span>/<span class="va">${PLATE_ID}</span>/illum/cp_docker_commands.txt
 <span class="kw">done</span></code></pre></div>
 <p>If this is run on the current node, this is the resulting structure of <code>analysis</code>, containing the output of <code>illum.cppipe</code>, on EFS (one level below <code>workspace</code>). Files for only <code>SQ00015167</code> are shown.</p>
@@ -202,7 +235,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             ├── SQ00015167_IllumMito.mat
             ├── SQ00015167_IllumRNA.mat
             └── SQ00015167.stderr</code></pre>
-<p>Sync this folder to S3, maintaining the same structure. If you used DCP to run this pipeline (discussed below), the files will have been stored directly on S3, in which case there’s no need to do a sync.</p>
+<p>Sync this folder to S3, maintaining the same structure.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/
 
 <span class="ex">aws</span> s3 sync <span class="va">${BATCH_ID}</span>/illum/<span class="va">${PLATE_ID}</span>  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/<span class="va">${BATCH_ID}</span>/illum/<span class="va">${PLATE_ID}</span></code></pre></div>
@@ -210,20 +243,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="run-illum-dcp" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> DCP</h3>
 <p>Edit the config files <code>illum_config.py</code> and <code>illum_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed.</p>
-<p>At the very least, replace the strings <code>VAR_AWS_ACCOUNT_NUMBER</code>,<code>VAR_AWS_BUCKET</code>,<code>VAR_SUBNET_ID</code>,<code>VAR_GROUP_ID</code>,<code>VAR_KEYNAME</code> with appropriate values.</p>
+<p>At the very least, replace the strings <code>VAR_AWS_ACCOUNT_NUMBER</code>,<code>VAR_AWS_BUCKET</code>,<code>VAR_SUBNET_ID</code>,<code>VAR_GROUP_ID</code>,<code>VAR_KEYNAME</code>, <code>VAR_APP_NAME</code>, <code>VAR_DCP_VERSION</code> with appropriate values. (See the DCP <a href="https://hub.docker.com/r/cellprofiler/distributed-cellprofiler/tags">dockerhub</a> to determine the best tag for your analysis)</p>
 <p>You do so using <code>sed</code>. The script below replaces the strings for both, <code>analysis_*</code> as well as <code>illum_*</code> config files.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> cellpainting_scripts/dcp_config_files/
 
-<span class="kw">for</span> <span class="ex">CONFIG_FILE</span> in analysis_config.py analysis_config.json illum_config.py illum_config.json<span class="kw">;</span> <span class="kw">do</span> 
+<span class="kw">for</span> <span class="ex">CONFIG_FILE</span> in analysis_config.py analysis_config.json illum_config.py illum_config.json<span class="kw">;</span> <span class="kw">do</span>
     <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
     <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_AWS_BUCKET/name-of-s3-bucket/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
     <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_SUBNET_ID/subnet-NNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
     <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_GROUP_ID/sg-NNNNNNNN/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
     <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_KEYNAME/filename-of-key-file-without-extension/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_APP_NAME/</span><span class="va">${PROJECT_NAME}</span><span class="st">/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
+    <span class="fu">sed</span> -i <span class="st">&quot;s/VAR_DCP_VERSION/1.2.0_3.1.8/g&quot;</span> <span class="va">${CONFIG_FILE}</span>
 <span class="kw">done</span>
 
 <span class="bu">cd</span> ..</code></pre></div>
-<p>Copy to the DCP directory and setup the compute environment</p>
+<p>Copy to the DCP directory and setup the compute environment:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/Distributed-CellProfiler/
 
 <span class="ex">pyenv</span> shell 2.7.12
@@ -240,16 +275,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   startCluster \
   ../cellpainting_scripts/dcp_config_files/illum_config.json
 
-<span class="co"># do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `illum_config.py`</span>
-<span class="ex">python</span> run.py monitor files/APP_NAMESpotFleetRequestId.json</code></pre></div>
+<span class="co"># do this in a tmux session.</span>
+<span class="ex">python</span> run.py monitor files/<span class="va">${PROJECT_NAME}</span>_IllumSpotFleetRequestId.json</code></pre></div>
+<p>Note that if your illumination correction takes longer than 12 hours to run (not uncommon, especially in CellProfiler 2.X), jobs may get started more than once. See the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Troubleshooting">troubleshooting</a> section of the DCP wiki. You should keep an eye on the output files directory <code>${PROJECT_NAME}/${BATCH_ID}/illum</code> ; when all folders have the expected number of files, it’s ok to purge the queue to kill all remaining machines.</p>
 </div>
 </div>
 <div id="quality-control-1" class="section level2">
-<h2><span class="header-section-number">5.2</span> Quality control</h2>
+<h2><span class="header-section-number">5.2</span> Quality Control</h2>
 <div id="process-qc-results-into-a-database-for-cpa" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Process QC results into a database for CPA</h3>
+<h3><span class="header-section-number">5.2.1</span> Process QC Results into a Database for CPA</h3>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/
-<span class="fu">git</span> clone https://username@github.com/cytomining/cytominer-database
+<span class="co"># If not cloned already, clone cytominer-database using http or ssh</span>
+<span class="co"># e.g. http - git clone https://username@github.com/cytomining/cytominer-database</span>
+<span class="co"># e.g. ssh - git clone git@github.com/cytomining/cytominer-database</span>
 <span class="bu">cd</span> cytominer-database
 
 <span class="ex">pyenv</span> shell 3.5.1
@@ -258,56 +296,59 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace
 <span class="fu">mkdir</span> qc
 
-<span class="ex">cytominer-database</span> ingest ~/bucket/projects/<span class="va">${PROJECT_NAME}</span>/workspace/qc/<span class="va">${BATCH_ID}</span>/results sqlite:///qc/<span class="va">${BATCH_ID}</span>_QC.sqlite -c software/cytominer-database/cytominer_database/config/config_default.ini --no-munge
+<span class="ex">cytominer-database</span> ingest \
+  ~/bucket/projects/<span class="va">${PROJECT_NAME}</span>/workspace/qc/<span class="va">${BATCH_ID}</span>/results sqlite:///qc/<span class="va">${BATCH_ID}</span>_QC.sqlite \
+  -c software/cytominer-database/cytominer_database/config/config_default.ini \
+  --no-munge
 
 <span class="fu">rsync</span> qc/<span class="va">${BATCH_ID}</span>_QC.sqlite ~/bucket/projects/<span class="va">${PROJECT_NAME}</span>/workspace/qc/<span class="va">${BATCH_ID}</span>_QC.sqlite</code></pre></div>
 <p>You can then download the database to your local machine; to update the S3 image paths to your local image paths you’ll need to configure and execute the following SQL statement (DB Browser for SQLite, for example, allows you to do this easily in the GUI). You need only specify the parts of the paths that are different, not the whole path.</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigBrightfield= <span class="kw">REPLACE</span>(PathName_OrigBrightfield, <span class="st">&#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;</span>, <span class="st">&#39;/local/path/to/files/&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigBrightfield <span class="kw">LIKE</span> <span class="st">&#39;%/home/ubuntu/bucket/projects/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigAGP= <span class="kw">REPLACE</span>(PathName_OrigAGP, <span class="st">&#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;</span>, <span class="st">&#39;/local/path/to/files/&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigAGP <span class="kw">LIKE</span> <span class="st">&#39;%/home/ubuntu/bucket/projects/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigDNA= <span class="kw">REPLACE</span>(PathName_OrigDNA, <span class="st">&#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;</span>, <span class="st">&#39;/local/path/to/files/&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigDNA <span class="kw">LIKE</span> <span class="st">&#39;%/home/ubuntu/bucket/projects/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigER= <span class="kw">REPLACE</span>(PathName_OrigER, <span class="st">&#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;</span>, <span class="st">&#39;/local/path/to/files/&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigER <span class="kw">LIKE</span> <span class="st">&#39;%/home/ubuntu/bucket/projects/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigMito= <span class="kw">REPLACE</span>(PathName_OrigMito, <span class="st">&#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;</span>, <span class="st">&#39;/local/path/to/files/&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigMito <span class="kw">LIKE</span> <span class="st">&#39;%/home/ubuntu/bucket/projects/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigRNA= <span class="kw">REPLACE</span>(PathName_OrigRNA, <span class="st">&#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;</span>, <span class="st">&#39;/local/path/to/files/&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigRNA <span class="kw">LIKE</span> <span class="st">&#39;%/home/ubuntu/bucket/projects/%&#39;</span></code></pre></div>
+<pre><code>UPDATE Image
+SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, &#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;, &#39;/local/path/to/files/&#39;)
+WHERE PathName_OrigBrightfield LIKE &#39;%/home/ubuntu/bucket/projects/%&#39;;
+UPDATE Image
+SET PathName_OrigAGP= REPLACE(PathName_OrigAGP, &#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;, &#39;/local/path/to/files/&#39;)
+WHERE PathName_OrigAGP LIKE &#39;%/home/ubuntu/bucket/projects/%&#39;;
+UPDATE Image
+SET PathName_OrigDNA= REPLACE(PathName_OrigDNA, &#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;, &#39;/local/path/to/files/&#39;)
+WHERE PathName_OrigDNA LIKE &#39;%/home/ubuntu/bucket/projects/%&#39;;
+UPDATE Image
+SET PathName_OrigER= REPLACE(PathName_OrigER, &#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;, &#39;/local/path/to/files/&#39;)
+WHERE PathName_OrigER LIKE &#39;%/home/ubuntu/bucket/projects/%&#39;;
+UPDATE Image
+SET PathName_OrigMito= REPLACE(PathName_OrigMito, &#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;, &#39;/local/path/to/files/&#39;)
+WHERE PathName_OrigMito LIKE &#39;%/home/ubuntu/bucket/projects/%&#39;;
+UPDATE Image
+SET PathName_OrigRNA= REPLACE(PathName_OrigRNA, &#39;/home/ubuntu/bucket/projects/s3/path/to/files/&#39;, &#39;/local/path/to/files/&#39;)
+WHERE PathName_OrigRNA LIKE &#39;%/home/ubuntu/bucket/projects/%&#39;</code></pre>
 <p>Windows users must also then execute the following statements to change the direction of any slashes in the path.</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigBrightfield= <span class="kw">REPLACE</span>(PathName_OrigBrightfield, <span class="st">&#39;/&#39;</span>, <span class="st">&#39;\&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigBrightfield <span class="kw">LIKE</span> <span class="st">&#39;%/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigAGP= <span class="kw">REPLACE</span>(PathName_OrigAGP, <span class="st">&#39;/&#39;</span>, <span class="st">&#39;\&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigAGP <span class="kw">LIKE</span> <span class="st">&#39;%/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigDNA= <span class="kw">REPLACE</span>(PathName_OrigDNA, <span class="st">&#39;/&#39;</span>, <span class="st">&#39;\&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigDNA <span class="kw">LIKE</span> <span class="st">&#39;%/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigER= <span class="kw">REPLACE</span>(PathName_OrigER, <span class="st">&#39;/&#39;</span>, <span class="st">&#39;\&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigER <span class="kw">LIKE</span> <span class="st">&#39;%/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigMito= <span class="kw">REPLACE</span>(PathName_OrigMito, <span class="st">&#39;/&#39;</span>, <span class="st">&#39;\&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigMito <span class="kw">LIKE</span> <span class="st">&#39;%/%&#39;</span>;
-<span class="kw">UPDATE</span> Image
-<span class="kw">SET</span> PathName_OrigRNA= <span class="kw">REPLACE</span>(PathName_OrigRNA, <span class="st">&#39;/&#39;</span>, <span class="st">&#39;\&#39;</span>)
-<span class="kw">WHERE</span> PathName_OrigRNA <span class="kw">LIKE</span> <span class="st">&#39;%/%&#39;</span></code></pre></div>
-<p>You can now configure your CPA properties file with the name of your new database and perform the QC. For more information on this process, see the CellProfiler/tutorials repo.</p>
+<pre><code>UPDATE Image
+SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, &#39;/&#39;, &#39;\&#39;)
+WHERE PathName_OrigBrightfield LIKE &#39;%/%&#39;;
+UPDATE Image
+SET PathName_OrigAGP= REPLACE(PathName_OrigAGP, &#39;/&#39;, &#39;\&#39;)
+WHERE PathName_OrigAGP LIKE &#39;%/%&#39;;
+UPDATE Image
+SET PathName_OrigDNA= REPLACE(PathName_OrigDNA, &#39;/&#39;, &#39;\&#39;)
+WHERE PathName_OrigDNA LIKE &#39;%/%&#39;;
+UPDATE Image
+SET PathName_OrigER= REPLACE(PathName_OrigER, &#39;/&#39;, &#39;\&#39;)
+WHERE PathName_OrigER LIKE &#39;%/%&#39;;
+UPDATE Image
+SET PathName_OrigMito= REPLACE(PathName_OrigMito, &#39;/&#39;, &#39;\&#39;)
+WHERE PathName_OrigMito LIKE &#39;%/%&#39;;
+UPDATE Image
+SET PathName_OrigRNA= REPLACE(PathName_OrigRNA, &#39;/&#39;, &#39;\&#39;)
+WHERE PathName_OrigRNA LIKE &#39;%/%&#39;</code></pre>
+<p>You can now configure your CPA properties file with the name of your new database and perform the QC. For more information on this process, see the Quality Control tutorial in the CellProfiler/tutorials repo.</p>
 </div>
 </div>
 <div id="analysis-1" class="section level2">
 <h2><span class="header-section-number">5.3</span> Analysis</h2>
 <div id="single-node-1" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Single node</h3>
+<h3><span class="header-section-number">5.3.1</span> Single Node</h3>
 <p>To run the analysis pipeline directly on the EC2 node, run the contents of <code>cp_docker_commands.txt</code> for each plate</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">PLATE_ID</span> in <span class="va">$(</span><span class="fu">cat</span> <span class="va">${PLATES})</span><span class="kw">;</span> <span class="kw">do</span> 
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">PLATE_ID</span> in <span class="va">$(</span><span class="fu">cat</span> <span class="va">${PLATES})</span><span class="kw">;</span> <span class="kw">do</span>
   <span class="ex">parallel</span> -a ../../batchfiles/<span class="va">${BATCH_ID}</span>/<span class="va">${PLATE_ID}</span>/analysis/cp_docker_commands.txt
 <span class="kw">done</span></code></pre></div>
 <p>If this is run on the EC2 node, this is the resulting structure of <code>analysis</code>, containing the output of <code>analysis.cppipe</code>, on EFS (one level below <code>workspace</code>). Files for only <code>SQ00015167</code> are shown.</p>
@@ -324,15 +365,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
                   └── outlines
                         ├── A01_s1--cell_outlines.png
                         └── A01_s1--nuclei_outlines.png</code></pre>
-<p><code>A01-1</code> is site 1 of well A01. In a 384-well plate, there will be 384*9 such folders. Note that the file <code>Experiment.csv</code> may get created one level above, i.e., under <code>A01-1</code> (see <a href="https://github.com/CellProfiler/CellProfiler/issues/1110" class="uri">https://github.com/CellProfiler/CellProfiler/issues/1110</a>)</p>
-<p>Sync this folder to S3, maintaining the same structure. If you used DCP to run this pipeline (discussed below), the files will have been stored directly on S3, in which case there’s no need to do a sync.</p>
+<p><code>A01-1</code> is site 1 of well A01. In a 384-well plate, there will be 384*9 such folders. Note that the file <code>Experiment.csv</code> may get created one level above, i.e., under <code>A01-1</code> (see <a href="https://github.com/CellProfiler/CellProfiler/issues/1110" class="uri">https://github.com/CellProfiler/CellProfiler/issues/1110</a>).</p>
+<p>Sync this folder to S3, maintaining the same structure.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
 
 <span class="ex">aws</span> s3 sync analysis/<span class="va">${BATCH_ID}</span>/<span class="va">${PLATE_ID}</span>/analysis  s3://<span class="va">${BUCKET}</span>/projects/<span class="va">${PROJECT_NAME}</span>/workspace/analysis/<span class="va">${BATCH_ID}</span>/<span class="va">${PLATE_ID}</span>/analysis/</code></pre></div>
 </div>
 <div id="dcp" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> DCP</h3>
-<p>Edit the config files <code>analysis_config.py</code> and <code>analysis_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed (see <a href="run-jobs.html#run-illum-dcp">5.1.2</a>).</p>
+<p>If not already done, edit the config files <code>analysis_config.py</code> and <code>analysis_config.json</code> in <code>cellpainting_scripts/dcp_config_files/</code> as needed (see <a href="run-jobs.html#run-illum-dcp">5.1.2</a>).</p>
 <p>Copy the analysis_config.py to the DCP directory and setup the compute environment.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/Distributed-CellProfiler/
 
@@ -349,23 +390,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="ex">python</span> run.py \
   startCluster \
   ../cellpainting_scripts/dcp_config_files/analysis_config.json</code></pre></div>
-<p>Start the monitor. Do this in a tmux session. Replace <code>APP_NAME</code> the value of APP_NAME in <code>analysis_config.py</code></p>
+<p>Start the monitor. Do this in a tmux session.</p>
 <p><strong>Note:</strong> Unless you run the monitor, the fleet will never be killed!</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">python</span> run.py monitor files/APP_NAMESpotFleetRequestId.json</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">python</span> run.py monitor files/<span class="va">${PROJECT_NAME}</span>_AnalysisSpotFleetRequestId.json</code></pre></div>
 
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="setup-jobs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="configure-tools-to-create-profiles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="create-profiles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
