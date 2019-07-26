@@ -1,16 +1,19 @@
-# Run jobs
+# Run Jobs
 
-## Illumination correction
-### Single node
+## Illumination Correction
+
+### Single Node
+
 To compute illumination functions directly on the EC2 node, run the contents of `cp_docker_commands.txt` for each plate
 
 ```sh
-for PLATE_ID in $(cat ${PLATES}); do 
+for PLATE_ID in $(cat ${PLATES}); do
   parallel -a ../../batchfiles/${BATCH_ID}/${PLATE_ID}/illum/cp_docker_commands.txt
 done
 ```
 
-If this is run on the current node, this is the resulting structure of `analysis`, containing the output of `illum.cppipe`, on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
+If this is run on the current node, this is the resulting structure of `analysis`, containing the output of `illum.cppipe`, on EFS (one level below `workspace`).
+Files for only `SQ00015167` are shown.
 
 ```
 └── 2016_04_01_a549_48hr_batch1
@@ -24,7 +27,7 @@ If this is run on the current node, this is the resulting structure of `analysis
             └── SQ00015167.stderr
 ```
 
-Sync this folder to S3, maintaining the same structure. If you used DCP to run this pipeline (discussed below), the files will have been stored directly on S3, in which case there's no need to do a sync.
+Sync this folder to S3, maintaining the same structure.
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/
@@ -33,27 +36,31 @@ aws s3 sync ${BATCH_ID}/illum/${PLATE_ID}  s3://${BUCKET}/projects/${PROJECT_NAM
 ```
 
 ### DCP {#run-illum-dcp}
-Edit the config files `illum_config.py` and `illum_config.json` in `cellpainting_scripts/dcp_config_files/` as needed. 
 
-At the very least, replace the strings `VAR_AWS_ACCOUNT_NUMBER`,`VAR_AWS_BUCKET`,`VAR_SUBNET_ID`,`VAR_GROUP_ID`,`VAR_KEYNAME` with appropriate values. 
+Edit the config files `illum_config.py` and `illum_config.json` in `cellpainting_scripts/dcp_config_files/` as needed.
 
-You do so using `sed`. The script below replaces the strings for both, `analysis_*` as well as `illum_*` config files.
+At the very least, replace the strings `VAR_AWS_ACCOUNT_NUMBER`,`VAR_AWS_BUCKET`,`VAR_SUBNET_ID`,`VAR_GROUP_ID`,`VAR_KEYNAME`, `VAR_APP_NAME`, `VAR_DCP_VERSION` with appropriate values. (See the DCP [dockerhub](https://hub.docker.com/r/cellprofiler/distributed-cellprofiler/tags) to determine the best tag for your analysis)
+
+You do so using `sed`.
+The script below replaces the strings for both, `analysis_*` as well as `illum_*` config files.
 
 ```sh
 cd cellpainting_scripts/dcp_config_files/
 
-for CONFIG_FILE in analysis_config.py analysis_config.json illum_config.py illum_config.json; do 
+for CONFIG_FILE in analysis_config.py analysis_config.json illum_config.py illum_config.json; do
     sed -i "s/VAR_AWS_ACCOUNT_NUMBER/NNNNNNNNNNN/g" ${CONFIG_FILE}
     sed -i "s/VAR_AWS_BUCKET/name-of-s3-bucket/g" ${CONFIG_FILE}
     sed -i "s/VAR_SUBNET_ID/subnet-NNNNNNNN/g" ${CONFIG_FILE}
     sed -i "s/VAR_GROUP_ID/sg-NNNNNNNN/g" ${CONFIG_FILE}
     sed -i "s/VAR_KEYNAME/filename-of-key-file-without-extension/g" ${CONFIG_FILE}
+    sed -i "s/VAR_APP_NAME/${PROJECT_NAME}/g" ${CONFIG_FILE}
+    sed -i "s/VAR_DCP_VERSION/1.2.0_3.1.8/g" ${CONFIG_FILE}
 done
 
 cd ..
 ```
 
-Copy to the DCP directory and setup the compute environment
+Copy to the DCP directory and setup the compute environment:
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/software/Distributed-CellProfiler/
@@ -76,17 +83,22 @@ python run.py \
   startCluster \
   ../cellpainting_scripts/dcp_config_files/illum_config.json
 
-# do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `illum_config.py`
-python run.py monitor files/APP_NAMESpotFleetRequestId.json
+# do this in a tmux session.
+python run.py monitor files/${PROJECT_NAME}_IllumSpotFleetRequestId.json
 ```
 
+Note that if your illumination correction takes longer than 12 hours to run (not uncommon, especially in CellProfiler 2.X), jobs may get started more than once. See the [troubleshooting](https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Troubleshooting) section of the DCP wiki.
+You should keep an eye on the output files directory `${PROJECT_NAME}/${BATCH_ID}/illum` ; when all folders have the expected number of files, it's ok to purge the queue to kill all remaining machines.
 
-## Quality control
-### Process QC results into a database for CPA
+## Quality Control
+
+### Process QC Results into a Database for CPA
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/software/
-git clone https://username@github.com/cytomining/cytominer-database
+# If not cloned already, clone cytominer-database using http or ssh
+# e.g. http - git clone https://username@github.com/cytomining/cytominer-database
+# e.g. ssh - git clone git@github.com/cytomining/cytominer-database
 cd cytominer-database
 
 pyenv shell 3.5.1
@@ -95,14 +107,16 @@ pip install -e .
 cd ~/efs/${PROJECT_NAME}/workspace
 mkdir qc
 
-cytominer-database ingest ~/bucket/projects/${PROJECT_NAME}/workspace/qc/${BATCH_ID}/results sqlite:///qc/${BATCH_ID}_QC.sqlite -c software/cytominer-database/cytominer_database/config/config_default.ini --no-munge
+cytominer-database ingest \
+  ~/bucket/projects/${PROJECT_NAME}/workspace/qc/${BATCH_ID}/results sqlite:///qc/${BATCH_ID}_QC.sqlite \
+  -c software/cytominer-database/cytominer_database/config/config_default.ini \
+  --no-munge
 
 rsync qc/${BATCH_ID}_QC.sqlite ~/bucket/projects/${PROJECT_NAME}/workspace/qc/${BATCH_ID}_QC.sqlite
 ```
 
-You can then download the database to your local machine; to update the S3 image paths to your local image paths 
-you'll need to configure and execute the following SQL statement (DB Browser for SQLite, for example, allows you 
-to do this easily in the GUI).  You need only specify the parts of the paths that are different, not the whole path.
+You can then download the database to your local machine; to update the S3 image paths to your local image paths you'll need to configure and execute the following SQL statement (DB Browser for SQLite, for example, allows you to do this easily in the GUI).
+You need only specify the parts of the paths that are different, not the whole path.
 
 ```sql
 UPDATE Image
@@ -127,7 +141,7 @@ WHERE PathName_OrigRNA LIKE '%/home/ubuntu/bucket/projects/%'
 
 Windows users must also then execute the following statements to change the direction of any slashes in the path.
 
-```sql
+```{sql}
 UPDATE Image
 SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, '/', '\')
 WHERE PathName_OrigBrightfield LIKE '%/%';
@@ -149,22 +163,22 @@ WHERE PathName_OrigRNA LIKE '%/%'
 ```
 
 You can now configure your CPA properties file with the name of your new database and perform the QC.
-For more information on this process, see the CellProfiler/tutorials repo.
+For more information on this process, see the Quality Control tutorial in the CellProfiler/tutorials repo.
 
+## Analysis
 
-## Analysis 
-### Single node
+### Single Node
+
 To run the analysis pipeline directly on the EC2 node, run the contents of `cp_docker_commands.txt` for each plate
 
 ```sh
-for PLATE_ID in $(cat ${PLATES}); do 
+for PLATE_ID in $(cat ${PLATES}); do
   parallel -a ../../batchfiles/${BATCH_ID}/${PLATE_ID}/analysis/cp_docker_commands.txt
 done
-
 ```
 
-If this is run on the EC2 node, this is the resulting structure of `analysis`, containing the output of `analysis.cppipe`, on EFS (one level below `workspace`). Files for only `SQ00015167` are shown.
-
+If this is run on the EC2 node, this is the resulting structure of `analysis`, containing the output of `analysis.cppipe`, on EFS (one level below `workspace`).
+Files for only `SQ00015167` are shown.
 
 ```
 └── analysis
@@ -182,11 +196,11 @@ If this is run on the EC2 node, this is the resulting structure of `analysis`, c
                         └── A01_s1--nuclei_outlines.png
 ```
 
-`A01-1` is site 1 of well A01. In a 384-well plate, there will be 384\*9 such folders.
-Note that the file `Experiment.csv` may get created one level above, i.e., under `A01-1` (see https://github.com/CellProfiler/CellProfiler/issues/1110)
+`A01-1` is site 1 of well A01.
+In a 384-well plate, there will be 384\*9 such folders.
+Note that the file `Experiment.csv` may get created one level above, i.e., under `A01-1` (see https://github.com/CellProfiler/CellProfiler/issues/1110).
 
-Sync this folder to S3, maintaining the same structure. If you used DCP to run this pipeline (discussed below), the files will have been stored directly on S3, in which case there's no need to do a sync.
-
+Sync this folder to S3, maintaining the same structure.
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/
@@ -222,12 +236,11 @@ python run.py \
   ../cellpainting_scripts/dcp_config_files/analysis_config.json
 ```
 
-Start the monitor.  Do this in a tmux session. Replace `APP_NAME` the value of APP_NAME in `analysis_config.py`
+Start the monitor.
+Do this in a tmux session.
 
 **Note:** Unless you run the monitor, the fleet will never be killed!
 
 ```sh
-python run.py monitor files/APP_NAMESpotFleetRequestId.json
+python run.py monitor files/${PROJECT_NAME}_AnalysisSpotFleetRequestId.json
 ```
-
-
