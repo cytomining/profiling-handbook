@@ -118,7 +118,7 @@ rsync qc/${BATCH_ID}_QC.sqlite ~/bucket/projects/${PROJECT_NAME}/workspace/qc/${
 You can then download the database to your local machine; to update the S3 image paths to your local image paths you'll need to configure and execute the following SQL statement (DB Browser for SQLite, for example, allows you to do this easily in the GUI).
 You need only specify the parts of the paths that are different, not the whole path.
 
-```sql
+```
 UPDATE Image
 SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, '/home/ubuntu/bucket/projects/s3/path/to/files/', '/local/path/to/files/')
 WHERE PathName_OrigBrightfield LIKE '%/home/ubuntu/bucket/projects/%';
@@ -141,7 +141,7 @@ WHERE PathName_OrigRNA LIKE '%/home/ubuntu/bucket/projects/%'
 
 Windows users must also then execute the following statements to change the direction of any slashes in the path.
 
-```sql
+```
 UPDATE Image
 SET PathName_OrigBrightfield= REPLACE(PathName_OrigBrightfield, '/', '\')
 WHERE PathName_OrigBrightfield LIKE '%/%';
