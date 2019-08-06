@@ -105,7 +105,7 @@ For downstream purposes, i.e. `cytominer`, you may choose to use only so much of
 We'll also set the SAMPLE_PLATE_ID variable, which is used in the profiling steps when a single plate name is required
 
 ```sh
-mkdir -p scratch/${BATCH_ID}/
+mkdir -p ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/
 
 PLATES=$(readlink -f ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/plates_to_process.txt)
 
