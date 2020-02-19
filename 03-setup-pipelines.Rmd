@@ -112,6 +112,8 @@ PLATES=$(readlink -f ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/plates_
 echo "SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165"|tr " " "\n" > ${PLATES}
 
 SAMPLE_PLATE_ID=SQ00015130
+
+SAMPLE_FULL_PLATE_NAME=SQ0015130__2019-08-30T18_45_25-Measurement1
 ```
 
 ## Create LoadData CSVs
@@ -144,7 +146,7 @@ metadata:
 Often, the values of the keys for channels are different in `Index.idx.xml`, so for example, above, we have `Brightfieldlow: OrigBrightfield` but the keys for channels could be different in `Index.idx.xml`:
 
 ```
-$ tail -n 500 Index.idx.xml|grep ChannelName|sort -u
+$ tail -n 500 ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/${SAMPLE_FULL_PLATE_NAME}/Images/Index.idx.xml|grep ChannelName|sort -u
 
       <ChannelName>488 long</ChannelName>
       <ChannelName>Alexa 488</ChannelName>
