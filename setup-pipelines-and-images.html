@@ -283,14 +283,15 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
 <div id="create-list-of-plates" class="section level2">
 <h2><span class="header-section-number">3.5</span> Create List of Plates</h2>
 <p>Create a text file with one plate id per line. The plate IDs, if using <code>pe2loaddata</code>, must match the plate IDs given when operating the Phenix. Otherwise, they should match CellProfiler’s understanding of the <code>Plate</code> grouping variable, whether that is explicitly stated in a loaddata CSV OR produced from the Metadata module if the CSVs and/or batch files are created using CellProfiler’s input modules. For downstream purposes, i.e. <code>cytominer</code>, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. <code>SQ00015167</code> instead of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> to keep the names compact.</p>
-<p>We’ll also set the SAMPLE_PLATE_ID variable, which is used in the profiling steps when a single plate name is required</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/
 
-<span class="va">PLATES=$(</span><span class="fu">readlink</span> -f ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/plates_to_process.txt<span class="va">)</span>
-
-<span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span>
-
-<span class="va">SAMPLE_PLATE_ID=</span>SQ00015130
+<span class="va">PLATES=$(</span><span class="fu">readlink</span> -f ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/plates_to_process.txt<span class="va">)</span></code></pre></div>
+<p>Option 1: create the list</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span></code></pre></div>
+<p>Option 2: create the list automatically, using some pattern to create the shortened name of the plate (e.g. <code>SQ00015130</code> is the first substring of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> when split by <code>_</code>). This creates a list of all plates in the batch:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">ls</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/<span class="va">${BATCH_ID}</span>/images/ <span class="kw">|</span> <span class="fu">cut</span> -d <span class="st">&#39;_&#39;</span> -f 1 <span class="op">&gt;&gt;</span> <span class="va">$PLATES</span></code></pre></div>
+<p>We’ll also set the <code>SAMPLE_PLATE_ID</code> and <code>SAMPLE_FULL_PLATE_NAME</code> variables, which are used in the profiling steps when a single plate name is required</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">SAMPLE_PLATE_ID=</span>SQ00015130
 
 <span class="va">SAMPLE_FULL_PLATE_NAME=</span>SQ0015130__2019-08-30T18_45_25-Measurement1</code></pre></div>
 </div>
