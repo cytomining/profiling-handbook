@@ -290,7 +290,9 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
 
 <span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span>
 
-<span class="va">SAMPLE_PLATE_ID=</span>SQ00015130</code></pre></div>
+<span class="va">SAMPLE_PLATE_ID=</span>SQ00015130
+
+<span class="va">SAMPLE_FULL_PLATE_NAME=</span>SQ0015130__2019-08-30T18_45_25-Measurement1</code></pre></div>
 </div>
 <div id="create-loaddata-csvs" class="section level2">
 <h2><span class="header-section-number">3.6</span> Create LoadData CSVs</h2>
@@ -313,7 +315,7 @@ metadata:
     ImageResolutionX: ImageResolutionX
     [...]</code></pre>
 <p>Often, the values of the keys for channels are different in <code>Index.idx.xml</code>, so for example, above, we have <code>Brightfieldlow: OrigBrightfield</code> but the keys for channels could be different in <code>Index.idx.xml</code>:</p>
-<pre><code>$ tail -n 500 Index.idx.xml|grep ChannelName|sort -u
+<pre><code>$ tail -n 500 ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/${SAMPLE_FULL_PLATE_NAME}/Images/Index.idx.xml|grep ChannelName|sort -u
 
       &lt;ChannelName&gt;488 long&lt;/ChannelName&gt;
       &lt;ChannelName&gt;Alexa 488&lt;/ChannelName&gt;
