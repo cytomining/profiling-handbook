@@ -38,6 +38,17 @@ This is the resulting structure of `software` on EFS (one level below `workspace
     └── pe2loaddata
 ```
 
+## Update some packages
+
+The AWS Virtual Machine has several required packages preinstalled. 
+However, the ones listed below need to be updated. 
+
+### cytominer-database
+
+```sh
+pyenv shell 3.5.1
+pip install --upgrade cytominer-database`
+```
 
 ## Setup Distributed CellProfiler
 
