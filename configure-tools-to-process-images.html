@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Configure Tools to Process Images | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.17.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Configure Tools to Process Images | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-02-19" />
+<meta name="date" content="2020-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -116,7 +116,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="part"><span><b>II Images to measurements</b></span></li>
 <li class="chapter" data-level="2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html"><i class="fa fa-check"></i><b>2</b> Configure Tools to Process Images</a><ul>
 <li class="chapter" data-level="2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#download-software"><i class="fa fa-check"></i><b>2.1</b> Download Software</a></li>
-<li class="chapter" data-level="2.2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#setup-distributed-cellprofiler"><i class="fa fa-check"></i><b>2.2</b> Setup Distributed CellProfiler</a></li>
+<li class="chapter" data-level="2.2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#update-some-packages"><i class="fa fa-check"></i><b>2.2</b> Update some packages</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#cytominer-database"><i class="fa fa-check"></i><b>2.2.1</b> cytominer-database</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#setup-distributed-cellprofiler"><i class="fa fa-check"></i><b>2.3</b> Setup Distributed CellProfiler</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html"><i class="fa fa-check"></i><b>3</b> Setup Pipelines and Images</a><ul>
 <li class="chapter" data-level="3.1" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#get-cellprofiler-pipelines"><i class="fa fa-check"></i><b>3.1</b> Get CellProfiler Pipelines</a></li>
@@ -243,8 +246,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     ├── cytominer_scripts
     └── pe2loaddata</code></pre>
 </div>
+<div id="update-some-packages" class="section level2">
+<h2><span class="header-section-number">2.2</span> Update some packages</h2>
+<p>The AWS Virtual Machine has several required packages preinstalled. However, the ones listed below need to be updated.</p>
+<div id="cytominer-database" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> cytominer-database</h3>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">pyenv</span> shell 3.5.1
+<span class="ex">pip</span> install --upgrade cytominer-database<span class="kw">`</span></code></pre></div>
+</div>
+</div>
 <div id="setup-distributed-cellprofiler" class="section level2">
-<h2><span class="header-section-number">2.2</span> Setup Distributed CellProfiler</h2>
+<h2><span class="header-section-number">2.3</span> Setup Distributed CellProfiler</h2>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/software/Distributed-CellProfiler/
 
 <span class="ex">pyenv</span> shell 2.7.12
