@@ -4,7 +4,7 @@
 
 ## Launch an AWS Virtual Machine
 
-Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/ (currently private to Imaging Platform).
+Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/cytomining/cytominer-vm.
 Note that the region must be set to `US East (N. Virginia)` (`us-east-1a` or `us-east-1b`).
 To use a different region, modify the `vpc` module in the AWS infrastructure setup.
 
