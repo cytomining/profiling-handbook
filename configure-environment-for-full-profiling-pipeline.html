@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-03-23" />
+<meta name="date" content="2020-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 1</span> Configure Environment for Full Profiling Pipeline</h1>
 <div id="launch-an-aws-virtual-machine" class="section level2">
 <h2><span class="header-section-number">1.1</span> Launch an AWS Virtual Machine</h2>
-<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/" class="uri">https://github.com/broadinstitute/imaging-vms/blob/master/cytominer/</a> (currently private to Imaging Platform). Note that the region must be set to <code>US East (N. Virginia)</code> (<code>us-east-1a</code> or <code>us-east-1b</code>). To use a different region, modify the <code>vpc</code> module in the AWS infrastructure setup.</p>
+<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/cytomining/cytominer-vm" class="uri">https://github.com/cytomining/cytominer-vm</a>. Note that the region must be set to <code>US East (N. Virginia)</code> (<code>us-east-1a</code> or <code>us-east-1b</code>). To use a different region, modify the <code>vpc</code> module in the AWS infrastructure setup.</p>
 <p>You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume (roughly, EBS size should be ((number of cores -1) * 30)+20).</p>
 <p>Note: Proper configuration is essential to mount the S3 bucket. The following configuration provides an example, named <code>imaging_platform</code> (modifications will be necessary).</p>
 <ul>
