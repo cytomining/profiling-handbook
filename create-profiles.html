@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-04-14" />
+<meta name="date" content="2020-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -533,7 +533,7 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 
 <span class="fu">head</span> -1 \
   ../../backend/<span class="va">${BATCH_ID}</span>/<span class="va">${SAMPLE_PLATE_ID}</span>/<span class="va">${SAMPLE_PLATE_ID}</span>.csv \
-  <span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot;,&quot;</span> <span class="st">&quot;\n&quot;</span><span class="kw">|</span><span class="fu">grep</span> -v Meta<span class="kw">|</span><span class="fu">grep</span> -E -v <span class="st">&#39;Granularity_14|Granularity_15|Granularity_16|Manders|RWC&#39;</span> <span class="op">&gt;&gt;</span> \
+  <span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot;,&quot;</span> <span class="st">&quot;\n&quot;</span><span class="kw">|</span><span class="fu">grep</span> -v Meta<span class="kw">|</span><span class="fu">grep</span> -E -v <span class="st">&#39;Granularity_14|Granularity_15|Granularity_16|Manders|RWC|Costes&#39;</span> <span class="op">&gt;&gt;</span> \
   ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/manual.txt</code></pre></div>
 </div>
 </div>
