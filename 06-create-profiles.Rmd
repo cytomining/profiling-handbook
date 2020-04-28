@@ -413,7 +413,7 @@ echo "variable" > ../../parameters/${BATCH_ID}/variable_selection/manual.txt
 
 head -1 \
   ../../backend/${BATCH_ID}/${SAMPLE_PLATE_ID}/${SAMPLE_PLATE_ID}.csv \
-  |tr "," "\n"|grep -v Meta|grep -E -v 'Granularity_14|Granularity_15|Granularity_16|Manders|RWC' >> \
+  |tr "," "\n"|grep -v Meta|grep -E -v 'Granularity_14|Granularity_15|Granularity_16|Manders|RWC|Costes' >> \
   ../../parameters/${BATCH_ID}/variable_selection/manual.txt
 ```
 
