@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Create Profiles | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Create Profiles | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-04-28" />
+<meta name="date" content="2020-07-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,14 +135,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
+<li class="chapter" data-level="5.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="5.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
+<li class="chapter" data-level="5.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
@@ -227,9 +227,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">6.1</span> Confirm Environment Configuration</h2>
 <p>If you are starting from here, make sure the following steps have been completed on your ec2 instance and/or session before proceeding</p>
 <ul>
-<li><a href="configure-environment-for-full-profiling-pipeline.html#configure-environment-for-full-profiling-pipeline">Configure Environment for Full Profiling Pipeline</a></li>
-<li><a href="configure-tools-to-process-images.html#download-software">Download software</a></li>
-<li><a href="setup-pipelines-and-images.html#create-list-of-plates">Create list of plates</a></li>
+<li>[Configure Environment for Full Profiling Pipeline]</li>
+<li>[Download software]</li>
+<li>[Create list of plates]</li>
 </ul>
 </div>
 <div id="create-database-backend" class="section level2">
@@ -276,7 +276,7 @@ For pipelines that use FlagImage to skip the measurements modules if the image f
 
 
 <div class="rmdnote">
-There is a known <a href="https://github.com/cytomining/cytominer-database/issues/100">issue</a> where if the alphabetically-first CSV failed QC in a pipeline where “Skip image if flagged” is turned on, the databases will not be created. We are working to fix this, but in the meantime we recommend either not skipping processing of your flagged images (and removing them from your data downstream) or deleting the alphabetically-first CSVs until you come to one where the pipeline ran completely.
+There is a known <a href="https://github.com/cytomining/cytominer-database/issues/100">issue</a> where if the alphabetically-first CSV failed QC in a pipeline where &quot;Skip image if flagged&quot; is turned on, the databases will not be created. We are working to fix this, but in the meantime we recommend either not skipping processing of your flagged images (and removing them from your data downstream) or deleting the alphabetically-first CSVs until you come to one where the pipeline ran completely.
 </div>
 
 <p>This is the resulting structure of <code>backend</code> on S3 (one level below <code>workspace</code>) for <code>SQ00015167</code>:</p>
@@ -420,7 +420,7 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 </div>
 <div id="normalize" class="section level2">
 <h2><span class="header-section-number">6.4</span> Normalize</h2>
-<p>Use all wells on the plate to normalize each feature. By default, this performs robust z-scoring per feature. The default input is the annotated per-well data. The column picked for normalization (e.g. “Metadata_Well”) needs to be present in the CSV; if it was added in the augmentation step (e.g. “cell_id”) it will now have the prefix “Metadata” prepended to it)</p>
+<p>Use all wells on the plate to normalize each feature. By default, this performs robust z-scoring per feature. The default input is the annotated per-well data. The column picked for normalization (e.g. &quot;Metadata_Well&quot;) needs to be present in the CSV; if it was added in the augmentation step (e.g. &quot;cell_id&quot;) it will now have the prefix &quot;Metadata&quot; prepended to it)</p>
 <p>We use <a href="https://github.com/broadinstitute/cytominer_scripts/blob/master/normalize.R">normalize.R</a> for this procedure.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
   --no-run-if-empty \
@@ -436,7 +436,7 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 
 <div class="rmdnote">
 <ul>
-<li>Don’t escape quotes if not using parallel i.e. use <code>--subset &quot;Metadata_Well != '''dummy'''&quot;</code> if not using within parallel.</li>
+<li>Don't escape quotes if not using parallel i.e. use <code>--subset &quot;Metadata_Well != '''dummy'''&quot;</code> if not using within parallel.</li>
 <li>To use a different reference distribution to compute the median and m.a.d. for z-scoring, change the filter specified using the <code>--subset</code> flag.
 </div>
 </li>
@@ -472,7 +472,7 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 </div>
 <div id="select-variables" class="section level2">
 <h2><span class="header-section-number">6.5</span> Select Variables</h2>
-<p>Create samples to do variable selection. Sample some wells from each replicate plate (if your experiment contains multiple copies of identical plates). Below, this is done by sample 2 entire replicate plates per platemap. Use <code>-n</code> (<code>--replicates</code>) to specify number of replicate <strong>plates</strong> to be used to create the sample (if you don’t have identical replicate plates in your experiment, you can set this to 1).</p>
+<p>Create samples to do variable selection. Sample some wells from each replicate plate (if your experiment contains multiple copies of identical plates). Below, this is done by sample 2 entire replicate plates per platemap. Use <code>-n</code> (<code>--replicates</code>) to specify number of replicate <strong>plates</strong> to be used to create the sample (if you don't have identical replicate plates in your experiment, you can set this to 1).</p>
 <div id="sample-data" class="section level3">
 <h3><span class="header-section-number">6.5.1</span> Sample Data</h3>
 <p>Samples are created for both, normalized and unnormalized data, because the variable selection techniques may require both.</p>
@@ -498,7 +498,7 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 <p>We use <a href="https://github.com/broadinstitute/cytominer_scripts/blob/master/preselect.R">preselect.R</a> for these procedures.</p>
 <div id="replicate-correlation" class="section level4">
 <h4><span class="header-section-number">6.5.2.1</span> Replicate Correlation</h4>
-<p>Make a list of variables to be preserved after <a href="https://cytomining.github.io/cytominer/reference/replicate_correlation.html"><code>replicate_correlation</code></a> variable selection is performed. If you don’t have replicate <strong>plates</strong> in this experiment, skip this step.</p>
+<p>Make a list of variables to be preserved after <a href="https://cytomining.github.io/cytominer/reference/replicate_correlation.html"><code>replicate_correlation</code></a> variable selection is performed. If you don't have replicate <strong>plates</strong> in this experiment, skip this step.</p>
 <p>To evaluate features for their replicability, use all the normalized profiles of treatments in the experiment (selected below using <code>Metadata_broad_sample_type == 'trt'</code>).</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">./preselect.R</span> \
   --batch_id <span class="va">${BATCH_ID}</span> \
@@ -539,7 +539,7 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 </div>
 <div id="alternate-load-previous-preselect-configuration" class="section level3">
 <h3><span class="header-section-number">6.5.3</span> Alternate: Load previous preselect configuration</h3>
-<p>You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch. Here’s how you’d copy these files.</p>
+<p>You may have already performed these steps for a different batch of data, and want to simply copy the parameters to this batch. Here's how you'd copy these files.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../parameters/<span class="va">${BATCH_ID}</span>/variable_selection/
 
 <span class="va">REFERENCE_BATCH_ID=</span>2018_02_23_LKCP_DBG

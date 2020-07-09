@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Setup Pipelines and Images | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Setup Pipelines and Images | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-04-28" />
+<meta name="date" content="2020-07-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,14 +135,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
+<li class="chapter" data-level="5.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="5.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
+<li class="chapter" data-level="5.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
@@ -240,15 +240,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="specify-pipeline-set" class="section level2">
 <h2><span class="header-section-number">3.2</span> Specify Pipeline Set</h2>
 <pre><code>PIPELINE_SET=cellpainting_a549_20x_with_bf_phenix_bin1</code></pre>
-<p>Ensure that, both, <code>analysis.cppipe</code> as well as <code>illum.cppipe</code> are present for this set. As well, each pipeline should have a <code>_without_batchfile</code> version of it in the same directory. It’s easy to create such a version of the pipeline - simply copy it and set <code>enabled=False</code> for the <code>CreateBatchFiles</code> module (like <a href="https://github.com/broadinstitute/imaging-platform-pipelines/blob/master/cellpainting_u2os_20x_imagexpress/illum_without_batchfile.cppipe#L384">here</a>).</p>
+<p>Ensure that, both, <code>analysis.cppipe</code> as well as <code>illum.cppipe</code> are present for this set. As well, each pipeline should have a <code>_without_batchfile</code> version of it in the same directory. It's easy to create such a version of the pipeline - simply copy it and set <code>enabled=False</code> for the <code>CreateBatchFiles</code> module (like <a href="https://github.com/broadinstitute/imaging-platform-pipelines/blob/master/cellpainting_u2os_20x_imagexpress/illum_without_batchfile.cppipe#L384">here</a>).</p>
 </div>
 <div id="upload-images" class="section level2">
 <h2><span class="header-section-number">3.3</span> Upload Images</h2>
 <p>Your image files should be uploaded to AWS from your local compute environment via a tool like Cyberduck or the AWS CLI (<code>aws s3 sync /local/path s3://BUCKET/PROJECT_NAME/BATCH_ID/images</code>) (see also Appendix A.2 for more information on folder structures). Some important tips BEFORE uploading (these are much more difficult to fix once uploaded):</p>
 <ul>
-<li>Ensure your image sets are complete i.e. all image sets should have the same number of channels and z-planes, and that this is true across the entire batch of plates you are processing.</li>
+<li>Ensure your image sets are complete i.e. all image sets should have the same number of channels and z-planes, and that this is true across the entire batch of plates you are processing.</li>
 <li>Avoid folder names with spaces</li>
-<li>Plate names should not have leading 0’s (ie <code>123</code> not <code>000123</code>)</li>
+<li>Plate names should not have leading 0's (ie <code>123</code> not <code>000123</code>)</li>
 <li>VERY IMPORTANT- If using <code>pe2loaddata</code> (described later) to generate your image CSVs, please ensure the folder name contains the plate name given when imaging on the Phenix microscope (can be checked in the <code>Index.idx.xml</code>)</li>
 </ul>
 </div>
@@ -281,19 +281,19 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
                 ├── r01c01f01p01-ch3sk1fk1fl1.tiff
                 ├── r01c01f01p01-ch4sk1fk1fl1.tiff
                 └── r01c01f01p01-ch5sk1fk1fl1.tiff</code></pre>
-<p><code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> is the typical nomenclature followed by Broad Chemical Biology Platform for plate names. <code>Measurement1</code> indicates the first attempt to image the plate. <code>Measurement2</code> indicates second attempt and so on. Ensure that there’s only one folder corresponding to a plate before running <code>create_csv_from_xml.sh</code> below (it gracefully exits if not).</p>
+<p><code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> is the typical nomenclature followed by Broad Chemical Biology Platform for plate names. <code>Measurement1</code> indicates the first attempt to image the plate. <code>Measurement2</code> indicates second attempt and so on. Ensure that there's only one folder corresponding to a plate before running <code>create_csv_from_xml.sh</code> below (it gracefully exits if not).</p>
 </div>
 <div id="create-list-of-plates" class="section level2">
 <h2><span class="header-section-number">3.5</span> Create List of Plates</h2>
-<p>Create a text file with one plate id per line. The plate IDs, if using <code>pe2loaddata</code>, must match the plate IDs given when operating the Phenix. Otherwise, they should match CellProfiler’s understanding of the <code>Plate</code> grouping variable, whether that is explicitly stated in a loaddata CSV OR produced from the Metadata module if the CSVs and/or batch files are created using CellProfiler’s input modules. For downstream purposes, i.e. <code>cytominer</code>, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. <code>SQ00015167</code> instead of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> to keep the names compact.</p>
+<p>Create a text file with one plate id per line. The plate IDs, if using <code>pe2loaddata</code>, must match the plate IDs given when operating the Phenix. Otherwise, they should match CellProfiler's understanding of the <code>Plate</code> grouping variable, whether that is explicitly stated in a loaddata CSV OR produced from the Metadata module if the CSVs and/or batch files are created using CellProfiler's input modules. For downstream purposes, i.e. <code>cytominer</code>, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. <code>SQ00015167</code> instead of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> to keep the names compact.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/
 
 <span class="va">PLATES=$(</span><span class="fu">readlink</span> -f ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/scratch/<span class="va">${BATCH_ID}</span>/plates_to_process.txt<span class="va">)</span></code></pre></div>
 <p>Option 1: create the list</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165&quot;</span><span class="kw">|</span><span class="fu">tr</span> <span class="st">&quot; &quot;</span> <span class="st">&quot;\n&quot;</span> <span class="op">&gt;</span> <span class="va">${PLATES}</span></code></pre></div>
 <p>Option 2: create the list automatically, using some pattern to create the shortened name of the plate (e.g. <code>SQ00015130</code> is the first substring of <code>SQ00015167__2016-04-21T03_34_00-Measurement1</code> when split by <code>_</code>). This creates a list of all plates in the batch:</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">ls</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/<span class="va">${BATCH_ID}</span>/images/ <span class="kw">|</span> <span class="fu">cut</span> -d <span class="st">&#39;_&#39;</span> -f 1 <span class="op">&gt;&gt;</span> <span class="va">$PLATES</span></code></pre></div>
-<p>We’ll also set the <code>SAMPLE_PLATE_ID</code> and <code>SAMPLE_FULL_PLATE_NAME</code> variables, which are used in the profiling steps when a single plate name is required</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">ls</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/images/<span class="va">${BATCH_ID}</span>/ <span class="kw">|</span> <span class="fu">cut</span> -d <span class="st">&#39;_&#39;</span> -f 1 <span class="op">&gt;&gt;</span> <span class="va">$PLATES</span></code></pre></div>
+<p>We'll also set the <code>SAMPLE_PLATE_ID</code> and <code>SAMPLE_FULL_PLATE_NAME</code> variables, which are used in the profiling steps when a single plate name is required</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">SAMPLE_PLATE_ID=</span>SQ00015130
 
 <span class="va">SAMPLE_FULL_PLATE_NAME=</span>SQ0015130__2019-08-30T18_45_25-Measurement1</code></pre></div>
@@ -301,7 +301,7 @@ The folder structure for <code>images</code> differs between <code>S3</code> and
 <div id="create-loaddata-csvs" class="section level2">
 <h2><span class="header-section-number">3.6</span> Create LoadData CSVs</h2>
 <p>The script below works only for Phenix microscopes – it reads a standard XML file (<code>Index.idx.xml</code>) and writes a LoadData csv file. For other microscopes, you will have to roll your own (see Appendix B). The script below requires <code>config.yml</code>, which specifies (1) the mapping between channel names in <code>Index.idx.xml</code> and the channel names in the CellProfiler pipelines and (2) metadata to extract from <code>Index.idx.xml</code>.</p>
-<p>Here’s a truncated sample <code>config.yml</code> (see the repository for the full file)</p>
+<p>Here's a truncated sample <code>config.yml</code> (see the repository for the full file)</p>
 <pre><code>channels:
     HOECHST 33342: OrigDNA
     Alexa 568: OrigAGP
@@ -339,8 +339,8 @@ metadata:
 <ul>
 <li>Ensure that all the metadata fields defined in <code>config.yml</code> are present in the <code>Index.idx.xml</code>.</li>
 <li>Ensure that the channel names are the same in <code>config.yml</code> and <code>Index.idx.xml</code></li>
-<li>Ensure that the LoadData csv files don’t already exist; if they do, delete them.</li>
-<li>The <code>max-procs</code> option is set as 1 because pe2loaddata accesses the image files on <code>s3fs</code>, which doesn’t handle multiple requests well.
+<li>Ensure that the LoadData csv files don't already exist; if they do, delete them.</li>
+<li>The <code>max-procs</code> option is set as 1 because pe2loaddata accesses the image files on <code>s3fs</code>, which doesn't handle multiple requests well.
 </div>
 </li>
 </ul>
