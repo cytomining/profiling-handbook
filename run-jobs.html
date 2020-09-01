@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Run Jobs | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.20.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Run Jobs | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-07-09" />
+<meta name="date" content="2020-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,14 +135,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
+<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
+<li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
@@ -223,7 +223,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="run-jobs" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Run Jobs</h1>
-<div id="illumination-correction" class="section level2">
+<div id="illumination-correction-1" class="section level2">
 <h2><span class="header-section-number">5.1</span> Illumination Correction</h2>
 <div id="single-node" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Single Node</h3>
@@ -286,7 +286,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Note that if your illumination correction takes longer than 12 hours to run (not uncommon, especially in CellProfiler 2.X), jobs may get started more than once. See the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Troubleshooting">troubleshooting</a> section of the DCP wiki. You should keep an eye on the output files directory <code>${PROJECT_NAME}/${BATCH_ID}/illum</code> ; when all folders have the expected number of files, it's ok to purge the queue to kill all remaining machines.</p>
 </div>
 </div>
-<div id="quality-control" class="section level2">
+<div id="quality-control-1" class="section level2">
 <h2><span class="header-section-number">5.2</span> Quality Control</h2>
 <div id="process-qc-results-into-a-database-for-cpa" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Process QC Results into a Database for CPA</h3>
@@ -349,7 +349,7 @@ WHERE PathName_OrigRNA LIKE &#39;%/%&#39;</code></pre>
 <p>You can now configure your CPA properties file with the name of your new database and perform the QC. For more information on this process, see the Quality Control tutorial in the CellProfiler/tutorials repo.</p>
 </div>
 </div>
-<div id="analysis" class="section level2">
+<div id="analysis-1" class="section level2">
 <h2><span class="header-section-number">5.3</span> Analysis</h2>
 <div id="single-node-1" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Single Node</h3>

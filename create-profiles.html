@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Create Profiles | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.20.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Create Profiles | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-07-09" />
+<meta name="date" content="2020-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,14 +135,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
+<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
+<li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
 <li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
 </ul></li>
@@ -227,9 +227,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">6.1</span> Confirm Environment Configuration</h2>
 <p>If you are starting from here, make sure the following steps have been completed on your ec2 instance and/or session before proceeding</p>
 <ul>
-<li>[Configure Environment for Full Profiling Pipeline]</li>
-<li>[Download software]</li>
-<li>[Create list of plates]</li>
+<li><a href="configure-environment-for-full-profiling-pipeline.html#configure-environment-for-full-profiling-pipeline">Configure Environment for Full Profiling Pipeline</a></li>
+<li><a href="configure-tools-to-process-images.html#download-software">Download software</a></li>
+<li><a href="setup-pipelines-and-images.html#create-list-of-plates">Create list of plates</a></li>
 </ul>
 </div>
 <div id="create-database-backend" class="section level2">
@@ -638,6 +638,17 @@ Use the <code>-c</code> flag to optionally specify the cell type.
 <div id="combine-averaged-profiles" class="section level3">
 <h3><span class="header-section-number">6.7.3</span> Combine Averaged Profiles</h3>
 <p>Combine all averaged profiles in the batch into a single file.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ../../log/<span class="va">${BATCH_ID}</span>/collate</code></pre></div>
+<p>The columns should be identical across all CSVs. Let's check for this. First create a list of columns names, per CSV file:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">parallel</span> \
+  <span class="st">&quot;csvcut -n ../../collated/</span><span class="va">${BATCH_ID}</span><span class="st">/{1}_collapsed.csv &gt; ../../log/</span><span class="va">${BATCH_ID}</span><span class="st">/collate/{1}_colnames.txt&quot;</span> :::: <span class="va">${PLATE_MAPS}</span></code></pre></div>
+<p>Next, verify that they are identical</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">diff</span> -q --from-file <span class="kw">`</span><span class="ex">parallel</span> echo ../../log/<span class="va">${BATCH_ID}</span>/collate/<span class="dt">{1}</span>_colnames.txt :::: <span class="va">${PLATE_MAPS}</span><span class="kw">`</span></code></pre></div>
+
+<div class="rmdnote">
+<code>csvstack</code> stacks CSVs even if they don't have identical columns, so proceed with the next step only if you have verified that the columns are identical.
+</div>
+
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">csvstack</span> \
   <span class="kw">`</span><span class="ex">parallel</span> echo ../../collated/<span class="va">${BATCH_ID}</span>/<span class="dt">{1}</span>_collapsed.csv :::: <span class="va">${PLATE_MAPS}</span><span class="kw">`</span> <span class="op">&gt;</span> \
    ../../collated/<span class="va">${BATCH_ID}</span>/<span class="va">${BATCH_ID}</span>_collapsed.csv</code></pre></div>
