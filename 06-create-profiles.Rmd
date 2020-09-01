@@ -555,6 +555,10 @@ csvstack \
    ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.csv
 ```
 
+```{block2, type='rmdnote'}
+- `csvstack` stacks the CSVs without checking whether the columns are identical across all CSVs. 
+```
+
 ## Audit
 
 Audit each plate map for replicate reproducibility.
