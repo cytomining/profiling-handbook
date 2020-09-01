@@ -550,14 +550,34 @@ parallel \
 Combine all averaged profiles in the batch into a single file.
 
 ```sh
+mkdir -p ../../log/${BATCH_ID}/collate
+```
+
+The columns should be identical across all CSVs.
+Let's check for this. First create a list of columns names, per CSV file:
+
+```sh
+parallel \
+  "csvcut -n {1} > ../../log/${BATCH_ID}/collate/{1}.txt" ::: \
+  `parallel echo ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}`
+```
+
+Next, verify that they are identical
+
+```sh
+diff -q --from-file `parallel echo ../../log/${BATCH_ID}/collate/{1}_collapsed.csv.txt :::: ${PLATE_MAPS}`
+```
+
+```{block2, type='rmdnote'}
+`csvstack` stacks CSVs even if they don't have identical columns, so proceed with the next step only if you have verified that the columns are identical.
+```
+
+```sh
 csvstack \
   `parallel echo ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}` > \
    ../../collated/${BATCH_ID}/${BATCH_ID}_collapsed.csv
 ```
 
-```{block2, type='rmdnote'}
-- `csvstack` stacks the CSVs without checking whether the columns are identical across all CSVs. 
-```
 
 ## Audit
 
