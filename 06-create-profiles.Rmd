@@ -558,14 +558,13 @@ Let's check for this. First create a list of columns names, per CSV file:
 
 ```sh
 parallel \
-  "csvcut -n {1} > ../../log/${BATCH_ID}/collate/{1}.txt" ::: \
-  `parallel echo ../../collated/${BATCH_ID}/{1}_collapsed.csv :::: ${PLATE_MAPS}`
+  "csvcut -n ../../collated/${BATCH_ID}/{1}_collapsed.csv > ../../log/${BATCH_ID}/collate/{1}_colnames.txt" :::: ${PLATE_MAPS}
 ```
 
 Next, verify that they are identical
 
 ```sh
-diff -q --from-file `parallel echo ../../log/${BATCH_ID}/collate/{1}_collapsed.csv.txt :::: ${PLATE_MAPS}`
+diff -q --from-file `parallel echo ../../log/${BATCH_ID}/collate/{1}_colnames.txt :::: ${PLATE_MAPS}`
 ```
 
 ```{block2, type='rmdnote'}
