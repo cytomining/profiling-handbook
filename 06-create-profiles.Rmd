@@ -90,7 +90,7 @@ cd ~/efs/${PROJECT_NAME}/workspace/software/cytominer_scripts
 
 aws s3 sync --exclude "*.sqlite" \
   s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/ \
-  ~/efs/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/
+  ~/ebs/${PROJECT_NAME}/workspace/backend/${BATCH_ID}/
 
 rsync -arzv ~/ebs_tmp/${PROJECT_NAME}/workspace/log/ ../../log
 ```
