@@ -69,7 +69,7 @@ pyenv shell 2.7.12
 
 cp ../cellpainting_scripts/dcp_config_files/illum_config.py config.py
 
-fab setup
+python run.py setup
 ```
 
 Submit jobs and start the cluster, then monitor:
