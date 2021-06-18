@@ -63,6 +63,18 @@ This path should exist:
 ls ~/bucket/projects
 ```
 
+## Create a tmux session
+
+You will want to retain environment variables once defined, and for processes to run when you are not connected, so you should create a tmux session to work in
+
+```sh
+tmux new -s sessionname
+```
+
+You can detach from this session at any time by typing `Ctl+b`, then `d`.  To reattach to an existing session, type `tmux a -t sessionname`
+
+You can list existing sessions with `tmux list-sessions` and kill any poorly-behaving session with `tmux kill-session -t sessionname`
+
 ## Define Environment Variables
 
 These variables will be used throughout the project to tag instances, logs etc so that you know which machines are working on what, which files to operate on, where your logs are, etc.
