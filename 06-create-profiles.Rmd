@@ -8,6 +8,44 @@ If you are starting from here, make sure the following steps have been completed
 * [Download software]
 * [Create list of plates]
 
+## Add a large EBS volume to your machine
+TODO - add the instructions to make and add the volume.
+Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
+
+```sh
+mkdir ~/ebs_tmp
+```
+
+```{block2, type='rmdnote'}
+If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -hs`), create and attach an EBS volume, and then mount it.
+Make sure that the EBS is created in the same region and availability zone as the ec2 instance.
+For more information about mounting the EBS see https://devopscube.com/mount-ebs-volume-ec2-instance/.
+```
+
+```sh
+# check the name of the disk
+lsblk
+
+#> NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+#> xvda    202:0    0     8G  0 disk
+#> └─xvda1 202:1    0     8G  0 part /
+#> xvdba    202:80   0   100G  0 disk
+
+# check if it has a file system
+sudo file -s /dev/xvdba
+# ...likely not, in which case you get:
+#> /dev/xvdf: data
+
+# if no file system, then create it
+sudo mkfs -t ext4 /dev/xvdba
+
+# mount it
+sudo mount /dev/xvdba /home/ubuntu/ebs_tmp/
+
+# change perm
+sudo chmod 777 ~/ebs_tmp/
+```
+
 ## Create Database Backend
 
 Run creation of sqlite backend as well as aggregation of measurements into per-well profiles.
