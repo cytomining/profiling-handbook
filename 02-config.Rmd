@@ -4,22 +4,20 @@
 
 ## Launch an AWS Virtual Machine
 
-Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*`, created using https://github.com/cytomining/cytominer-vm.
-Note that the region must be set to `US East (N. Virginia)` (`us-east-1a` or `us-east-1b`).
+Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*`, created using https://github.com/cytomining/cytominer-vm.
 To use a different region, modify the `vpc` module in the AWS infrastructure setup.
 
 You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific.
-We recommend using an `m4.xlarge` instance, with a 110Gb EBS volume (roughly, EBS size should be ((number of cores -1) * 30)+20).
+We recommend using an `m4.xlarge` instance, with an 8Gb EBS volume.
 
 Note: Proper configuration is essential to mount the S3 bucket.
 The following configuration provides an example, named `imaging_platform` (modifications will be necessary).
 
   * Launch an ec2 instance on AWS
-  * AMI: `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-1529668435`
+  * AMI: `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-18.04-amd64-server-1529668435`
   * Instance Type: m4.xlarge
   * Network: vpc-35149752 - Subnet: Default (imaging platform terraform)
   * IAM role: `s3-imaging-platform-role`
-  * Add New Volume (if necessary): `EBS` with 110 GiB
   * No Tags
   * Select Existing Security Group: `SSH_HTTP`
   * Review and Launch
@@ -81,10 +79,6 @@ MAXPROCS=3 # m4.xlarge has 4 cores; this should be # of cores on your instance -
 
 ## Create Directories
 
-```{block2, type='rmdcaution'}
-See note above about EFS - that it can only be mounted from us-east-1a or 1b.
-```
-
 ```sh
 mkdir -p ~/efs/${PROJECT_NAME}/workspace/
 
@@ -93,39 +87,3 @@ cd ~/efs/${PROJECT_NAME}/workspace/
 mkdir -p log/${BATCH_ID}
 ```
 
-Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
-This is also useful if you decide to run CellProfiler directly on this node – running the Cell Painting analysis pipeline results in large temporary files.
-
-```sh
-mkdir ~/ebs_tmp
-```
-
-```{block2, type='rmdnote'}
-If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -hs`), create and attach an EBS volume, and then mount it.
-Make sure that the EBS is created in the same region and availability zone as the ec2 instance.
-For more information about mounting the EBS see https://devopscube.com/mount-ebs-volume-ec2-instance/.
-```
-
-```sh
-# check the name of the disk
-lsblk
-
-#> NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-#> xvda    202:0    0     8G  0 disk
-#> └─xvda1 202:1    0     8G  0 part /
-#> xvdba    202:80   0   100G  0 disk
-
-# check if it has a file system
-sudo file -s /dev/xvdba
-# ...likely not, in which case you get:
-#> /dev/xvdf: data
-
-# if no file system, then create it
-sudo mkfs -t ext4 /dev/xvdba
-
-# mount it
-sudo mount /dev/xvdba /home/ubuntu/ebs_tmp/
-
-# change perm
-sudo chmod 777 ~/ebs_tmp/
-```
