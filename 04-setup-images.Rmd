@@ -98,6 +98,8 @@ This can be any single plate name, this time using the full name.
 
 ## Create LoadData CSVs
 
+(if using `pe2loaddata` to create image sets)
+
 The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file.
 For other microscopes, you will have to roll your own (see Appendix B).
 The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines and (2) metadata to extract from `Index.idx.xml`.
@@ -204,10 +206,18 @@ Files for only `SQ00015167` are shown.
 `load_data_with_illum.csv` will be used by `analysis.cppipe`.
 When creating `load_data_with_illum.csv`, the script assumes a specific location for the folder containing the illumination correction files.
 
+## Upload image location files to S3
+
+If using `pe2loaddata`, run the command below
+
 Copy the load data files to S3:
 
 ```sh
 aws s3 sync \
-  ../../load_data_csv/${BATCH_ID}/ \
+  ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/ \
   s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/
 ```
+
+If using your own home-created load data CSVs, load them to the same location - `s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}` - we strongly recommend the structure of making one subfolder with CSVs in it per plate and then using the names `load_data.csv` for CSVs without illum files and `load_data_with_illum.csv` for those with the illum files.
+
+If using batch files, we recommend uploading them to `s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/batchfiles/${BATCH_ID}`, giving each batch file a unique name to reflect which step it is for - since the process of creating batchfiles can be onerous, subsequent steps assume you will make one batchfile per batch rather than per plate, but you may adjust this if you like.
