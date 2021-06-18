@@ -1,0 +1,29 @@
+# (PART) Images to measurements  {-}
+
+# Configure Tools to Process Images
+
+## Download Software
+
+You may need to authenticate your GitHub account to be able to clone these:
+
+(Note that cellpainting_scripts is currently a private repository; contact our team for access)
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/
+mkdir software
+cd software
+git clone https://github.com/broadinstitute/pe2loaddata.git
+git clone https://github.com/CellProfiler/Distributed-CellProfiler.git
+
+cd ..
+```
+
+If these repos have already been cloned, `git pull` to make sure they are up to date.
+
+This is the resulting structure of `software` on EFS (one level below `workspace`):
+```
+└── software
+    ├── Distributed-CellProfiler
+    └── pe2loaddata
+```
+
