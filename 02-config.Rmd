@@ -2,7 +2,7 @@
 
 # Configure Environment for Full Profiling Pipeline
 
-## Launch an AWS Virtual Machine
+## Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler
 
 Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*`, created using https://github.com/cytomining/cytominer-vm.
 To use a different region, modify the `vpc` module in the AWS infrastructure setup.
