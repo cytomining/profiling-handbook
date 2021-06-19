@@ -2,21 +2,26 @@
 
 # Configure Environment for Full Profiling Pipeline
 
+> _TODO: Maybe clarify that users should have an S3 bucket and EFS set up already?_
+
 ## Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler
 
-Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*`, created using https://github.com/cytomining/cytominer-vm.
+Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*`, created using [cytominer-vm](https://github.com/cytomining/cytominer-vm).
 To use a different region, modify the `vpc` module in the AWS infrastructure setup.
+
+> _TODO: Clarify what we mean by "AWS infrastructure setup" here. Is it the config below? Or the cytominer_ami.json file in the VM?_
 
 You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific.
 We recommend using an `m4.xlarge` instance, with an 8Gb EBS volume.
 
 Note: Proper configuration is essential to mount the S3 bucket.
-The following configuration provides an example, named `imaging_platform` (modifications will be necessary).
+The following configuration provides an example, named `imaging-platform` (modifications will be necessary).
 
   * Launch an ec2 instance on AWS
   * AMI: `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-18.04-amd64-server-1529668435`
   * Instance Type: m4.xlarge
-  * Network: vpc-35149752 - Subnet: Default (imaging platform terraform)
+  * Network: vpc-35149752 
+  * Subnet: Default (imaging platform terraform)
   * IAM role: `s3-imaging-platform-role`
   * No Tags
   * Select Existing Security Group: `SSH_HTTP`
@@ -30,6 +35,9 @@ If not, run `sudo mount -a`.
 Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`.
 This can be changed by appropriately editing the EFS configuration via Terraform.
 ```
+
+> _TODO: Clarify what changes need to be made to allow mounting from a different region because users are unlikely to have used Terraform_
+
 
 Log in to the EC2 instance.
 
@@ -71,7 +79,8 @@ You will want to retain environment variables once defined, and for processes to
 tmux new -s sessionname
 ```
 
-You can detach from this session at any time by typing `Ctl+b`, then `d`.  To reattach to an existing session, type `tmux a -t sessionname`
+You can detach from this session at any time by typing `Ctl+b`, then `d`.  
+To reattach to an existing session, type `tmux a -t sessionname`
 
 You can list existing sessions with `tmux list-sessions` and kill any poorly-behaving session with `tmux kill-session -t sessionname`
 
@@ -98,4 +107,3 @@ cd ~/efs/${PROJECT_NAME}/workspace/
 
 mkdir -p log/${BATCH_ID}
 ```
-
