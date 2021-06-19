@@ -81,21 +81,21 @@ In general, as long as you are running inside a tmux session and it isn't killed
 
 ### (Optional) QC
 
-* Your `APP_NAME` variable should be set to the `appname` set in `run_batch_general.py` plus `_QC`, ie `2015_10_05_DrugRepurposing_QC`
-* Your number of `CLUSTER_MACHINES` should be medium-large, ie a hundred or few hundred.
-* Your `SQS_MESSAGE_VISIBILITY` should be short, such as `5*60` (5 minutes)
+- Your `APP_NAME` variable should be set to the `appname` set in `run_batch_general.py` plus `_QC`, ie `2015_10_05_DrugRepurposing_QC`
+- Your number of `CLUSTER_MACHINES` should be medium-large, ie a hundred or few hundred.
+- Your `SQS_MESSAGE_VISIBILITY` should be short, such as `5*60` (5 minutes)
 
 ### Illumination Correction
 
-* Your `APP_NAME` variable should be set to the `appname` set in `run_batch_general.py` plus `_Illum`, ie `2015_10_05_DrugRepurposing_Illum`
-* Your number of `CLUSTER_MACHINES` should be set to the number of plates you have divided by 4 then rounded up, ie 6 for 22 plates
-* Your `SQS_MESSAGE_VISIBILITY` should be 12 hours `720*60` 
+- Your `APP_NAME` variable should be set to the `appname` set in `run_batch_general.py` plus `_Illum`, ie `2015_10_05_DrugRepurposing_Illum`
+- Your number of `CLUSTER_MACHINES` should be set to the number of plates you have divided by 4 then rounded up, ie 6 for 22 plates
+- Your `SQS_MESSAGE_VISIBILITY` should be 12 hours `720*60` 
 
 ### (Optional) Assay Dev
 
-* Your `APP_NAME` variable should be set to the `appname` set in `run_batch_general.py` plus `_AssayDev`, ie `2015_10_05_DrugRepurposing_AssayDev`
-* Your number of `CLUSTER_MACHINES` should be medium-large, ie a hundred or few hundred.
-* Your `SQS_MESSAGE_VISIBILITY` should be short, such as `5*60` (5 minutes)
+- Your `APP_NAME` variable should be set to the `appname` set in `run_batch_general.py` plus `_AssayDev`, ie `2015_10_05_DrugRepurposing_AssayDev`
+- Your number of `CLUSTER_MACHINES` should be medium-large, ie a hundred or few hundred.
+- Your `SQS_MESSAGE_VISIBILITY` should be short, such as `5*60` (5 minutes)
 
 ### Analysis
 
@@ -105,7 +105,9 @@ In general, as long as you are running inside a tmux session and it isn't killed
 
 # Do any post-CellProfiler steps
 
-The optional QC and assay development steps have post-CellProfiler components.  These pipelines need only be run if the user plans to do these post-CellProfiler steps. 
+The optional QC and assay development steps have post-CellProfiler components.  
+These pipelines need only be run if the user plans to do these post-CellProfiler steps. 
+
 * QC may require visual inspection of images, [creation of a machine learning classifier to detect poor quality images](https://github.com/CellProfiler/tutorials/tree/master/QualityControl), and/or running scripts to evaluate CV.  How best to evaluate quality is left to the user.
 * The assay development step creates images to be visually evaluated, either individually or [after stitching for easier evaluation](https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpz1.89)
 * After running the final analysis pipelines, proceed to the next step of this guide.
