@@ -9,7 +9,9 @@ If you are starting from here, make sure the following steps have been completed
 * [Create list of plates]
 
 ## Add a large EBS volume to your machine
-TODO - add the instructions to make and add the volume.
+
+> _TODO: add the instructions to make and add the volume._
+
 Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
 
 ```sh
