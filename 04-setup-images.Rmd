@@ -2,13 +2,13 @@
 
 ## Upload Images
 
-Your image files should be uploaded to AWS from your local compute environment via a tool like Cyberduck or the AWS CLI (`aws s3 sync /local/path s3://BUCKET/PROJECT_NAME/BATCH_ID/images`) (see also Appendix A.2 for more information on folder structures).
+Your image files should be uploaded to AWS from your local compute environment via a tool like [Cyberduck](https://cyberduck.io/) or the [AWS CLI](https://aws.amazon.com/cli/) (`aws s3 sync /local/path s3://BUCKET/PROJECT_NAME/BATCH_ID/images`) (see also Appendix A.2 for more information on folder structures).
 Some important tips BEFORE uploading (these are much more difficult to fix once uploaded):
 
 * Ensure your image sets are complete i.e. all image sets should have the same number of channels and z-planes, and that this is true across the entire batch of plates you are processing.
 * Avoid folder names with spaces
 * Plate names should not have leading 0's (ie `123` not `000123`)
-* VERY  IMPORTANT- If using `pe2loaddata` (described later) to generate your image CSVs, please ensure the folder name contains the plate name given when imaging on the Phenix microscope (can be checked in the `Index.idx.xml`)
+* *VERY  IMPORTANT*: If using `pe2loaddata` (described later) to generate your image CSVs, please ensure the folder name contains the plate name given when imaging on the Phenix microscope (can be checked in the `Index.idx.xml`)
 
 ## Prepare Images
 
@@ -86,24 +86,28 @@ ls ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/ | cut -d '_' -f 1 >> $PLA
 ls ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/ >> $FULL_PLATES
 ```
 
-Check that your plate names are correct by nano $PLATES and nano $FULL_PLATES. If your plate names contain underscores, you may need to fix the simplified plate names. Both should have the same number of rows as the number of plates in your batch.
+Check that your plate names are correct by `nano $PLATES` and `nano $FULL_PLATES`. 
+If your plate names contain underscores, you may need to fix the simplified plate names. 
+Both should have the same number of rows as the number of plates in your batch.
 
 `SAMPLE_PLATE_ID=PLATE_NAME_1`
-This can be any single plate name, again using the portion of the name that is before the double underscore __.
+This can be any single plate name, again using the portion of the name that is before the double underscore `__`.
 
 `SAMPLE_FULL_PLATE_NAME=FULL_PLATE_NAME_1`
 This can be any single plate name, this time using the full name.
-
 
 ## Create LoadData CSVs
 
 (if using `pe2loaddata` to create image sets)
 
-The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file.
+The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData CSV file.
 For other microscopes, you will have to roll your own (see the overview chapter for more information).
-The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines and (2) metadata to extract from `Index.idx.xml`.
+The script below requires `config.yml`, which specifies 
 
-Here's a truncated sample `config.yml` (see the repository for the full file)
+1. the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines
+1. metadata to extract from `Index.idx.xml`
+
+Here's a truncated sample `config.yml` (here is an example of the [full file](https://github.com/broadinstitute/pe2loaddata/blob/220ac512bfc0c2e582d379b19411c1585272aee3/config.yml))
 
 ```
 channels:
@@ -136,6 +140,7 @@ $ tail -n 500 ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/${SAMPLE_FULL_P
       <ChannelName>Brightfield CP</ChannelName>
       <ChannelName>HOECHST 33342</ChannelName>
 ```
+
 Copy the text into a text file somewhere on your computer so you can refer to it.
 
 Now navigate to your pe2loaddata repository and ensure that it is up to date
@@ -150,7 +155,7 @@ pyenv shell 3.8.10
 pip3 install -e . 
 ```
 
-Adjust any discrepencies between the list of channels from your index file and the config by editing `config.yml`:
+Adjust any discrepancies between the list of channels from your index file and the config by editing `config.yml`:
 
 ```
     HOECHST 33342: OrigDNA
@@ -172,23 +177,22 @@ Adjust any discrepencies between the list of channels from your index file and t
 ```sh
 pyenv shell 3.8.10
 parallel \
---link \
---max-procs 1 \
---eta \
---joblog ../../log/${BATCH_ID}/create_csv_from_xml.log \
---results ../../log/${BATCH_ID}/create_csv_from_xml \
---files \
---keep-order \
-pe2loaddata config.yml \
-~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/{1}/load_data.csv \
---index-directory ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/{2}/Images \
---illum \
---illum-directory /home/ubuntu/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/illum/{1} \
---plate-id {1} \
---illum-output ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/{1}/load_data_with_illum.csv \
---sub-string-out efs/${PROJECT_NAME}/workspace/images/${BATCH_ID} \
---sub-string-in bucket/projects/${PROJECT_NAME}/${BATCH_ID}/images :::: ${PLATES} ${FULL_PLATES}
-
+  --link \
+  --max-procs 1 \
+  --eta \
+  --joblog ../../log/${BATCH_ID}/create_csv_from_xml.log \
+  --results ../../log/${BATCH_ID}/create_csv_from_xml \
+  --files \
+  --keep-order \
+  pe2loaddata config.yml \
+    ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/{1}/load_data.csv \
+    --index-directory ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/{2}/Images \
+    --illum \
+    --illum-directory /home/ubuntu/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/illum/{1} \
+    --plate-id {1} \
+    --illum-output ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/{1}/load_data_with_illum.csv \
+    --sub-string-out efs/${PROJECT_NAME}/workspace/images/${BATCH_ID} \
+    --sub-string-in bucket/projects/${PROJECT_NAME}/${BATCH_ID}/images :::: ${PLATES} ${FULL_PLATES}
 ```
 
 This is the resulting structure of `load_data_csv` on EFS (one level below `workspace`).
@@ -208,9 +212,12 @@ When creating `load_data_with_illum.csv`, the script assumes a specific location
 
 ```{block2, type='rmdnote'}
 If your files must be Z projected, your load_data.csv will be correct for that step.  Once that step is executed, edit BOTH of your CSVs to ensure that
+
 * The `Orig` image paths are updated to the location of the projected files rather than than the unprojected files
-* That you only keep the last-numbered plane from each site
-These steps can be done manually in ie Excel but are easier to script for large numbers of plates.  You should then upload your edited CSVs to S3.
+* Only the last-numbered plane from each site are kept
+
+These steps can be done manually in e.g. in Excel but are easier to script for large numbers of plates.  
+You should then upload your edited CSVs to S3.
 ```
 
 ## Upload image location files to S3
