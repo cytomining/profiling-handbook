@@ -17,6 +17,8 @@ For the specific use case here, this involves
 along with their dependencies. 
 Almost certainly, you will need a locally-to-your-images installed version of GUI CellProfiler that matches the version you want to run on your cluster - locally might mean on a local machine or a VM.
 
+> _TODO: Maybe clarify that users don't need to install these at this point because we provide instructions later?_
+
 ## Collect your pipelines 
 
 You will minimally require these pipelines

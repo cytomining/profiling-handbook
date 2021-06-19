@@ -6,8 +6,6 @@
 
 You may need to authenticate your GitHub account to be able to clone these:
 
-(Note that cellpainting_scripts is currently a private repository; contact our team for access)
-
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/
 mkdir software
@@ -26,4 +24,3 @@ This is the resulting structure of `software` on EFS (one level below `workspace
     ├── Distributed-CellProfiler
     └── pe2loaddata
 ```
-
