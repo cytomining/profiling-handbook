@@ -101,7 +101,7 @@ This can be any single plate name, this time using the full name.
 (if using `pe2loaddata` to create image sets)
 
 The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file.
-For other microscopes, you will have to roll your own (see Appendix B).
+For other microscopes, you will have to roll your own (see the overview chapter for more information).
 The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines and (2) metadata to extract from `Index.idx.xml`.
 
 Here's a truncated sample `config.yml` (see the repository for the full file)
@@ -203,8 +203,15 @@ Files for only `SQ00015167` are shown.
 ```
 
 `load_data.csv` will be used by `illum.cppipe` and, optionally, `qc.cppipe`.
-`load_data_with_illum.csv` will be used by `analysis.cppipe`.
+`load_data_with_illum.csv` will be used by `analysis.cppipe` and, optionally, `assaydev.cppipe`.
 When creating `load_data_with_illum.csv`, the script assumes a specific location for the folder containing the illumination correction files.
+
+```{block2, type='rmdnote'}
+If your files must be Z projected, your load_data.csv will be correct for that step.  Once that step is executed, edit your CSVs to ensure that
+* The `Orig` image paths are updated to the location of the projected files
+* That you only keep the last-numbered plane from each site
+These steps can be done manually in ie Excel but are easier to script for large numbers of plates.  You should then upload your edited CSVs to S3.
+```
 
 ## Upload image location files to S3
 
