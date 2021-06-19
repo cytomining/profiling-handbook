@@ -21,7 +21,7 @@ Note that the relevant S3 bucket has been mounted at `/home/ubuntu/bucket/`.
 The folder structure for `images` differs between `S3` and `EFS`.
 This can be potentially confusing.
 However note that the step below simply creates a soft link to the images in S3; no files are copied.
-Further, when `pe2loaddata` is run (later in the process, via `create_csv_from_xml.sh`) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3.
+Further, when `pe2loaddata` is run, the `--sub-string-out` and `--sub-string-in` flags ensure the resulting LoadData CSV files end up having the paths to the images as they exist on S3.
 Thus the step below (of creating a softlink) only serves the purpose of making the `images` folder have a similar structure as the others (e.g. `load_data_csv`, `metadata`, `analysis`).
 
 If you’re Z-projecting images and the unprojected images are in a folder with a different name (such as /unprojected_images/), you should create the soft link to that folder:
@@ -63,7 +63,6 @@ Here, only one plate (`SQ00015167__2016-04-21T03_34_00-Measurement1`) is show bu
 `SQ00015167__2016-04-21T03_34_00-Measurement1` is the typical nomenclature followed by Broad Chemical Biology Platform for plate names.
 `Measurement1` indicates the first attempt to image the plate.
 `Measurement2` indicates second attempt and so on.
-Ensure that there's only one folder corresponding to a plate before running `create_csv_from_xml.sh` below (it gracefully exits if not).
 
 ## Create List of Plates
 
@@ -167,6 +166,7 @@ Adjust any discrepencies between the list of channels from your index file and t
 - Ensure that the channel names are the same in `config.yml` and `Index.idx.xml`
 - Ensure that the LoadData csv files don't already exist; if they do, delete them.
 - The `max-procs` option is set as 1 because pe2loaddata accesses the image files on `s3fs`, which doesn't handle multiple requests well.
+- If your images require Z projection, make sure that `sub-string-in` is set to the folder that you soft-linked to in the previous step.
 ```
 
 ```sh
@@ -207,8 +207,8 @@ Files for only `SQ00015167` are shown.
 When creating `load_data_with_illum.csv`, the script assumes a specific location for the folder containing the illumination correction files.
 
 ```{block2, type='rmdnote'}
-If your files must be Z projected, your load_data.csv will be correct for that step.  Once that step is executed, edit your CSVs to ensure that
-* The `Orig` image paths are updated to the location of the projected files
+If your files must be Z projected, your load_data.csv will be correct for that step.  Once that step is executed, edit BOTH of your CSVs to ensure that
+* The `Orig` image paths are updated to the location of the projected files rather than than the unprojected files
 * That you only keep the last-numbered plane from each site
 These steps can be done manually in ie Excel but are easier to script for large numbers of plates.  You should then upload your edited CSVs to S3.
 ```
