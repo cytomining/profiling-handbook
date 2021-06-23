@@ -2,15 +2,21 @@
 
 ## Confirm Environment Configuration
 
-If you are starting from here, make sure the following steps have been completed on your ec2 instance and/or session before proceeding
+You CAN, if you choose, make your backends with the same machine that you have used to make CSVs and run DCP for CellProfiler.  However, we typically do not, since backend creation can take a long time so it is desirable to use 2 machines - a small inexpensive machine with only a few CPUs for all the steps before backends and a larger machine with at least as many CPUs as (the number of plates in your batch +1) for backend creation. Both machines can be turned off when not in use and when off will generate only minimal charges.  
 
-* [Configure Environment for Full Profiling Pipeline]
-* [Download software]
-* [Create list of plates]
+To make a new backend machine, follow the identical instructions as the in the section below, only with a larger Instance Type (such as an m4.10xlarge). 
+
+* [Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler]
+
+Since backend creation also typically requires a large amount of hard disk space, which you pay for whether or not the machine is on, we recommend attaching a large EBS volume to your backend creation machine only when needed, then detaching and terminating it when not in use.
 
 ## Add a large EBS volume to your machine
 
 > _TODO: add the instructions to make and add the volume._
+
+Follow the AWS instructions for [creating](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html) and [attaching](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html) the EBS volume.  Two critical factors to note- the volume must be created in the same subnet as your backend creation machine, and should be approximately 2X the size as the analysis files in your batch - this is most easily figured by navigating to that location in the S3 web console and selecting "Actions -> Calculate total size".
+
+Once the volume is created and attached, turn on and SSH connect to the machine.
 
 Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
 
@@ -18,11 +24,7 @@ Create a temp directory which is required when creating the database backed usin
 mkdir ~/ebs_tmp
 ```
 
-```{block2, type='rmdnote'}
-If at this point you realize that the ec2 instance does not have enough space (which you can check using `du -hs`), create and attach an EBS volume, and then mount it.
-Make sure that the EBS is created in the same region and availability zone as the ec2 instance.
-For more information about mounting the EBS see https://devopscube.com/mount-ebs-volume-ec2-instance/.
-```
+Get the name of the disk and attach it.
 
 ```sh
 # check the name of the disk
@@ -48,6 +50,12 @@ sudo mount /dev/xvdba /home/ubuntu/ebs_tmp/
 sudo chmod 777 ~/ebs_tmp/
 ```
 
+If you are starting from here, make sure the following steps have been completed on your ec2 instance and/or session before proceeding
+
+* [Configure Environment for Full Profiling Pipeline]
+* [Create list of plates]
+
+
 ## Create Database Backend
 
 Run creation of sqlite backend as well as aggregation of measurements into per-well profiles.
@@ -61,41 +69,40 @@ mkdir -p ~/ebs_tmp/${PROJECT_NAME}/workspace/software
 
 cd ~/ebs_tmp/${PROJECT_NAME}/workspace/software
 
-if [ -d cytominer_scripts ]; then rm -rf cytominer_scripts; fi
+if [ -d pycytominer ]; then rm -rf pycytominer; fi
 
-git clone https://github.com/broadinstitute/cytominer_scripts.git
+git clone https://github.com/cytomining/pycytominer.git
 
-cd cytominer_scripts
+cd pycytominer
+
+git checkout jump
 ```
 
 The command below first calls `cytominer-database ingest` to create the SQLite backend, and then `aggregate.R` to create per-well profiles.
 Once complete, all files are uploaded to S3 and the local cache are deleted.
 
-[collate.R](https://github.com/broadinstitute/cytominer_scripts/blob/master/collate.R) ingests the database and then calls `aggregate.R`.
+[collate.py](https://github.com/cytomining/pycytominer/blob/jump/pycytominer/cyto_utils/collate.py) ingests and indexes the database.
 
 ```sh
-pyenv shell 3.5.1
+pyenv shell 3.8.10
 
 mkdir -p  ../../log/${BATCH_ID}/
 parallel \
-  --max-procs ${MAXPROCS} \
-  --eta \
-  --joblog ../../log/${BATCH_ID}/collate.log \
-  --results ../../log/${BATCH_ID}/collate \
-  --files \
-  --keep-order \
-  ./collate.R \
-    --batch_id ${BATCH_ID} \
-    --plate {1} \
-    --config ingest_config.ini \
-    --tmpdir ~/ebs_tmp \
-    --download \
-    --remote_base_dir s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
+--max-procs ${MAXPROCS} \
+--ungroup \
+--eta \
+--joblog ../../log/${BATCH_ID}/collate.log \
+--results ../../log/${BATCH_ID}/collate \
+--files \
+--keep-order \
+python3 pycytominer/cyto_utils/collate.py ${BATCH_ID}  pycytominer/cyto_utils/ingest_config.ini {1} \
+--temp ~/ebs_tmp \
+--remote=s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
 ```
 
 ```{block2, type='rmdnote'}
-`collate.R` does not recreate the SQLite backend if it already exists in the local cache.
-Add `--overwrite_backend_cache` flag to recreate.
+`collate.py` does not recreate the SQLite backend if it already exists in the local cache.
+Add `--overwrite` flag to recreate.
 ```
 
 ```{block2, type='rmdnote'}
@@ -115,11 +122,9 @@ This is the resulting structure of `backend` on S3 (one level below `workspace`)
 └── backend
     └── 2016_04_01_a549_48hr_batch1
         └── SQ00015167
-            ├── SQ00015167.csv
             └── SQ00015167.sqlite
 ```
 
-`SQ00015167.sqlite` is the per cell data and `SQ00015167.csv` is the aggregated per-well data.
 
 ### Copy Files from S3 to EFS
 
