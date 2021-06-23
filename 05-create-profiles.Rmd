@@ -74,6 +74,8 @@ git clone https://github.com/cytomining/pycytominer.git
 cd pycytominer
 
 git checkout jump
+
+python3 -m pip install -e .
 ```
 
 The command below first calls `cytominer-database ingest` to create the SQLite backend, and then pycytominer's `aggregate_profiles` to create per-well profiles.
