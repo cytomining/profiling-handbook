@@ -12,11 +12,9 @@ Since backend creation also typically requires a large amount of hard disk space
 
 ## Add a large EBS volume to your machine
 
-> _TODO: add the instructions to make and add the volume._
-
 Follow the AWS instructions for [creating](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html) and [attaching](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html) the EBS volume.  Two critical factors to note- the volume must be created in the same subnet as your backend creation machine, and should be approximately 2X the size as the analysis files in your batch - this is most easily figured by navigating to that location in the S3 web console and selecting "Actions -> Calculate total size".
 
-Once the volume is created and attached, turn on and SSH connect to the machine.
+Once the volume is created and attached, ensure the machine is started and SSH connect to it.
 
 Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
 
@@ -137,6 +135,8 @@ aws s3 sync --exclude "*.sqlite" \
 
 rsync -arzv ~/ebs_tmp/${PROJECT_NAME}/workspace/log/ ../../log
 ```
+
+END OF THE PRE RECIPE WORKFLOW
 
 ### Quick Check Rows
 
