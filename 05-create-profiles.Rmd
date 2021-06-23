@@ -76,7 +76,7 @@ cd pycytominer
 git checkout jump
 ```
 
-The command below first calls `cytominer-database ingest` to create the SQLite backend, and then `aggregate.R` to create per-well profiles.
+The command below first calls `cytominer-database ingest` to create the SQLite backend, and then pycytominer's `aggregate_profiles` to create per-well profiles.
 Once complete, all files are uploaded to S3 and the local cache are deleted.
 
 [collate.py](https://github.com/cytomining/pycytominer/blob/jump/pycytominer/cyto_utils/collate.py) ingests and indexes the database.
@@ -120,8 +120,9 @@ This is the resulting structure of `backend` on S3 (one level below `workspace`)
 └── backend
     └── 2016_04_01_a549_48hr_batch1
         └── SQ00015167
+            ├── SQ00015167.csv
             └── SQ00015167.sqlite
 ```
 
 
-At this point, the user needs to use the [profiling template](https://github.com/cytomining/profiling-template) to use the [jump branch of pycytominer](https://github.com/cytomining/pycytominer/tree/jump) to create aggregated profiles, annotate them with metadata, normalize them, and feature select them.  Detailed instructions for these steps will be added as soon as possible.
+At this point, the user needs to use the [profiling template](https://github.com/cytomining/profiling-template) to use the [jump branch of pycytominer](https://github.com/cytomining/pycytominer/tree/jump) to annotate the profiles with metadata, normalize them, and feature select them.  Detailed instructions for these steps will be added as soon as possible.
