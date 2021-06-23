@@ -97,21 +97,6 @@ The guidances notes provide an overview of the folder structure used in this han
     │       └── SQ00015167
     │           ├── SQ00015167.csv
     │           └── SQ00015167.sqlite
-    ├── batchfiles
-    │   └── 2016_04_01_a549_48hr_batch1
-    │       └── SQ00015167
-    │           ├── analysis
-    │           │   ├── Batch_data.h5
-    │           │   ├── dcp_config.json
-    │           │   ├── cp_docker_commands.txt
-    │           │   └── cpgroups.csv
-    │           └── illum
-    │               ├── Batch_data.h5
-    │               ├── dcp_config.json
-    │               ├── cp_docker_commands.txt
-    │               └── cpgroups.csv
-    ├── github
-    │   └── imaging-platform-pipelines
     ├── images
     │   └── 2016_04_01_a549_48hr_batch1 -> /home/ubuntu/bucket/projects/2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad/2016_04_01_a549_48hr_batch1/images/
     ├── load_data_csv
@@ -120,8 +105,6 @@ The guidances notes provide an overview of the folder structure used in this han
     │           ├── load_data.csv
     │           └── load_data_with_illum.csv
     ├── log 
-    │   ├── create_batch_files_analysis
-    │   ├── create_batch_files_illum
     │   ├── create_csv_from_xml
     │   └── collate       
     ├── metadata
@@ -129,10 +112,9 @@ The guidances notes provide an overview of the folder structure used in this han
     │       ├── barcode_platemap.csv
     │       └── platemap
     │           └── C-7161-01-LM6-006.txt
-    ├── pipelines -> github/imaging-platform-pipelines
+    ├── pipelines
     ├── status
     └── software
-        ├── cellpainting_scripts
-        ├── cytominer_scripts
+        ├── Distributed-CellProfiler
         └── pe2loaddata
 ```

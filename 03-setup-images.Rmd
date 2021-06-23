@@ -1,47 +1,14 @@
-# Setup Pipelines and Images
-
-## Get CellProfiler Pipelines
-
-Cell Painting pipelines are stored in a GitHub repo.
-If you are using a new pipeline, be sure to add it to the repo first.
-Follow instructions on https://github.com/broadinstitute/imaging-platform-pipelines for adding new pipelines.
-
-```sh
-cd ~/efs/${PROJECT_NAME}/workspace/
-mkdir github
-cd github/
-git clone https://github.com/broadinstitute/imaging-platform-pipelines.git
-cd ..
-ln -s github/imaging-platform-pipelines pipelines
-```
-
-This is the resulting structure of `github` and `pipelines` on EFS (one level below `workspace`):
-
-```
-├── github
-│    └── imaging-platform-pipelines
-└── pipelines -> github/imaging-platform-pipelines
-```
-
-## Specify Pipeline Set
-
-```
-PIPELINE_SET=cellpainting_a549_20x_with_bf_phenix_bin1
-```
-
-Ensure that, both, `analysis.cppipe` as well as `illum.cppipe` are present for this set.
-As well, each pipeline should have a `_without_batchfile` version of it in the same directory.
-It's easy to create such a version of the pipeline - simply copy it and set `enabled=False` for the `CreateBatchFiles` module (like [here](https://github.com/broadinstitute/imaging-platform-pipelines/blob/master/cellpainting_u2os_20x_imagexpress/illum_without_batchfile.cppipe#L384)).
+# Setup Images
 
 ## Upload Images
 
-Your image files should be uploaded to AWS from your local compute environment via a tool like Cyberduck or the AWS CLI (`aws s3 sync /local/path s3://BUCKET/PROJECT_NAME/BATCH_ID/images`) (see also Appendix A.2 for more information on folder structures).
+Your image files should be uploaded to AWS from your local compute environment via a tool like [Cyberduck](https://cyberduck.io/) or the [AWS CLI](https://aws.amazon.com/cli/) (`aws s3 sync /local/path s3://BUCKET/PROJECT_NAME/BATCH_ID/images`) (see also Appendix A.2 for more information on folder structures).
 Some important tips BEFORE uploading (these are much more difficult to fix once uploaded):
 
 * Ensure your image sets are complete i.e. all image sets should have the same number of channels and z-planes, and that this is true across the entire batch of plates you are processing.
 * Avoid folder names with spaces
 * Plate names should not have leading 0's (ie `123` not `000123`)
-* VERY  IMPORTANT- If using `pe2loaddata` (described later) to generate your image CSVs, please ensure the folder name contains the plate name given when imaging on the Phenix microscope (can be checked in the `Index.idx.xml`)
+* *VERY  IMPORTANT*: If using `pe2loaddata` (described later) to generate your image CSVs, please ensure the folder name contains the plate name given when imaging on the Phenix microscope (can be checked in the `Index.idx.xml`)
 
 ## Prepare Images
 
@@ -54,13 +21,16 @@ Note that the relevant S3 bucket has been mounted at `/home/ubuntu/bucket/`.
 The folder structure for `images` differs between `S3` and `EFS`.
 This can be potentially confusing.
 However note that the step below simply creates a soft link to the images in S3; no files are copied.
-Further, when `pe2loaddata` is run (later in the process, via `create_csv_from_xml.sh`) it resolves the soft link, so the the resulting LoadData CSV files end up having the paths to the images as they exist on S3.
+Further, when `pe2loaddata` is run, the `--sub-string-out` and `--sub-string-in` flags ensure the resulting LoadData CSV files end up having the paths to the images as they exist on S3.
 Thus the step below (of creating a softlink) only serves the purpose of making the `images` folder have a similar structure as the others (e.g. `load_data_csv`, `metadata`, `analysis`).
+
+If you’re Z-projecting images and the unprojected images are in a folder with a different name (such as /unprojected_images/), you should create the soft link to that folder:
+`ln -s ~/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/unprojected_images/ ${BATCH_ID}`
 ```
 
 ```sh
 cd ~/efs/${PROJECT_NAME}/workspace/
-mkdir images
+mkdir images #Run this only if this is the first batch for this project
 cd images
 ln -s ~/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/images/ ${BATCH_ID}
 cd ..
@@ -93,9 +63,10 @@ Here, only one plate (`SQ00015167__2016-04-21T03_34_00-Measurement1`) is show bu
 `SQ00015167__2016-04-21T03_34_00-Measurement1` is the typical nomenclature followed by Broad Chemical Biology Platform for plate names.
 `Measurement1` indicates the first attempt to image the plate.
 `Measurement2` indicates second attempt and so on.
-Ensure that there's only one folder corresponding to a plate before running `create_csv_from_xml.sh` below (it gracefully exits if not).
 
 ## Create List of Plates
+
+(if using `pe2loaddata` to create image sets)
 
 Create a text file with one plate id per line.
 The plate IDs, if using `pe2loaddata`, must match the plate IDs given when operating the Phenix.
@@ -103,38 +74,40 @@ Otherwise, they should match CellProfiler's understanding of the `Plate` groupin
 For downstream purposes, i.e. `cytominer`, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. `SQ00015167` instead of `SQ00015167__2016-04-21T03_34_00-Measurement1` to keep the names compact.
 
 ```sh
+
 mkdir -p ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/
 
 PLATES=$(readlink -f ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/plates_to_process.txt)
-```
 
-Option 1: create the list
+FULL_PLATES=$(readlink -f ~/efs/${PROJECT_NAME}/workspace/scratch/${BATCH_ID}/full_plates_to_process.txt)
 
-```sh
-echo "SQ00015130 SQ00015168 SQ00015167 SQ00015166 SQ00015165"|tr " " "\n" > ${PLATES}
-```
-
-Option 2: create the list automatically, using some pattern to create the shortened name of the plate (e.g. `SQ00015130` is the first substring of `SQ00015167__2016-04-21T03_34_00-Measurement1` when split by `_`). This creates a list of all plates in the batch:
-
-```sh
 ls ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/ | cut -d '_' -f 1 >> $PLATES
+
+ls ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/ >> $FULL_PLATES
 ```
 
-We'll also set the `SAMPLE_PLATE_ID` and `SAMPLE_FULL_PLATE_NAME` variables, which are used in the profiling steps when a single plate name is required
+Check that your plate names are correct by `nano $PLATES` and `nano $FULL_PLATES`. 
+If your plate names contain underscores, you may need to fix the simplified plate names. 
+Both should have the same number of rows as the number of plates in your batch.
 
-```sh
-SAMPLE_PLATE_ID=SQ00015130
+`SAMPLE_PLATE_ID=PLATE_NAME_1`
+This can be any single plate name, again using the portion of the name that is before the double underscore `__`.
 
-SAMPLE_FULL_PLATE_NAME=SQ0015130__2019-08-30T18_45_25-Measurement1
-```
+`SAMPLE_FULL_PLATE_NAME=FULL_PLATE_NAME_1`
+This can be any single plate name, this time using the full name.
 
 ## Create LoadData CSVs
 
-The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData csv file.
-For other microscopes, you will have to roll your own (see Appendix B).
-The script below requires `config.yml`, which specifies (1) the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines and (2) metadata to extract from `Index.idx.xml`.
+(if using `pe2loaddata` to create image sets)
 
-Here's a truncated sample `config.yml` (see the repository for the full file)
+The script below works only for Phenix microscopes – it reads a standard XML file (`Index.idx.xml`) and writes a LoadData CSV file.
+For other microscopes, you will have to roll your own (see the overview chapter for more information).
+The script below requires `config.yml`, which specifies 
+
+1. the mapping between channel names in `Index.idx.xml` and the channel names in the CellProfiler pipelines
+1. metadata to extract from `Index.idx.xml`
+
+Here's a truncated sample `config.yml` (here is an example of the [full file](https://github.com/broadinstitute/pe2loaddata/blob/220ac512bfc0c2e582d379b19411c1585272aee3/config.yml))
 
 ```
 channels:
@@ -168,8 +141,21 @@ $ tail -n 500 ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/${SAMPLE_FULL_P
       <ChannelName>HOECHST 33342</ChannelName>
 ```
 
-The brightfield channel is tagged `Brightfield CP` in `Index.idx.xml`.
-Fix this discrepancy by editing `config.yml`:
+Copy the text into a text file somewhere on your computer so you can refer to it.
+
+Now navigate to your pe2loaddata repository and ensure that it is up to date
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/software/pe2loaddata
+
+git pull
+
+pyenv shell 3.8.10
+
+pip3 install -e . 
+```
+
+Adjust any discrepancies between the list of channels from your index file and the config by editing `config.yml`:
 
 ```
     HOECHST 33342: OrigDNA
@@ -185,22 +171,28 @@ Fix this discrepancy by editing `config.yml`:
 - Ensure that the channel names are the same in `config.yml` and `Index.idx.xml`
 - Ensure that the LoadData csv files don't already exist; if they do, delete them.
 - The `max-procs` option is set as 1 because pe2loaddata accesses the image files on `s3fs`, which doesn't handle multiple requests well.
+- If your images require Z projection, make sure that `sub-string-in` is set to the folder that you soft-linked to in the previous step.
 ```
 
 ```sh
-cd ~/efs/${PROJECT_NAME}/workspace/software/cellpainting_scripts/
-pyenv shell 2.7.12
+pyenv shell 3.8.10
 parallel \
+  --link \
   --max-procs 1 \
   --eta \
   --joblog ../../log/${BATCH_ID}/create_csv_from_xml.log \
   --results ../../log/${BATCH_ID}/create_csv_from_xml \
   --files \
   --keep-order \
-  ./create_csv_from_xml.sh \
-  -b ${BATCH_ID} \
-  --plate {1} :::: ${PLATES}
-cd ../../
+  pe2loaddata config.yml \
+    ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/{1}/load_data.csv \
+    --index-directory ~/efs/${PROJECT_NAME}/workspace/images/${BATCH_ID}/{2}/Images \
+    --illum \
+    --illum-directory /home/ubuntu/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/illum/{1} \
+    --plate-id {1} \
+    --illum-output ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/{1}/load_data_with_illum.csv \
+    --sub-string-out efs/${PROJECT_NAME}/workspace/images/${BATCH_ID} \
+    --sub-string-in bucket/projects/${PROJECT_NAME}/${BATCH_ID}/images :::: ${PLATES} ${FULL_PLATES}
 ```
 
 This is the resulting structure of `load_data_csv` on EFS (one level below `workspace`).
@@ -215,13 +207,31 @@ Files for only `SQ00015167` are shown.
 ```
 
 `load_data.csv` will be used by `illum.cppipe` and, optionally, `qc.cppipe`.
-`load_data_with_illum.csv` will be used by `analysis.cppipe`.
+`load_data_with_illum.csv` will be used by `analysis.cppipe` and, optionally, `assaydev.cppipe`.
 When creating `load_data_with_illum.csv`, the script assumes a specific location for the folder containing the illumination correction files.
+
+```{block2, type='rmdnote'}
+If your files must be Z projected, your load_data.csv will be correct for that step.  Once that step is executed, edit BOTH of your CSVs to ensure that
+
+* The `Orig` image paths are updated to the location of the projected files rather than than the unprojected files
+* Only the last-numbered plane from each site are kept
+
+These steps can be done manually in e.g. in Excel but are easier to script for large numbers of plates.  
+You should then upload your edited CSVs to S3.
+```
+
+## Upload image location files to S3
+
+If using `pe2loaddata`, run the command below
 
 Copy the load data files to S3:
 
 ```sh
 aws s3 sync \
-  ../../load_data_csv/${BATCH_ID}/ \
+  ~/efs/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/ \
   s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}/
 ```
+
+If using your own home-created load data CSVs, load them to the same location - `s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}` - we strongly recommend the structure of making one subfolder with CSVs in it per plate and then using the names `load_data.csv` for CSVs without illum files and `load_data_with_illum.csv` for those with the illum files.
+
+If using batch files, we recommend uploading them to `s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/batchfiles/${BATCH_ID}`, giving each batch file a unique name to reflect which step it is for - since the process of creating batchfiles can be onerous, subsequent steps assume you will make one batchfile per batch rather than per plate, but you may adjust this if you like.

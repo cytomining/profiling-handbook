@@ -1,0 +1,130 @@
+# Create Profiles
+
+## Confirm Environment Configuration
+
+You CAN, if you choose, make your backends with the same machine that you have used to make CSVs and run DCP for CellProfiler.  However, we typically do not, since backend creation can take a long time so it is desirable to use 2 machines - a small inexpensive machine with only a few CPUs for all the steps before backends and a larger machine with at least as many CPUs as (the number of plates in your batch +1) for backend creation. Both machines can be turned off when not in use and when off will generate only minimal charges.  
+
+To make a new backend machine, follow the identical instructions as the in the section below, only with a larger Instance Type (such as an m4.10xlarge). 
+
+* [Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler]
+
+Since backend creation also typically requires a large amount of hard disk space, which you pay for whether or not the machine is on, we recommend attaching a large EBS volume to your backend creation machine only when needed, then detaching and terminating it when not in use.
+
+## Add a large EBS volume to your machine
+
+Follow the AWS instructions for [creating](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html) and [attaching](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html) the EBS volume.  Two critical factors to note- the volume must be created in the same subnet as your backend creation machine, and should be approximately 2X the size as the analysis files in your batch - this is most easily figured by navigating to that location in the S3 web console and selecting "Actions -> Calculate total size".
+
+Once the volume is created and attached, ensure the machine is started and SSH connect to it.
+
+Create a temp directory which is required when creating the database backed using `cytominer-database` (discussed later).
+
+```sh
+mkdir ~/ebs_tmp
+```
+
+Get the name of the disk and attach it.
+
+```sh
+# check the name of the disk
+lsblk
+
+#> NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+#> xvda    202:0    0     8G  0 disk
+#> └─xvda1 202:1    0     8G  0 part /
+#> xvdba    202:80   0   100G  0 disk
+
+# check if it has a file system
+sudo file -s /dev/xvdba
+# ...likely not, in which case you get:
+#> /dev/xvdf: data
+
+# if no file system, then create it
+sudo mkfs -t ext4 /dev/xvdba
+
+# mount it
+sudo mount /dev/xvdba /home/ubuntu/ebs_tmp/
+
+# change perm
+sudo chmod 777 ~/ebs_tmp/
+```
+
+If you are starting from here, make sure the following steps have been completed on your ec2 instance and/or session before proceeding
+
+* [Configure Environment for Full Profiling Pipeline]
+* [Create list of plates]
+
+
+## Create Database Backend
+
+Run creation of sqlite backend as well as aggregation of measurements into per-well profiles.
+This process can be very slow since the files are read from s3fs/EFS.
+We recommend first downloading the CSVs files locally on an EBS volume attached to the ec2 instance you are running on, and then ingesting.
+
+To do so, first recreate the analysis output folder structure on the EBS volume:
+
+```sh
+mkdir -p ~/ebs_tmp/${PROJECT_NAME}/workspace/software
+
+cd ~/ebs_tmp/${PROJECT_NAME}/workspace/software
+
+if [ -d pycytominer ]; then rm -rf pycytominer; fi
+
+git clone https://github.com/cytomining/pycytominer.git
+
+cd pycytominer
+
+git checkout jump
+
+python3 -m pip install -e .
+```
+
+The command below first calls `cytominer-database ingest` to create the SQLite backend, and then pycytominer's `aggregate_profiles` to create per-well profiles.
+Once complete, all files are uploaded to S3 and the local cache are deleted.
+
+[collate.py](https://github.com/cytomining/pycytominer/blob/jump/pycytominer/cyto_utils/collate.py) ingests and indexes the database.
+
+```sh
+pyenv shell 3.8.10
+
+mkdir -p  ../../log/${BATCH_ID}/
+parallel \
+--max-procs ${MAXPROCS} \
+--ungroup \
+--eta \
+--joblog ../../log/${BATCH_ID}/collate.log \
+--results ../../log/${BATCH_ID}/collate \
+--files \
+--keep-order \
+python3 pycytominer/cyto_utils/collate.py ${BATCH_ID}  pycytominer/cyto_utils/ingest_config.ini {1} \
+--temp ~/ebs_tmp \
+--remote=s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
+```
+
+```{block2, type='rmdnote'}
+`collate.py` does not recreate the SQLite backend if it already exists in the local cache.
+Add `--overwrite` flag to recreate.
+```
+
+```{block2, type='rmdnote'}
+For pipelines that use FlagImage to skip the measurements modules if the image failed QC, the failed images will have Image.csv files with fewer columns that the rest (because columns corresponding to aggregated measurements will be absent).
+The ingest command will show a warning related to sqlite: `expected X columns but found Y - filling the rest with NULL`.
+This is expected behavior.
+```
+
+```{block2, type='rmdnote'}
+There is a known [issue](https://github.com/cytomining/cytominer-database/issues/100) where if the alphabetically-first CSV failed QC in a pipeline where "Skip image if flagged" is turned on, the databases will not be created.
+We are working to fix this, but in the meantime we recommend either not skipping processing of your flagged images (and removing them from your data downstream) or deleting the alphabetically-first CSVs until you come to one where the pipeline ran completely.
+```
+
+This is the resulting structure of `backend` on S3 (one level below `workspace`) for `SQ00015167`:
+
+```
+└── backend
+    └── 2016_04_01_a549_48hr_batch1
+        └── SQ00015167
+            ├── SQ00015167.csv
+            └── SQ00015167.sqlite
+```
+
+
+At this point, the user needs to use the [profiling template](https://github.com/cytomining/profiling-template) to use the [jump branch of pycytominer](https://github.com/cytomining/pycytominer/tree/jump) to annotate the profiles with metadata, normalize them, and feature select them.  Detailed instructions for these steps will be added as soon as possible.
