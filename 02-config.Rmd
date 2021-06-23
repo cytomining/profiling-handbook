@@ -88,3 +88,24 @@ cd ~/efs/${PROJECT_NAME}/workspace/
 
 mkdir -p log/${BATCH_ID}
 ```
+
+## Download Software
+
+```sh
+cd ~/efs/${PROJECT_NAME}/workspace/
+mkdir software
+cd software
+git clone https://github.com/broadinstitute/pe2loaddata.git
+git clone https://github.com/CellProfiler/Distributed-CellProfiler.git
+
+cd ..
+```
+
+If these repos have already been cloned, `git pull` to make sure they are up to date.
+
+This is the resulting structure of `software` on EFS (one level below `workspace`):
+```
+└── software
+    ├── Distributed-CellProfiler
+    └── pe2loaddata
+```
