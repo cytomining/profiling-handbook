@@ -2,14 +2,11 @@
 
 # Configure Environment for Full Profiling Pipeline
 
-> _TODO: Maybe clarify that users should have an S3 bucket and EFS set up already?_
+This workflow assumes you have already set up an AWS account with an S3 bucket and EFS, and created a VM per the instructions in the link below.
 
 ## Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler
 
 Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*`, created using [cytominer-vm](https://github.com/cytomining/cytominer-vm).
-To use a different region, modify the `vpc` module in the AWS infrastructure setup.
-
-> _TODO: Clarify what we mean by "AWS infrastructure setup" here. Is it the config below? Or the cytominer_ami.json file in the VM?_
 
 You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific.
 We recommend using an `m4.xlarge` instance, with an 8Gb EBS volume.
@@ -31,25 +28,9 @@ The following configuration provides an example, named `imaging-platform` (modif
 After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`.
 If not, run `sudo mount -a`.
 
-```{block2, type='rmdnote'}
-Note that given this configuration in this AMI, EFS can only be mounted from `us-east-1a` or `us-east-1b`.
-This can be changed by appropriately editing the EFS configuration via Terraform.
-```
-
-> _TODO: Clarify what changes need to be made to allow mounting from a different region because users are unlikely to have used Terraform_
-
 
 Log in to the EC2 instance.
 
-Check available space on the instance
-
-```sh
-df -h
-```
-
-Ensure that the `Available` column is at least 30Gb x `p`, where `p` is the number of plates you will process in parallel when creating the database backend.
-We recommend `p` to be one less than the number of cores (`p` = 3 for `m4.xlarge`, so 60Gb should be available).
-If you don't have sufficient space, mount an EBS volume (below).
 
 Enter your AWS credentials
 
