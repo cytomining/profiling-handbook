@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Configure Environment for Full Profiling Pipeline | Image-based Profiling Handbook</title>
+  <title>Chapter 2 Configure Environment for Full Profiling Pipeline | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
-  <meta name="generator" content="bookdown 0.20.3 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.5 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Configure Environment for Full Profiling Pipeline | Image-based Profiling Handbook" />
+  <meta property="og:title" content="Chapter 2 Configure Environment for Full Profiling Pipeline | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Configure Environment for Full Profiling Pipeline | Image-based Profiling Handbook" />
+  <meta name="twitter:title" content="Chapter 2 Configure Environment for Full Profiling Pipeline | Image-based Profiling Handbook" />
   
   <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2020-09-01" />
+<meta name="date" content="2021-06-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="configure-tools-to-process-images.html"/>
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="setup-images.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -90,6 +92,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -107,94 +110,53 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#collect-your-software"><i class="fa fa-check"></i><b>1.1</b> Collect your software</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#collect-your-pipelines"><i class="fa fa-check"></i><b>1.2</b> Collect your pipelines</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#determine-how-to-get-your-image-lists-to-cellprofiler"><i class="fa fa-check"></i><b>1.3</b> Determine how to get your image lists to CellProfiler</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#execute-your-cellprofiler-pipelines"><i class="fa fa-check"></i><b>1.4</b> Execute your CellProfiler pipelines</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#optional-z-projection"><i class="fa fa-check"></i><b>1.4.1</b> (Optional) Z projection</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#optional-qc"><i class="fa fa-check"></i><b>1.4.2</b> (Optional) QC</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#illumination-correction"><i class="fa fa-check"></i><b>1.4.3</b> Illumination correction</a></li>
+<li class="chapter" data-level="1.4.4" data-path="introduction.html"><a href="introduction.html#optional-assay-development"><i class="fa fa-check"></i><b>1.4.4</b> (Optional) Assay Development</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#analysis"><i class="fa fa-check"></i><b>1.5</b> Analysis</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#aggregate-your-data"><i class="fa fa-check"></i><b>1.6</b> Aggregate your data</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#create-and-manipulate-per-well-profiles."><i class="fa fa-check"></i><b>1.7</b> Create and manipulate per-well profiles.</a></li>
+</ul></li>
 <li class="part"><span><b>I Configuration</b></span></li>
-<li class="chapter" data-level="1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html"><i class="fa fa-check"></i><b>1</b> Configure Environment for Full Profiling Pipeline</a><ul>
-<li class="chapter" data-level="1.1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#launch-an-aws-virtual-machine"><i class="fa fa-check"></i><b>1.1</b> Launch an AWS Virtual Machine</a></li>
-<li class="chapter" data-level="1.2" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#define-environment-variables"><i class="fa fa-check"></i><b>1.2</b> Define Environment Variables</a></li>
-<li class="chapter" data-level="1.3" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#create-directories"><i class="fa fa-check"></i><b>1.3</b> Create Directories</a></li>
+<li class="chapter" data-level="2" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html"><i class="fa fa-check"></i><b>2</b> Configure Environment for Full Profiling Pipeline</a><ul>
+<li class="chapter" data-level="2.1" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#launch-an-aws-virtual-machine-for-making-csvs-and-running-distributed-cellprofiler"><i class="fa fa-check"></i><b>2.1</b> Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler</a></li>
+<li class="chapter" data-level="2.2" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#create-a-tmux-session"><i class="fa fa-check"></i><b>2.2</b> Create a tmux session</a></li>
+<li class="chapter" data-level="2.3" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#define-environment-variables"><i class="fa fa-check"></i><b>2.3</b> Define Environment Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#create-directories"><i class="fa fa-check"></i><b>2.4</b> Create Directories</a></li>
+<li class="chapter" data-level="2.5" data-path="configure-environment-for-full-profiling-pipeline.html"><a href="configure-environment-for-full-profiling-pipeline.html#download-software"><i class="fa fa-check"></i><b>2.5</b> Download Software</a></li>
 </ul></li>
-<li class="part"><span><b>II Images to measurements</b></span></li>
-<li class="chapter" data-level="2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html"><i class="fa fa-check"></i><b>2</b> Configure Tools to Process Images</a><ul>
-<li class="chapter" data-level="2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#download-software"><i class="fa fa-check"></i><b>2.1</b> Download Software</a></li>
-<li class="chapter" data-level="2.2" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#update-some-packages"><i class="fa fa-check"></i><b>2.2</b> Update some packages</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#cytominer-database"><i class="fa fa-check"></i><b>2.2.1</b> cytominer-database</a></li>
+<li class="chapter" data-level="3" data-path="setup-images.html"><a href="setup-images.html"><i class="fa fa-check"></i><b>3</b> Setup Images</a><ul>
+<li class="chapter" data-level="3.1" data-path="setup-images.html"><a href="setup-images.html#upload-images"><i class="fa fa-check"></i><b>3.1</b> Upload Images</a></li>
+<li class="chapter" data-level="3.2" data-path="setup-images.html"><a href="setup-images.html#prepare-images"><i class="fa fa-check"></i><b>3.2</b> Prepare Images</a></li>
+<li class="chapter" data-level="3.3" data-path="setup-images.html"><a href="setup-images.html#create-list-of-plates"><i class="fa fa-check"></i><b>3.3</b> Create List of Plates</a></li>
+<li class="chapter" data-level="3.4" data-path="setup-images.html"><a href="setup-images.html#create-loaddata-csvs"><i class="fa fa-check"></i><b>3.4</b> Create LoadData CSVs</a></li>
+<li class="chapter" data-level="3.5" data-path="setup-images.html"><a href="setup-images.html#upload-image-location-files-to-s3"><i class="fa fa-check"></i><b>3.5</b> Upload image location files to S3</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="configure-tools-to-process-images.html"><a href="configure-tools-to-process-images.html#setup-distributed-cellprofiler"><i class="fa fa-check"></i><b>2.3</b> Setup Distributed CellProfiler</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html"><i class="fa fa-check"></i><b>3</b> Setup Pipelines and Images</a><ul>
-<li class="chapter" data-level="3.1" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#get-cellprofiler-pipelines"><i class="fa fa-check"></i><b>3.1</b> Get CellProfiler Pipelines</a></li>
-<li class="chapter" data-level="3.2" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#specify-pipeline-set"><i class="fa fa-check"></i><b>3.2</b> Specify Pipeline Set</a></li>
-<li class="chapter" data-level="3.3" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#upload-images"><i class="fa fa-check"></i><b>3.3</b> Upload Images</a></li>
-<li class="chapter" data-level="3.4" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#prepare-images"><i class="fa fa-check"></i><b>3.4</b> Prepare Images</a></li>
-<li class="chapter" data-level="3.5" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-list-of-plates"><i class="fa fa-check"></i><b>3.5</b> Create List of Plates</a></li>
-<li class="chapter" data-level="3.6" data-path="setup-pipelines-and-images.html"><a href="setup-pipelines-and-images.html#create-loaddata-csvs"><i class="fa fa-check"></i><b>3.6</b> Create LoadData CSVs</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="setup-jobs.html"><a href="setup-jobs.html"><i class="fa fa-check"></i><b>4</b> Setup Jobs</a><ul>
-<li class="chapter" data-level="4.1" data-path="setup-jobs.html"><a href="setup-jobs.html#illumination-correction"><i class="fa fa-check"></i><b>4.1</b> Illumination Correction</a></li>
-<li class="chapter" data-level="4.2" data-path="setup-jobs.html"><a href="setup-jobs.html#quality-control"><i class="fa fa-check"></i><b>4.2</b> Quality Control</a></li>
-<li class="chapter" data-level="4.3" data-path="setup-jobs.html"><a href="setup-jobs.html#analysis"><i class="fa fa-check"></i><b>4.3</b> Analysis</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="run-jobs.html"><a href="run-jobs.html"><i class="fa fa-check"></i><b>5</b> Run Jobs</a><ul>
-<li class="chapter" data-level="5.1" data-path="run-jobs.html"><a href="run-jobs.html#illumination-correction-1"><i class="fa fa-check"></i><b>5.1</b> Illumination Correction</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node"><i class="fa fa-check"></i><b>5.1.1</b> Single Node</a></li>
-<li class="chapter" data-level="5.1.2" data-path="run-jobs.html"><a href="run-jobs.html#run-illum-dcp"><i class="fa fa-check"></i><b>5.1.2</b> DCP</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="run-jobs.html"><a href="run-jobs.html#quality-control-1"><i class="fa fa-check"></i><b>5.2</b> Quality Control</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="run-jobs.html"><a href="run-jobs.html#process-qc-results-into-a-database-for-cpa"><i class="fa fa-check"></i><b>5.2.1</b> Process QC Results into a Database for CPA</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="run-jobs.html"><a href="run-jobs.html#analysis-1"><i class="fa fa-check"></i><b>5.3</b> Analysis</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="run-jobs.html"><a href="run-jobs.html#single-node-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Node</a></li>
-<li class="chapter" data-level="5.3.2" data-path="run-jobs.html"><a href="run-jobs.html#dcp"><i class="fa fa-check"></i><b>5.3.2</b> DCP</a></li>
+<li class="chapter" data-level="4" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html"><i class="fa fa-check"></i><b>4</b> Run each CellProfiler step</a><ul>
+<li class="chapter" data-level="4.1" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#upload-your-pipelines-to-s3"><i class="fa fa-check"></i><b>4.1</b> Upload your pipelines to S3</a></li>
+<li class="chapter" data-level="4.2" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#configure-distributed-cellprofilers-run_batch_general-script"><i class="fa fa-check"></i><b>4.2</b> Configure Distributed-CellProfiler's <code>run_batch_general</code> script</a></li>
+<li class="chapter" data-level="4.3" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#configure-distributed-cellprofilers-fleet-file"><i class="fa fa-check"></i><b>4.3</b> Configure Distributed-CellProfiler's fleet file</a></li>
+<li class="chapter" data-level="4.4" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#change-required-parameters-in-distributed-cellprofilers-config-file"><i class="fa fa-check"></i><b>4.4</b> Change required parameters in Distributed-CellProfiler's config file</a></li>
+<li class="chapter" data-level="4.5" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#run-each-cellprofiler-step-1"><i class="fa fa-check"></i><b>4.5</b> Run each CellProfiler step</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-z-projection-1"><i class="fa fa-check"></i><b>4.5.1</b> (Optional) Z projection</a></li>
+<li class="chapter" data-level="4.5.2" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-qc-1"><i class="fa fa-check"></i><b>4.5.2</b> (Optional) QC</a></li>
+<li class="chapter" data-level="4.5.3" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#illumination-correction-1"><i class="fa fa-check"></i><b>4.5.3</b> Illumination Correction</a></li>
+<li class="chapter" data-level="4.5.4" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-assay-dev"><i class="fa fa-check"></i><b>4.5.4</b> (Optional) Assay Dev</a></li>
+<li class="chapter" data-level="4.5.5" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#analysis-1"><i class="fa fa-check"></i><b>4.5.5</b> Analysis</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="do-any-post-cellprofiler-steps.html"><a href="do-any-post-cellprofiler-steps.html"><i class="fa fa-check"></i><b>5</b> Do any post-CellProfiler steps</a></li>
 <li class="chapter" data-level="6" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>6</b> Create Profiles</a><ul>
 <li class="chapter" data-level="6.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>6.1</b> Confirm Environment Configuration</a></li>
-<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.2</b> Create Database Backend</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="create-profiles.html"><a href="create-profiles.html#copy-files-from-s3-to-efs"><i class="fa fa-check"></i><b>6.2.1</b> Copy Files from S3 to EFS</a></li>
-<li class="chapter" data-level="6.2.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows"><i class="fa fa-check"></i><b>6.2.2</b> Quick Check Rows</a></li>
-<li class="chapter" data-level="6.2.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss"><i class="fa fa-check"></i><b>6.2.3</b> Something Amiss?</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#annotate"><i class="fa fa-check"></i><b>6.3</b> Annotate</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="create-profiles.html"><a href="create-profiles.html#example-1-simple-metadata"><i class="fa fa-check"></i><b>6.3.1</b> Example 1: Simple Metadata</a></li>
-<li class="chapter" data-level="6.3.2" data-path="create-profiles.html"><a href="create-profiles.html#example-2-complex-metadata"><i class="fa fa-check"></i><b>6.3.2</b> Example 2: Complex Metadata</a></li>
-<li class="chapter" data-level="6.3.3" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure"><i class="fa fa-check"></i><b>6.3.3</b> Expected Folder Structure</a></li>
-<li class="chapter" data-level="6.3.4" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-1"><i class="fa fa-check"></i><b>6.3.4</b> Quick Check Rows</a></li>
-<li class="chapter" data-level="6.3.5" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-1"><i class="fa fa-check"></i><b>6.3.5</b> Something Amiss?</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="create-profiles.html"><a href="create-profiles.html#normalize"><i class="fa fa-check"></i><b>6.4</b> Normalize</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-1"><i class="fa fa-check"></i><b>6.4.1</b> Expected Folder Structure</a></li>
-<li class="chapter" data-level="6.4.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-2"><i class="fa fa-check"></i><b>6.4.2</b> Quick Check Rows</a></li>
-<li class="chapter" data-level="6.4.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-2"><i class="fa fa-check"></i><b>6.4.3</b> Something Amiss?</a></li>
-</ul></li>
-<li class="chapter" data-level="6.5" data-path="create-profiles.html"><a href="create-profiles.html#select-variables"><i class="fa fa-check"></i><b>6.5</b> Select Variables</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="create-profiles.html"><a href="create-profiles.html#sample-data"><i class="fa fa-check"></i><b>6.5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="6.5.2" data-path="create-profiles.html"><a href="create-profiles.html#preselect"><i class="fa fa-check"></i><b>6.5.2</b> Preselect</a></li>
-<li class="chapter" data-level="6.5.3" data-path="create-profiles.html"><a href="create-profiles.html#alternate-load-previous-preselect-configuration"><i class="fa fa-check"></i><b>6.5.3</b> Alternate: Load previous preselect configuration</a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="create-profiles.html"><a href="create-profiles.html#execute-feature-selection"><i class="fa fa-check"></i><b>6.6</b> Execute Feature Selection</a><ul>
-<li class="chapter" data-level="6.6.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-2"><i class="fa fa-check"></i><b>6.6.1</b> Expected Folder Structure</a></li>
-<li class="chapter" data-level="6.6.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-3"><i class="fa fa-check"></i><b>6.6.2</b> Quick Check Rows</a></li>
-<li class="chapter" data-level="6.6.3" data-path="create-profiles.html"><a href="create-profiles.html#something-amiss-3"><i class="fa fa-check"></i><b>6.6.3</b> Something Amiss?</a></li>
-</ul></li>
-<li class="chapter" data-level="6.7" data-path="create-profiles.html"><a href="create-profiles.html#aggregate-replicates"><i class="fa fa-check"></i><b>6.7</b> Aggregate Replicates</a><ul>
-<li class="chapter" data-level="6.7.1" data-path="create-profiles.html"><a href="create-profiles.html#expected-folder-structure-3"><i class="fa fa-check"></i><b>6.7.1</b> Expected Folder Structure</a></li>
-<li class="chapter" data-level="6.7.2" data-path="create-profiles.html"><a href="create-profiles.html#quick-check-rows-4"><i class="fa fa-check"></i><b>6.7.2</b> Quick Check Rows</a></li>
-<li class="chapter" data-level="6.7.3" data-path="create-profiles.html"><a href="create-profiles.html#combine-averaged-profiles"><i class="fa fa-check"></i><b>6.7.3</b> Combine Averaged Profiles</a></li>
-</ul></li>
-<li class="chapter" data-level="6.8" data-path="create-profiles.html"><a href="create-profiles.html#audit"><i class="fa fa-check"></i><b>6.8</b> Audit</a><ul>
-<li class="chapter" data-level="6.8.1" data-path="create-profiles.html"><a href="create-profiles.html#treatment-audit"><i class="fa fa-check"></i><b>6.8.1</b> Treatment Audit</a></li>
-<li class="chapter" data-level="6.8.2" data-path="create-profiles.html"><a href="create-profiles.html#control-audit"><i class="fa fa-check"></i><b>6.8.2</b> Control Audit</a></li>
-</ul></li>
-<li class="chapter" data-level="6.9" data-path="create-profiles.html"><a href="create-profiles.html#convert-to-other-formats"><i class="fa fa-check"></i><b>6.9</b> Convert to Other Formats</a><ul>
-<li class="chapter" data-level="6.9.1" data-path="create-profiles.html"><a href="create-profiles.html#convert-per-plate-csv-files-to-gct"><i class="fa fa-check"></i><b>6.9.1</b> Convert per-plate CSV files to GCT</a></li>
-<li class="chapter" data-level="6.9.2" data-path="create-profiles.html"><a href="create-profiles.html#convert-per-plate-map-csv-files-to-gct"><i class="fa fa-check"></i><b>6.9.2</b> Convert per-plate map CSV files to GCT</a></li>
-<li class="chapter" data-level="6.9.3" data-path="create-profiles.html"><a href="create-profiles.html#convert-the-replicate-collapsed-csv-file-to-gct"><i class="fa fa-check"></i><b>6.9.3</b> Convert the replicate-collapsed CSV file to gct</a></li>
-</ul></li>
-<li class="chapter" data-level="6.10" data-path="create-profiles.html"><a href="create-profiles.html#upload-data"><i class="fa fa-check"></i><b>6.10</b> Upload Data</a><ul>
-<li class="chapter" data-level="6.10.1" data-path="create-profiles.html"><a href="create-profiles.html#sync-to-s3"><i class="fa fa-check"></i><b>6.10.1</b> Sync to S3</a></li>
-<li class="chapter" data-level="6.10.2" data-path="create-profiles.html"><a href="create-profiles.html#sync-down-from-s3-onto-a-machine"><i class="fa fa-check"></i><b>6.10.2</b> Sync Down from S3 onto a Machine</a></li>
-<li class="chapter" data-level="6.10.3" data-path="create-profiles.html"><a href="create-profiles.html#sync-the-files"><i class="fa fa-check"></i><b>6.10.3</b> Sync the files</a></li>
-</ul></li>
+<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>6.2</b> Add a large EBS volume to your machine</a></li>
+<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.3</b> Create Database Backend</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
@@ -222,34 +184,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="configure-environment-for-full-profiling-pipeline" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Configure Environment for Full Profiling Pipeline</h1>
-<div id="launch-an-aws-virtual-machine" class="section level2">
-<h2><span class="header-section-number">1.1</span> Launch an AWS Virtual Machine</h2>
-<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-*</code>, created using <a href="https://github.com/cytomining/cytominer-vm" class="uri">https://github.com/cytomining/cytominer-vm</a>. Note that the region must be set to <code>US East (N. Virginia)</code> (<code>us-east-1a</code> or <code>us-east-1b</code>). To use a different region, modify the <code>vpc</code> module in the AWS infrastructure setup.</p>
-<p>You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. We recommend using an <code>m4.xlarge</code> instance, with a 110Gb EBS volume (roughly, EBS size should be ((number of cores -1) * 30)+20).</p>
-<p>Note: Proper configuration is essential to mount the S3 bucket. The following configuration provides an example, named <code>imaging_platform</code> (modifications will be necessary).</p>
+<h1><span class="header-section-number">Chapter 2</span> Configure Environment for Full Profiling Pipeline</h1>
+<p>This workflow assumes you have already set up an AWS account with an S3 bucket and EFS, and created a VM per the instructions in the link below.</p>
+<div id="launch-an-aws-virtual-machine-for-making-csvs-and-running-distributed-cellprofiler" class="section level2">
+<h2><span class="header-section-number">2.1</span> Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler</h2>
+<p>Launch an EC2 node using AMI <code>cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*</code>, created using <a href="https://github.com/cytomining/cytominer-vm">cytominer-vm</a>.</p>
+<p>You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. We recommend using an <code>m4.xlarge</code> instance, with an 8Gb EBS volume.</p>
+<p>Note: Proper configuration is essential to mount the S3 bucket. The following configuration provides an example, named <code>imaging-platform</code> (modifications will be necessary).</p>
 <ul>
 <li>Launch an ec2 instance on AWS</li>
-<li>AMI: <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-14.04-amd64-server-1529668435</code></li>
+<li>AMI: <code>cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-18.04-amd64-server-1529668435</code></li>
 <li>Instance Type: m4.xlarge</li>
-<li>Network: vpc-35149752 - Subnet: Default (imaging platform terraform)</li>
+<li>Network: vpc-35149752</li>
+<li>Subnet: Default (imaging platform terraform)</li>
 <li>IAM role: <code>s3-imaging-platform-role</code></li>
-<li>Add New Volume (if necessary): <code>EBS</code> with 110 GiB</li>
 <li>No Tags</li>
 <li>Select Existing Security Group: <code>SSH_HTTP</code></li>
 <li>Review and Launch</li>
 <li><code>ssh -i &lt;USER&gt;.pem ubuntu@&lt;Public DNS IPv4&gt;</code></li>
 </ul>
 <p>After starting the instance, ensure that the S3 bucket is mounted on <code>~/bucket</code>. If not, run <code>sudo mount -a</code>.</p>
-
-<div class="rmdnote">
-Note that given this configuration in this AMI, EFS can only be mounted from <code>us-east-1a</code> or <code>us-east-1b</code>. This can be changed by appropriately editing the EFS configuration via Terraform.
-</div>
-
 <p>Log in to the EC2 instance.</p>
-<p>Check available space on the instance</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">df</span> -h</code></pre></div>
-<p>Ensure that the <code>Available</code> column is at least 30Gb x <code>p</code>, where <code>p</code> is the number of plates you will process in parallel when creating the database backend. We recommend <code>p</code> to be one less than the number of cores (<code>p</code> = 3 for <code>m4.xlarge</code>, so 60Gb should be available). If you don't have sufficient space, mount an EBS volume (below).</p>
 <p>Enter your AWS credentials</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> configure</code></pre></div>
 <p>The infrastructure is configured with one S3 bucket. Mount this S3 bucket (if it is not automatically mounted)</p>
@@ -257,8 +212,16 @@ Note that given this configuration in this AMI, EFS can only be mounted from <co
 <p>Check that the bucket was was mounted. This path should exist:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">ls</span> ~/bucket/projects</code></pre></div>
 </div>
+<div id="create-a-tmux-session" class="section level2">
+<h2><span class="header-section-number">2.2</span> Create a tmux session</h2>
+<p>You will want to retain environment variables once defined, and for processes to run when you are not connected, so you should create a tmux session to work in</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">tmux</span> new -s sessionname</code></pre></div>
+<p>You can detach from this session at any time by typing <code>Ctl+b</code>, then <code>d</code>.<br />
+To reattach to an existing session, type <code>tmux a -t sessionname</code></p>
+<p>You can list existing sessions with <code>tmux list-sessions</code> and kill any poorly-behaving session with <code>tmux kill-session -t sessionname</code></p>
+</div>
 <div id="define-environment-variables" class="section level2">
-<h2><span class="header-section-number">1.2</span> Define Environment Variables</h2>
+<h2><span class="header-section-number">2.3</span> Define Environment Variables</h2>
 <p>These variables will be used throughout the project to tag instances, logs etc so that you know which machines are working on what, which files to operate on, where your logs are, etc.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="va">PROJECT_NAME=</span>2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad
 
@@ -269,58 +232,37 @@ Note that given this configuration in this AMI, EFS can only be mounted from <co
 <span class="va">MAXPROCS=</span>3 <span class="co"># m4.xlarge has 4 cores; this should be # of cores on your instance - 1</span></code></pre></div>
 </div>
 <div id="create-directories" class="section level2">
-<h2><span class="header-section-number">1.3</span> Create Directories</h2>
-
-<div class="rmdcaution">
-See note above about EFS - that it can only be mounted from us-east-1a or 1b.
-</div>
-
+<h2><span class="header-section-number">2.4</span> Create Directories</h2>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
 
 <span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
 
 <span class="fu">mkdir</span> -p log/<span class="va">${BATCH_ID}</span></code></pre></div>
-<p>Create a temp directory which is required when creating the database backed using <code>cytominer-database</code> (discussed later). This is also useful if you decide to run CellProfiler directly on this node – running the Cell Painting analysis pipeline results in large temporary files.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> ~/ebs_tmp</code></pre></div>
-
-<div class="rmdnote">
-If at this point you realize that the ec2 instance does not have enough space (which you can check using <code>du -hs</code>), create and attach an EBS volume, and then mount it. Make sure that the EBS is created in the same region and availability zone as the ec2 instance. For more information about mounting the EBS see <a href="https://devopscube.com/mount-ebs-volume-ec2-instance/" class="uri">https://devopscube.com/mount-ebs-volume-ec2-instance/</a>.
 </div>
+<div id="download-software" class="section level2">
+<h2><span class="header-section-number">2.5</span> Download Software</h2>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> ~/efs/<span class="va">${PROJECT_NAME}</span>/workspace/
+<span class="fu">mkdir</span> software
+<span class="bu">cd</span> software
+<span class="fu">git</span> clone https://github.com/broadinstitute/pe2loaddata.git
+<span class="fu">git</span> clone https://github.com/CellProfiler/Distributed-CellProfiler.git
 
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="co"># check the name of the disk</span>
-<span class="ex">lsblk</span>
-
-<span class="co">#&gt; NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span>
-<span class="co">#&gt; xvda    202:0    0     8G  0 disk</span>
-<span class="co">#&gt; └─xvda1 202:1    0     8G  0 part /</span>
-<span class="co">#&gt; xvdba    202:80   0   100G  0 disk</span>
-
-<span class="co"># check if it has a file system</span>
-<span class="fu">sudo</span> file -s /dev/xvdba
-<span class="co"># ...likely not, in which case you get:</span>
-<span class="co">#&gt; /dev/xvdf: data</span>
-
-<span class="co"># if no file system, then create it</span>
-<span class="fu">sudo</span> mkfs -t ext4 /dev/xvdba
-
-<span class="co"># mount it</span>
-<span class="fu">sudo</span> mount /dev/xvdba /home/ubuntu/ebs_tmp/
-
-<span class="co"># change perm</span>
-<span class="fu">sudo</span> chmod 777 ~/ebs_tmp/</code></pre></div>
+<span class="bu">cd</span> ..</code></pre></div>
+<p>If these repos have already been cloned, <code>git pull</code> to make sure they are up to date.</p>
+<p>This is the resulting structure of <code>software</code> on EFS (one level below <code>workspace</code>):</p>
+<pre><code>└── software
+    ├── Distributed-CellProfiler
+    └── pe2loaddata</code></pre>
 
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="configure-tools-to-process-images.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="setup-images.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -343,6 +285,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -351,7 +294,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/cytomining/profiling-handbook/edit/master/01-config.Rmd",
+"link": "https://github.com/cytomining/profiling-handbook/edit/master/02-config.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -363,6 +306,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
