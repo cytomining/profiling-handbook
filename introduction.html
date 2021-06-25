@@ -5,23 +5,23 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction | Image-based Profiling Handbook</title>
-  <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="generator" content="bookdown 0.22.5 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta property="og:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 1 Introduction | Image-based Profiling Handbook" />
   
-  <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   
 
-<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
+<meta name="author" content="Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
 <meta name="date" content="2021-06-25" />
@@ -151,12 +151,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.5.4" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-assay-dev"><i class="fa fa-check"></i><b>4.5.4</b> (Optional) Assay Dev</a></li>
 <li class="chapter" data-level="4.5.5" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#analysis-1"><i class="fa fa-check"></i><b>4.5.5</b> Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="4.6" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-do-any-post-cellprofiler-steps"><i class="fa fa-check"></i><b>4.6</b> (Optional) Do any post-CellProfiler steps</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="do-any-post-cellprofiler-steps.html"><a href="do-any-post-cellprofiler-steps.html"><i class="fa fa-check"></i><b>5</b> Do any post-CellProfiler steps</a></li>
-<li class="chapter" data-level="6" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>6</b> Create Profiles</a><ul>
-<li class="chapter" data-level="6.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>6.1</b> Confirm Environment Configuration</a></li>
-<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>6.2</b> Add a large EBS volume to your machine</a></li>
-<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.3</b> Create Database Backend</a></li>
+<li class="chapter" data-level="5" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>5</b> Create Profiles</a><ul>
+<li class="chapter" data-level="5.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>5.1</b> Confirm Environment Configuration</a></li>
+<li class="chapter" data-level="5.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>5.2</b> Add a large EBS volume to your machine</a></li>
+<li class="chapter" data-level="5.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>5.3</b> Create Database Backend</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
@@ -185,7 +185,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p>This handbook describes the process of running a Cell Painting experiment. While the code here will describe doing so in the context of running <a href="https://github.com/CellProfiler/Distributed-CellProfiler">Distributed-CellProfiler</a> on AWS on images generated by a PerkinElmer microscope, then collating the data with <a href="https://github.com/cytomining/cytominer-database">cytominer-database</a> and analyzing it with <a href="https://github.com/cytomining/pycytominer">pycytominer</a>, the basic procedure for running a Cell Painting experiment is the same no matter the microscope or the processing platform. Briefly, the steps are:</p>
+<p>This handbook describes the process of running a Cell Painting experiment. While the code here will describe doing so in the context of running <a href="https://github.com/CellProfiler/Distributed-CellProfiler">Distributed-CellProfiler</a> on AWS on images generated by a PerkinElmer microscope, then collating the data with <a href="https://github.com/cytomining/cytominer-database">cytominer-database</a> and analyzing it with <a href="https://github.com/cytomining/pycytominer">pycytominer</a>, the basic procedure for running a Cell Painting experiment is the same no matter the microscope or the processing platform. Briefly, the steps for any and every platform are:</p>
 <div id="collect-your-software" class="section level2">
 <h2><span class="header-section-number">1.1</span> Collect your software</h2>
 <p>For the specific use case here, this involves</p>
@@ -196,9 +196,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="https://github.com/cytomining/pycytominer">pycytominer</a></li>
 </ul>
 <p>along with their dependencies. Almost certainly, you will need a locally-to-your-images installed version of GUI CellProfiler that matches the version you want to run on your cluster - locally might mean on a local machine or a VM.</p>
-<blockquote>
-<p><em>TODO: Maybe clarify that users don't need to install these at this point because we provide instructions later?</em></p>
-</blockquote>
 </div>
 <div id="collect-your-pipelines" class="section level2">
 <h2><span class="header-section-number">1.2</span> Collect your pipelines</h2>

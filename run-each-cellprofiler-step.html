@@ -5,23 +5,23 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Run each CellProfiler step | Image-based Profiling Handbook</title>
-  <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="generator" content="bookdown 0.22.5 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Run each CellProfiler step | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta property="og:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 4 Run each CellProfiler step | Image-based Profiling Handbook" />
   
-  <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   
 
-<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
+<meta name="author" content="Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
 <meta name="date" content="2021-06-25" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="setup-images.html"/>
-<link rel="next" href="do-any-post-cellprofiler-steps.html"/>
+<link rel="next" href="create-profiles.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -151,12 +151,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.5.4" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-assay-dev"><i class="fa fa-check"></i><b>4.5.4</b> (Optional) Assay Dev</a></li>
 <li class="chapter" data-level="4.5.5" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#analysis-1"><i class="fa fa-check"></i><b>4.5.5</b> Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="4.6" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-do-any-post-cellprofiler-steps"><i class="fa fa-check"></i><b>4.6</b> (Optional) Do any post-CellProfiler steps</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="do-any-post-cellprofiler-steps.html"><a href="do-any-post-cellprofiler-steps.html"><i class="fa fa-check"></i><b>5</b> Do any post-CellProfiler steps</a></li>
-<li class="chapter" data-level="6" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>6</b> Create Profiles</a><ul>
-<li class="chapter" data-level="6.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>6.1</b> Confirm Environment Configuration</a></li>
-<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>6.2</b> Add a large EBS volume to your machine</a></li>
-<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.3</b> Create Database Backend</a></li>
+<li class="chapter" data-level="5" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>5</b> Create Profiles</a><ul>
+<li class="chapter" data-level="5.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>5.1</b> Confirm Environment Configuration</a></li>
+<li class="chapter" data-level="5.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>5.2</b> Add a large EBS volume to your machine</a></li>
+<li class="chapter" data-level="5.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>5.3</b> Create Database Backend</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
@@ -234,9 +234,9 @@ Refer to the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/w
 <p>You may have as many as 5 or as few as 2 CellProfiler steps</p>
 <ul>
 <li>(optional) Z projection</li>
-<li>(optional) QC</li>
+<li>(optional) QC - see also section 4.6</li>
 <li>illumination correction</li>
-<li>(optional) assay development</li>
+<li>(optional) assay development - see also section 4.6</li>
 <li>analysis.</li>
 </ul>
 <p>For each step, the steps you will run will be identical:</p>
@@ -291,6 +291,17 @@ Refer to the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/w
 </ul>
 </div>
 </div>
+<div id="optional-do-any-post-cellprofiler-steps" class="section level2">
+<h2><span class="header-section-number">4.6</span> (Optional) Do any post-CellProfiler steps</h2>
+<p>The optional QC and assay development steps have post-CellProfiler components.<br />
+These pipelines need only be run if the user plans to do these post-CellProfiler steps.</p>
+<ul>
+<li>QC may require visual inspection of images, <a href="https://github.com/CellProfiler/tutorials/tree/master/QualityControl">creation of a machine learning classifier to detect poor quality images</a>, and/or running scripts to evaluate CV. How best to evaluate quality is left to the user.</li>
+<li>The assay development step creates images to be visually evaluated, either individually or <a href="https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpz1.89">after stitching for easier evaluation</a>. If your segmentation is not ideal, you may need to update your assay dev and analysis pipelines by manually tuning the segmentation steps on a local set of representative data until they perform better on your images, then making sure to update the segmentation in the assay dev and analysis pipelines on your cluster accordingly.</li>
+<li>After running the final analysis pipelines, proceed to the next step of this guide.</li>
+</ul>
+
+</div>
 </div>
             </section>
 
@@ -298,7 +309,7 @@ Refer to the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/w
         </div>
       </div>
 <a href="setup-images.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="do-any-post-cellprofiler-steps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="create-profiles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

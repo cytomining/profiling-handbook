@@ -4,24 +4,24 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Create Profiles | Image-based Profiling Handbook</title>
-  <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <title>Chapter 5 Create Profiles | Image-based Profiling Handbook</title>
+  <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="generator" content="bookdown 0.22.5 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Create Profiles | Image-based Profiling Handbook" />
+  <meta property="og:title" content="Chapter 5 Create Profiles | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta property="og:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Create Profiles | Image-based Profiling Handbook" />
+  <meta name="twitter:title" content="Chapter 5 Create Profiles | Image-based Profiling Handbook" />
   
-  <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and cytominer" />
+  <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   
 
-<meta name="author" content="Tim Becker, Beth Cimini, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
+<meta name="author" content="Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
 <meta name="date" content="2021-06-25" />
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="do-any-post-cellprofiler-steps.html"/>
+<link rel="prev" href="run-each-cellprofiler-step.html"/>
 <link rel="next" href="appendix-a.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -151,12 +151,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.5.4" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-assay-dev"><i class="fa fa-check"></i><b>4.5.4</b> (Optional) Assay Dev</a></li>
 <li class="chapter" data-level="4.5.5" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#analysis-1"><i class="fa fa-check"></i><b>4.5.5</b> Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="4.6" data-path="run-each-cellprofiler-step.html"><a href="run-each-cellprofiler-step.html#optional-do-any-post-cellprofiler-steps"><i class="fa fa-check"></i><b>4.6</b> (Optional) Do any post-CellProfiler steps</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="do-any-post-cellprofiler-steps.html"><a href="do-any-post-cellprofiler-steps.html"><i class="fa fa-check"></i><b>5</b> Do any post-CellProfiler steps</a></li>
-<li class="chapter" data-level="6" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>6</b> Create Profiles</a><ul>
-<li class="chapter" data-level="6.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>6.1</b> Confirm Environment Configuration</a></li>
-<li class="chapter" data-level="6.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>6.2</b> Add a large EBS volume to your machine</a></li>
-<li class="chapter" data-level="6.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>6.3</b> Create Database Backend</a></li>
+<li class="chapter" data-level="5" data-path="create-profiles.html"><a href="create-profiles.html"><i class="fa fa-check"></i><b>5</b> Create Profiles</a><ul>
+<li class="chapter" data-level="5.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>5.1</b> Confirm Environment Configuration</a></li>
+<li class="chapter" data-level="5.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>5.2</b> Add a large EBS volume to your machine</a></li>
+<li class="chapter" data-level="5.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>5.3</b> Create Database Backend</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
@@ -184,9 +184,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="create-profiles" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Create Profiles</h1>
+<h1><span class="header-section-number">Chapter 5</span> Create Profiles</h1>
 <div id="confirm-environment-configuration" class="section level2">
-<h2><span class="header-section-number">6.1</span> Confirm Environment Configuration</h2>
+<h2><span class="header-section-number">5.1</span> Confirm Environment Configuration</h2>
 <p>You CAN, if you choose, make your backends with the same machine that you have used to make CSVs and run DCP for CellProfiler. However, we typically do not, since backend creation can take a long time so it is desirable to use 2 machines - a small inexpensive machine with only a few CPUs for all the steps before backends and a larger machine with at least as many CPUs as (the number of plates in your batch +1) for backend creation. Both machines can be turned off when not in use and when off will generate only minimal charges.</p>
 <p>To make a new backend machine, follow the identical instructions as the in the section below, only with a larger Instance Type (such as an m4.10xlarge).</p>
 <ul>
@@ -195,7 +195,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Since backend creation also typically requires a large amount of hard disk space, which you pay for whether or not the machine is on, we recommend attaching a large EBS volume to your backend creation machine only when needed, then detaching and terminating it when not in use.</p>
 </div>
 <div id="add-a-large-ebs-volume-to-your-machine" class="section level2">
-<h2><span class="header-section-number">6.2</span> Add a large EBS volume to your machine</h2>
+<h2><span class="header-section-number">5.2</span> Add a large EBS volume to your machine</h2>
 <p>Follow the AWS instructions for <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html">creating</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">attaching</a> the EBS volume. Two critical factors to note- the volume must be created in the same subnet as your backend creation machine, and should be approximately 2X the size as the analysis files in your batch - this is most easily figured by navigating to that location in the S3 web console and selecting &quot;Actions -&gt; Calculate total size&quot;.</p>
 <p>Once the volume is created and attached, ensure the machine is started and SSH connect to it.</p>
 <p>Create a temp directory which is required when creating the database backed using <code>cytominer-database</code> (discussed later).</p>
@@ -229,7 +229,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 </div>
 <div id="create-database-backend" class="section level2">
-<h2><span class="header-section-number">6.3</span> Create Database Backend</h2>
+<h2><span class="header-section-number">5.3</span> Create Database Backend</h2>
 <p>Run creation of sqlite backend as well as aggregation of measurements into per-well profiles. This process can be very slow since the files are read from s3fs/EFS. We recommend first downloading the CSVs files locally on an EBS volume attached to the ec2 instance you are running on, and then ingesting.</p>
 <p>To do so, first recreate the analysis output folder structure on the EBS volume:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">mkdir</span> -p ~/ebs_tmp/<span class="va">${PROJECT_NAME}</span>/workspace/software
@@ -282,7 +282,7 @@ There is a known <a href="https://github.com/cytomining/cytominer-database/issue
         └── SQ00015167
             ├── SQ00015167.csv
             └── SQ00015167.sqlite</code></pre>
-<p>At this point, the user needs to use the <a href="https://github.com/cytomining/profiling-template">profiling template</a> to use the <a href="https://github.com/cytomining/pycytominer/tree/jump">jump branch of pycytominer</a> to annotate the profiles with metadata, normalize them, and feature select them. Detailed instructions for these steps will be added as soon as possible.</p>
+<p>At this point, the user needs to use the <a href="https://github.com/cytomining/profiling-template">profiling template</a> to use <a href="https://github.com/cytomining/pycytominer/">pycytominer</a> to annotate the profiles with metadata, normalize them, and feature select them. Detailed instructions for these steps will be added as soon as possible.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ There is a known <a href="https://github.com/cytomining/cytominer-database/issue
           </div>
         </div>
       </div>
-<a href="do-any-post-cellprofiler-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="run-each-cellprofiler-step.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="appendix-a.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

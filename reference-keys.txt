@@ -33,7 +33,7 @@ optional-qc-1
 illumination-correction-1
 optional-assay-dev
 analysis-1
-do-any-post-cellprofiler-steps
+optional-do-any-post-cellprofiler-steps
 create-profiles
 confirm-environment-configuration
 add-a-large-ebs-volume-to-your-machine
