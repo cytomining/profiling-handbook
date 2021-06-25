@@ -103,7 +103,7 @@ In general, as long as you are running inside a tmux session and it isn't killed
 * Your number of `CLUSTER_MACHINES` should be as many as possible per your account limits, ideally at least a few hundred.
 * Your `SQS_MESSAGE_VISIBILITY` should be 10-20 minutes for images with a binning of 2, longer (30-120 minutes) for unbinned images and/or CellProfiler 2 or 3 runs.  This value is the most potentially variable -once you've run a single analysis workflow, you can adjust this value accordingly based on your log files.
 
-# Do any post-CellProfiler steps
+## (Optional) Do any post-CellProfiler steps
 
 The optional QC and assay development steps have post-CellProfiler components.  
 These pipelines need only be run if the user plans to do these post-CellProfiler steps. 
