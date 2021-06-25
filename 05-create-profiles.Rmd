@@ -127,4 +127,4 @@ This is the resulting structure of `backend` on S3 (one level below `workspace`)
 ```
 
 
-At this point, the user needs to use the [profiling template](https://github.com/cytomining/profiling-template) to use the [jump branch of pycytominer](https://github.com/cytomining/pycytominer/tree/jump) to annotate the profiles with metadata, normalize them, and feature select them.  Detailed instructions for these steps will be added as soon as possible.
+At this point, the user needs to use the [profiling template](https://github.com/cytomining/profiling-template) to use [pycytominer](https://github.com/cytomining/pycytominer/) to annotate the profiles with metadata, normalize them, and feature select them.  Detailed instructions for these steps will be added as soon as possible.
