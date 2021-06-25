@@ -54,9 +54,9 @@ Refer to the [manual](https://github.com/CellProfiler/Distributed-CellProfiler/w
 You may have as many as 5 or as few as 2 CellProfiler steps
 
 - (optional) Z projection
-- (optional) QC
+- (optional) QC - see also section 4.6
 - illumination correction
-- (optional) assay development
+- (optional) assay development - see also section 4.6
 - analysis.  
 
 For each step, the steps you will run will be identical:
@@ -103,11 +103,11 @@ In general, as long as you are running inside a tmux session and it isn't killed
 * Your number of `CLUSTER_MACHINES` should be as many as possible per your account limits, ideally at least a few hundred.
 * Your `SQS_MESSAGE_VISIBILITY` should be 10-20 minutes for images with a binning of 2, longer (30-120 minutes) for unbinned images and/or CellProfiler 2 or 3 runs.  This value is the most potentially variable -once you've run a single analysis workflow, you can adjust this value accordingly based on your log files.
 
-# Do any post-CellProfiler steps
+## (Optional) Do any post-CellProfiler steps
 
 The optional QC and assay development steps have post-CellProfiler components.  
 These pipelines need only be run if the user plans to do these post-CellProfiler steps. 
 
 * QC may require visual inspection of images, [creation of a machine learning classifier to detect poor quality images](https://github.com/CellProfiler/tutorials/tree/master/QualityControl), and/or running scripts to evaluate CV.  How best to evaluate quality is left to the user.
-* The assay development step creates images to be visually evaluated, either individually or [after stitching for easier evaluation](https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpz1.89)
+* The assay development step creates images to be visually evaluated, either individually or [after stitching for easier evaluation](https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpz1.89). If your segmentation is not ideal, you may need to update your assay dev and analysis pipelines by manually tuning the segmentation steps on a local set of representative data until they perform better on your images, then making sure to update the segmentation in the assay dev and analysis pipelines on your cluster accordingly.
 * After running the final analysis pipelines, proceed to the next step of this guide.
