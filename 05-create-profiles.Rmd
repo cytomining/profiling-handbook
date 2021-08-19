@@ -138,10 +138,11 @@ This is the structure of the metadata folder (one level below `workspace`):
 
 ```
 └── metadata
-    └── 2016_04_01_a549_48hr_batch1
-        ├── barcode_platemap.csv
-        └── platemap
-            └── C-7161-01-LM6-006.txt
+    └── platemaps
+        └── 2016_04_01_a549_48hr_batch1
+            ├── barcode_platemap.csv
+            └── platemap
+                └── C-7161-01-LM6-006.txt
 ```
 
 `2016_04_01_a549_48hr_batch1` is the batch name – the plates (and all related data) are arranged under batches, as seen below.
@@ -170,9 +171,23 @@ C-7161-01-LM6-006 A09 BRD-K18895904-001-16-1  0.347146666668001866  1.1111111111
 - `plate_map_name` and `well_position` are currently the only mandatory columns.
 ```
 
-NIRANJ TODO- External metdata
+The external metadata is an optional file tab separated `.tsv` file that contains the mapping between a perturbation identifier to other metadata. The name of the perturbation identifier column (e.g. `broad_sample`) should be the same as the column in platemap.txt.
 
-## Set up GitHub 
+The external metadata file should be placed in a folder named `external_metadata` within the `metadata` folder. If this file is provided, then the following should be the folder structure
+
+```
+└── metadata
+    ├── external_metadata
+    │   └── external_metadata.tsv
+    └── platemaps
+        └── 2016_04_01_a549_48hr_batch1
+            ├── barcode_platemap.csv
+            └── platemap
+                └── C-7161-01-LM6-006.txt
+```
+
+
+## Set up GitHub
 
 Once and only once - fork the [profiling recipe](https://github.com/cytomining/profiling-recipe) to your own user name
 (Each time you make a new project - you may want to [keep your fork up to date](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
@@ -283,7 +298,7 @@ nano config_files/${CONFIG_FILE}.yml
 ```{block2, type='rmdnote'}
 The changes you will likely need to make for most small use cases following this handbook- for `aggregate` set `perform` to `false`, for `annotate` sub-setting `external` set `perform` to `false`, in `feature_select` set `gct` to `true`, and finally at the bottom set the batch(es) and plates names
 
-For large batches with many DMSO wells and external metadata ala the JUMP project - NIRANJ TODO
+For large batches with many DMSO wells and external metadata ala the JUMP project - set `perform` under `external` to `true`, set `file` to the name of the external metadata file and set `merge_column` to the name of the compound identifier column in platemap.txt and external_metadata.tsv.
 ```
 
 ### Set up the profiles 
@@ -297,7 +312,7 @@ rsync -arzv --include="*/" --include="*.gz" --exclude "*" ../../backend/${BATCH_
 ### Run the profiling workflow
 Especially for large number of plates, this will take some time.  Output will be logged to the console as different steps proceed.
 ```
-python profiling-recipe/profiles/profiling_pipeline.py  --config config_files/config.yml
+python profiling-recipe/profiles/profiling_pipeline.py  --config config_files/{$CONFIG_FILE}.yml
 ```
 
 
