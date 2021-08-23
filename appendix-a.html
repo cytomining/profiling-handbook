@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A Appendix A | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
-  <meta name="generator" content="bookdown 0.22.5 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A Appendix A | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi" />
 
 
-<meta name="date" content="2021-06-25" />
+<meta name="date" content="2021-08-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="create-profiles.html"/>
 
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -157,6 +157,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="create-profiles.html"><a href="create-profiles.html#confirm-environment-configuration"><i class="fa fa-check"></i><b>5.1</b> Confirm Environment Configuration</a></li>
 <li class="chapter" data-level="5.2" data-path="create-profiles.html"><a href="create-profiles.html#add-a-large-ebs-volume-to-your-machine"><i class="fa fa-check"></i><b>5.2</b> Add a large EBS volume to your machine</a></li>
 <li class="chapter" data-level="5.3" data-path="create-profiles.html"><a href="create-profiles.html#create-database-backend"><i class="fa fa-check"></i><b>5.3</b> Create Database Backend</a></li>
+<li class="chapter" data-level="5.4" data-path="create-profiles.html"><a href="create-profiles.html#create-metadata-files"><i class="fa fa-check"></i><b>5.4</b> Create Metadata Files</a></li>
+<li class="chapter" data-level="5.5" data-path="create-profiles.html"><a href="create-profiles.html#set-up-github"><i class="fa fa-check"></i><b>5.5</b> Set up GitHub</a></li>
+<li class="chapter" data-level="5.6" data-path="create-profiles.html"><a href="create-profiles.html#make-profiles"><i class="fa fa-check"></i><b>5.6</b> Make Profiles</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="create-profiles.html"><a href="create-profiles.html#optional---set-up-compute-environment"><i class="fa fa-check"></i><b>5.6.1</b> Optional - set up compute environment</a></li>
+<li class="chapter" data-level="5.6.2" data-path="create-profiles.html"><a href="create-profiles.html#set-new-environment-variables"><i class="fa fa-check"></i><b>5.6.2</b> Set new environment variables</a></li>
+<li class="chapter" data-level="5.6.3" data-path="create-profiles.html"><a href="create-profiles.html#if-a-first-batch-in-this-compute-environment-make-some-directories"><i class="fa fa-check"></i><b>5.6.3</b> If a first batch in this compute environment, make some directories</a></li>
+<li class="chapter" data-level="5.6.4" data-path="create-profiles.html"><a href="create-profiles.html#add-your-backend-files"><i class="fa fa-check"></i><b>5.6.4</b> Add your backend files</a></li>
+<li class="chapter" data-level="5.6.5" data-path="create-profiles.html"><a href="create-profiles.html#if-a-first-batch-in-this-compute-environment-clone-your-repository"><i class="fa fa-check"></i><b>5.6.5</b> If a first batch in this compute environment, clone your repository</a></li>
+<li class="chapter" data-level="5.6.6" data-path="create-profiles.html"><a href="create-profiles.html#if-a-first-batch-in-this-project-weld-the-recipe-into-the-repository"><i class="fa fa-check"></i><b>5.6.6</b> If a first batch in this project, weld the recipe into the repository</a></li>
+<li class="chapter" data-level="5.6.7" data-path="create-profiles.html"><a href="create-profiles.html#if-a-first-batch-in-this-compute-environment-set-up-the-environment"><i class="fa fa-check"></i><b>5.6.7</b> If a first batch in this compute environment, set up the environment</a></li>
+<li class="chapter" data-level="5.6.8" data-path="create-profiles.html"><a href="create-profiles.html#activate-the-environment"><i class="fa fa-check"></i><b>5.6.8</b> Activate the environment</a></li>
+<li class="chapter" data-level="5.6.9" data-path="create-profiles.html"><a href="create-profiles.html#if-a-first-batch-in-this-project-create-the-necessary-directories"><i class="fa fa-check"></i><b>5.6.9</b> If a first batch in this project, create the necessary directories</a></li>
+<li class="chapter" data-level="5.6.10" data-path="create-profiles.html"><a href="create-profiles.html#download-the-load_data_csvs"><i class="fa fa-check"></i><b>5.6.10</b> Download the load_data_CSVs</a></li>
+<li class="chapter" data-level="5.6.11" data-path="create-profiles.html"><a href="create-profiles.html#download-the-metadata-files"><i class="fa fa-check"></i><b>5.6.11</b> Download the metadata files</a></li>
+<li class="chapter" data-level="5.6.12" data-path="create-profiles.html"><a href="create-profiles.html#make-the-config-file"><i class="fa fa-check"></i><b>5.6.12</b> Make the config file</a></li>
+<li class="chapter" data-level="5.6.13" data-path="create-profiles.html"><a href="create-profiles.html#set-up-the-profiles"><i class="fa fa-check"></i><b>5.6.13</b> Set up the profiles</a></li>
+<li class="chapter" data-level="5.6.14" data-path="create-profiles.html"><a href="create-profiles.html#run-the-profiling-workflow"><i class="fa fa-check"></i><b>5.6.14</b> Run the profiling workflow</a></li>
+<li class="chapter" data-level="5.6.15" data-path="create-profiles.html"><a href="create-profiles.html#push-resulting-files-back-up-to-github"><i class="fa fa-check"></i><b>5.6.15</b> Push resulting files back up to GitHub</a></li>
+<li class="chapter" data-level="5.6.16" data-path="create-profiles.html"><a href="create-profiles.html#push-resulting-files-up-to-s3"><i class="fa fa-check"></i><b>5.6.16</b> Push resulting files up to S3</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>

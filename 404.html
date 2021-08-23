@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Run each CellProfiler step | Image-based Profiling Handbook</title>
+  <title>Page not found | Image-based Profiling Handbook</title>
   <meta name="description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   <meta name="generator" content="bookdown 0.23.2 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Run each CellProfiler step | Image-based Profiling Handbook" />
+  <meta property="og:title" content="Page not found | Image-based Profiling Handbook" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Run each CellProfiler step | Image-based Profiling Handbook" />
+  <meta name="twitter:title" content="Page not found | Image-based Profiling Handbook" />
   
   <meta name="twitter:description" content="This is a handbook for processing image-based profiling datasets using CellProfiler and pycytominer" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="setup-images.html"/>
-<link rel="next" href="create-profiles.html"/>
+
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -203,133 +203,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="run-each-cellprofiler-step" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Run each CellProfiler step</h1>
-<p>The steps below are outlined specifically for running Distributed CellProfiler on AWS.<br />
-If you are not doing so, the steps will still be more-or-less the same</p>
-<ul>
-<li>Make sure CellProfiler pipelines are accessible</li>
-<li>Make sure CellProfiler knows where the input images are, either via a CSV or a batch file</li>
-<li>Run each CellProfiler pipeline, in sequence, with appropriate input folder, output folder, and grouping</li>
-</ul>
-<div id="upload-your-pipelines-to-s3" class="section level2">
-<h2><span class="header-section-number">4.1</span> Upload your pipelines to S3</h2>
-<p>In your project's workspace directory, create a batch specific folder and upload your pipelines there.<br />
-If there are previous batches from the same project or a similar one, you may find it easiest to copy the files directly. Once uploaded and/or copied, the file structure should look like the below.</p>
-<pre><code>└── pipelines
-    └── 2016_04_01_a549_48hr_batch1
-        ├── illum_without_batchfile.cppipe
-        └── analysis_without_batchfile.cppipe</code></pre>
-</div>
-<div id="configure-distributed-cellprofilers-run_batch_general-script" class="section level2">
-<h2><span class="header-section-number">4.2</span> Configure Distributed-CellProfiler's <code>run_batch_general</code> script</h2>
-
-<div class="rmdnote">
-Note that <a href="https://github.com/CellProfiler/Distributed-CellProfiler/blob/master/run_batch_general.py"><code>run_batch_general</code></a> is not required; the Distributed CellProfiler <a href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Step-2%3A-Submit-jobs">handbook</a> lays out a number of different ways of creating jobs.<br />
-However, we find it the most efficient way to run numerous pipelines on the same data. If you do not wish to use it, you can adjust steps 3 and 4 in the &quot;Run each CellProfiler step&quot; to &quot;Create a job file&quot; and &quot;Execute <code>python3 run.py submitJob jobFileName.json</code>&quot;
-</div>
-
-<p><code>run_batch_general.py</code> can be configured once at the beginning of the run of a batch of data, and then can be run for each step simply by uncommenting the name of the step to run.<br />
-The following variables in the <code>project specific stuff</code> section of the script should be configured:</p>
-<ul>
-<li><code>topdirname</code> and <code>batchsuffix</code> should match your <code>PROJECT_NAME</code> and <code>BATCH_ID</code>, respectively</li>
-<li><code>appname</code> is typically the same as <code>topdirname</code>, but if that name is long and cumbersome you can create an abbreviated version here (ie <code>2015_10_05_DrugRepurposing</code> rather than <code>2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad</code>). This will be used in your <code>config.py</code> file</li>
-<li><code>rows</code>, <code>columns</code>, and <code>sites</code> should reflect the imaging conditions used</li>
-<li><code>platelist</code> should contain a list of plates, comma separated, ie <code>['SQ00015167','SQ00015168']</code></li>
-<li>If you are using pipeline files with the LoadData module and CSVs, you should make sure that the pipeline names reflect your pipeline names (or adjust if not). Otherwise, you should make sure that the batch file names reflect your batch file names.</li>
-<li>If following the recommended structures and procedures, none of the <code>not project specific</code> section of the script should need to be adapted, but if you are making changes you may need to.</li>
-</ul>
-</div>
-<div id="configure-distributed-cellprofilers-fleet-file" class="section level2">
-<h2><span class="header-section-number">4.3</span> Configure Distributed-CellProfiler's fleet file</h2>
-<p>If running in a fresh clone of Distributed-CellProfiler, you will need to configure a single fleet file, which will be used in all subsequent steps.<br />
-Refer to the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Step-3%3A-Start-your-cluster">manual</a> for instructions.</p>
-</div>
-<div id="change-required-parameters-in-distributed-cellprofilers-config-file" class="section level2">
-<h2><span class="header-section-number">4.4</span> Change required parameters in Distributed-CellProfiler's config file</h2>
-<p>If running in a fresh clone of Distributed-CellProfiler, you will need to set the <code>AWS_REGION</code>, <code>SSH_KEY_NAME</code>, <code>AWS_BUCKET</code>, and <code>SQS_DEAD_LETTER_QUEUE</code> settings to appropriate settings for your account. Refer to the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Step-1%3A--Configuration">manual</a> for instructions.</p>
-</div>
-<div id="run-each-cellprofiler-step-1" class="section level2">
-<h2><span class="header-section-number">4.5</span> Run each CellProfiler step</h2>
-<p>You may have as many as 5 or as few as 2 CellProfiler steps</p>
-<ul>
-<li>(optional) Z projection</li>
-<li>(optional) QC - see also section 4.6</li>
-<li>illumination correction</li>
-<li>(optional) assay development - see also section 4.6</li>
-<li>analysis.</li>
-</ul>
-<p>For each step, the steps you will run will be identical:</p>
-<ol style="list-style-type: decimal">
-<li>Configure the <code>config.py</code> file</li>
-<li>Execute <code>python3 run.py setup</code></li>
-<li>Uncomment the correct step name in your <code>run_batch_general.py</code> file (and ensure all other steps are commented out)</li>
-<li>Execute <code>python3 run_batch_general.py</code></li>
-<li>Execute <code>python3 run.py startCluster files/yourFleetFileName.json</code>, where you have set the name of the fleet file previously created or located</li>
-<li>Execute <code>python3 run.py monitor files/APP_NAMESpotFleetRequestId.json</code>, where APP_NAME matches the APP_NAME variable set in step 1.</li>
-</ol>
-<p>Information on all of these steps is available in the <a href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki">Distributed-CellProfiler wiki</a>. You need only absolutely change the variables stated above and below for Distributed-CellProfiler to function, but other variables may be useful, such as using a non-default profile, adjusting whether or not you would like to pre-download files and/or use plugins and/or restart only parts of a batch of data.</p>
-<p>In general, as long as you are running inside a tmux session and it isn't killed, the monitor should destroy any and all infrastructure created on AWS as part of the running Distributed-CellProfiler, but it is the user's responsibility to check that this has completed appropriately; failure to do so may lead to spot fleets generating charges after all useful work has completed.</p>
-<div id="optional-z-projection-1" class="section level3">
-<h3><span class="header-section-number">4.5.1</span> (Optional) Z projection</h3>
-<ul>
-<li>Your <code>APP_NAME</code> variable should be set to the <code>appname</code> set in <code>run_batch_general.py</code> plus <code>_Zproj</code>, ie <code>2015_10_05_DrugRepurposing_Zproj</code></li>
-<li>Your number of <code>CLUSTER_MACHINES</code> should be medium-large, ie a hundred or few hundred.</li>
-<li>Your <code>SQS_MESSAGE_VISIBILITY</code> should be short, such as <code>5*60</code> (5 minutes)</li>
-</ul>
-</div>
-<div id="optional-qc-1" class="section level3">
-<h3><span class="header-section-number">4.5.2</span> (Optional) QC</h3>
-<ul>
-<li>Your <code>APP_NAME</code> variable should be set to the <code>appname</code> set in <code>run_batch_general.py</code> plus <code>_QC</code>, ie <code>2015_10_05_DrugRepurposing_QC</code></li>
-<li>Your number of <code>CLUSTER_MACHINES</code> should be medium-large, ie a hundred or few hundred.</li>
-<li>Your <code>SQS_MESSAGE_VISIBILITY</code> should be short, such as <code>5*60</code> (5 minutes)</li>
-</ul>
-</div>
-<div id="illumination-correction-1" class="section level3">
-<h3><span class="header-section-number">4.5.3</span> Illumination Correction</h3>
-<ul>
-<li>Your <code>APP_NAME</code> variable should be set to the <code>appname</code> set in <code>run_batch_general.py</code> plus <code>_Illum</code>, ie <code>2015_10_05_DrugRepurposing_Illum</code></li>
-<li>Your number of <code>CLUSTER_MACHINES</code> should be set to the number of plates you have divided by 4 then rounded up, ie 6 for 22 plates</li>
-<li>Your <code>SQS_MESSAGE_VISIBILITY</code> should be 12 hours <code>720*60</code></li>
-</ul>
-</div>
-<div id="optional-assay-dev" class="section level3">
-<h3><span class="header-section-number">4.5.4</span> (Optional) Assay Dev</h3>
-<ul>
-<li>Your <code>APP_NAME</code> variable should be set to the <code>appname</code> set in <code>run_batch_general.py</code> plus <code>_AssayDev</code>, ie <code>2015_10_05_DrugRepurposing_AssayDev</code></li>
-<li>Your number of <code>CLUSTER_MACHINES</code> should be medium-large, ie a hundred or few hundred.</li>
-<li>Your <code>SQS_MESSAGE_VISIBILITY</code> should be short, such as <code>5*60</code> (5 minutes)</li>
-</ul>
-</div>
-<div id="analysis-1" class="section level3">
-<h3><span class="header-section-number">4.5.5</span> Analysis</h3>
-<ul>
-<li>Your <code>APP_NAME</code> variable should be set to the <code>appname</code> set in <code>run_batch_general.py</code> plus <code>_Analysis</code>, ie <code>2015_10_05_DrugRepurposing_Analysis</code></li>
-<li>Your number of <code>CLUSTER_MACHINES</code> should be as many as possible per your account limits, ideally at least a few hundred.</li>
-<li>Your <code>SQS_MESSAGE_VISIBILITY</code> should be 10-20 minutes for images with a binning of 2, longer (30-120 minutes) for unbinned images and/or CellProfiler 2 or 3 runs. This value is the most potentially variable -once you've run a single analysis workflow, you can adjust this value accordingly based on your log files.</li>
-</ul>
-</div>
-</div>
-<div id="optional-do-any-post-cellprofiler-steps" class="section level2">
-<h2><span class="header-section-number">4.6</span> (Optional) Do any post-CellProfiler steps</h2>
-<p>The optional QC and assay development steps have post-CellProfiler components.<br />
-These pipelines need only be run if the user plans to do these post-CellProfiler steps.</p>
-<ul>
-<li>QC may require visual inspection of images, <a href="https://github.com/CellProfiler/tutorials/tree/master/QualityControl">creation of a machine learning classifier to detect poor quality images</a>, and/or running scripts to evaluate CV. How best to evaluate quality is left to the user.</li>
-<li>The assay development step creates images to be visually evaluated, either individually or <a href="https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpz1.89">after stitching for easier evaluation</a>. If your segmentation is not ideal, you may need to update your assay dev and analysis pipelines by manually tuning the segmentation steps on a local set of representative data until they perform better on your images, then making sure to update the segmentation in the assay dev and analysis pipelines on your cluster accordingly.</li>
-<li>After running the final analysis pipelines, proceed to the next step of this guide.</li>
-</ul>
-
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="setup-images.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="create-profiles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -361,7 +247,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/cytomining/profiling-handbook/edit/master/04-run-cellprofiler.Rmd",
+"link": "https://github.com/cytomining/profiling-handbook/edit/master/%s",
 "text": "Edit"
 },
 "history": {
