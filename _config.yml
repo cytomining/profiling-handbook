@@ -35,10 +35,6 @@ html:
   use_repository_button: true
   use_edit_page_button: true  
 
-sphinx:
-  config:
-    bibtex_reference_style: author_year
-
 # For .Rmd files in book
 # sphinx:
 #   config:
