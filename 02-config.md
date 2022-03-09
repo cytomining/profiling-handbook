@@ -1,36 +1,30 @@
-# (PART) Configuration {-}
-
 # Configure Environment for Full Profiling Pipeline
 
 This workflow assumes you have already set up an AWS account with an S3 bucket and EFS, and created a VM per the instructions in the link below.
 
+(02-config:aws)=
 ## Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler
 
 Launch an EC2 node using AMI `cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*`, created using [cytominer-vm](https://github.com/cytomining/cytominer-vm).
 
-You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific.
-We recommend using an `m4.xlarge` instance, with an 8Gb EBS volume.
+You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. We recommend using an `m4.xlarge` instance, with an 8Gb EBS volume.
 
-Note: Proper configuration is essential to mount the S3 bucket.
-The following configuration provides an example, named `imaging-platform` (modifications will be necessary).
+Note: Proper configuration is essential to mount the S3 bucket. The following configuration provides an example, named `imaging-platform` (modifications will be necessary).
 
-  * Launch an ec2 instance on AWS
-  * AMI: `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-18.04-amd64-server-1529668435`
-  * Instance Type: m4.xlarge
-  * Network: vpc-35149752 
-  * Subnet: Default (imaging platform terraform)
-  * IAM role: `s3-imaging-platform-role`
-  * No Tags
-  * Select Existing Security Group: `SSH_HTTP`
-  * Review and Launch
-  * `ssh -i <USER>.pem ubuntu@<Public DNS IPv4>`
+- Launch an ec2 instance on AWS
+- AMI: `cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-18.04-amd64-server-1529668435`
+- Instance Type: m4.xlarge
+- Network: vpc-35149752
+- Subnet: Default (imaging platform terraform)
+- IAM role: `s3-imaging-platform-role`
+- No Tags
+- Select Existing Security Group: `SSH_HTTP`
+- Review and Launch
+- `ssh -i <USER>.pem ubuntu@<Public DNS IPv4>`
 
-After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`.
-If not, run `sudo mount -a`.
-
+After starting the instance, ensure that the S3 bucket is mounted on `~/bucket`. If not, run `sudo mount -a`.
 
 Log in to the EC2 instance.
-
 
 Enter your AWS credentials
 
@@ -38,15 +32,13 @@ Enter your AWS credentials
 aws configure
 ```
 
-The infrastructure is configured with one S3 bucket.
-Mount this S3 bucket (if it is not automatically mounted)
+The infrastructure is configured with one S3 bucket. Mount this S3 bucket (if it is not automatically mounted)
 
 ```sh
 sudo mount -a
 ```
 
-Check that the bucket was was mounted.
-This path should exist:
+Check that the bucket was was mounted. This path should exist:
 
 ```sh
 ls ~/bucket/projects
@@ -60,7 +52,7 @@ You will want to retain environment variables once defined, and for processes to
 tmux new -s sessionname
 ```
 
-You can detach from this session at any time by typing `Ctl+b`, then `d`.  
+You can detach from this session at any time by typing `Ctl+b`, then `d`.
 To reattach to an existing session, type `tmux a -t sessionname`
 
 You can list existing sessions with `tmux list-sessions` and kill any poorly-behaving session with `tmux kill-session -t sessionname`
