@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: Image-based Profiling Handbook
-author: Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi
+author: Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi, Callum Tromans-Coia
 copyright: ""
 
 # Only build files that are in the ToC
@@ -19,12 +19,12 @@ latex:
     targetname: book.tex
 
 # Add a bibtex file so that we can create citations
-bibtex_bibfiles:
-  - book.bib
+# bibtex_bibfiles:
+#   - book.bib
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/callum-jpg/profiling-handbook  # Online location of your book
+  url: https://github.com/cytomining/profiling-handbook  # Online location of your book
   # path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
@@ -34,6 +34,10 @@ html:
   # use_issues_button: true
   use_repository_button: true
   use_edit_page_button: true  
+
+sphinx:
+  config:
+    bibtex_reference_style: author_year
 
 # For .Rmd files in book
 # sphinx:
