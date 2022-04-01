@@ -177,7 +177,10 @@ The external metadata file should be placed in a folder named `external_metadata
 
 ## Set up GitHub
 
-Once and only once - fork the [profiling recipe](https://github.com/cytomining/profiling-recipe) to your own user name (Each time you make a new project - you may want to [keep your fork up to date](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
+Once and only once - fork the [profiling recipe](https://github.com/cytomining/profiling-recipe) to your own user name
+(Each time you make a new project - you may want to [keep your fork up to date](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
+
+Once per new PROJECT, not new batch - make a copy of the [template repository](https://github.com/cytomining/profiling-template) into your preferred organization with a project name that is similar OR identical to its project tag on S3 and elsewhere.
 
 Once per new PROJECT, not new batch - make a copy of the [template repository](https://github.com/cytomining/profiling-template) into your preferred organization with a project name that is similar OR identical to its project tag on S3 and elsewhere.
 
@@ -185,9 +188,10 @@ Once per new PROJECT, not new batch - make a copy of the [template repository](h
 
 ### Optional - set up compute environment
 
-These final steps are small and can be done either in your local environment or on your node used to build the backends. Conda is currently required and not currently on the backend creation VMs. Use these commands to install Miniconda for a Linux ecosystem (otherwise, search for your own OS).
-
-```sh
+These final steps are small and can be done either in your local environment or on your node used to build the backends.
+Conda is currently required and not currently on the backend creation VMs.
+Use these commands to install Miniconda for a Linux ecosystem (otherwise, search for your own OS).
+```
 # Miniconda installation
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
 bash ~/miniconda.sh -b -p $HOME/miniconda
@@ -196,26 +200,24 @@ source .bashrc
 conda init bash
 source .bashrc
 ```
-
-We recommend using DVC for large file management and DVC requires the use of AWS CLI. AWS CLI is already on the backend creation VMs. If you are not using the backend creation VM, use these commands to install AWS CLI for a Linux ecosystem (otherwise, search for your own OS).
-
-```sh
+We recommend using DVC for large file management and DVC requires the use of AWS CLI.
+AWS CLI is already on the backend creation VMs.
+If you are not using the backend creation VM, use these commands to install AWS CLI for a Linux ecosystem (otherwise, search for your own OS).
+```
 # AWS CLI installation - if not on your machine already
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
 ```
-
 Configure your AWS CLI installation with
 ```
 aws configure
 ```
-
-It will prompt you for: 
-- `AWS Access Key ID:` YOUR-KEY
-- `AWS Secret Access Key:` YOUR-SECRET-KEY 
-- `Default region name:` e.g. us-east-1 
-- `Default output format:` json
+It will prompt you for:
+`AWS Access Key ID:` YOUR-KEY
+`AWS Secret Access Key:` YOUR-SECRET-KEY
+`Default region name:` e.g. us-east-1
+`Default output format:` json
 
 If not using the same machine + tmux as for making backends, where your environment variables are already set, set them up
 
@@ -278,11 +280,12 @@ conda env create --force --file environment.yml
 conda activate profiling
 ```
 
+
 ### Set up DVC
-
-Initialize DVC for this project and set it to store large files in S3. This needs to happen once per project, not per batch. Skip this step if not using DVC.
-
-```sh
+Initialize DVC for this project and set it to store large files in S3.
+This needs to happen once per project, not per batch.
+Skip this step if not using DVC.
+```
 # Navigate
 cd ~/work/projects/${PROJECT_NAME}/workspace/software/${DATA}/profiling-recipe
 # Initialize DVC
@@ -292,6 +295,10 @@ dvc remote add -d S3storage s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/so
 # Commit new files to git
 git add .dvc/.gitignore .dvc/config
 git commit -m "Setup DVC"
+```
+
+
+### If a first batch in this project, create the necessary directories
 ```
 
 ### If a first batch in this project, create the necessary directories
@@ -327,7 +334,6 @@ and finally at the bottom set the batch(es) and plates names
 For large batches with many DMSO wells and external metadata ala the JUMP project - set `perform` under `external` to `true`, set `file` to the name of the external metadata file and set `merge_column` to the name of the compound identifier column in platemap.txt and external_metadata.tsv.
 ```
 
-
 ### Set up the profiles
 Note that the “find” step can take a few seconds/minutes
 
@@ -347,8 +353,7 @@ python profiling-recipe/profiles/profiling_pipeline.py --config config_files/{$C
 
 ### Push resulting files back up to GitHub
 If using a data repository, push the newly created profiles to DVC and the .dvc files and other files to GitHub as follows
-
-```sh
+```
 dvc add profiles/${BATCH} --recursive
 dvc push
 git add profiles/${BATCH}/*.dvc profiles/*.gitignore
@@ -356,6 +361,8 @@ git commit -m 'add profiles'
 git add *
 git commit -m 'add files made in profiling'
 git push
+```
+If not using DVC but using a data repository, push all new files to GitHub as follows
 ```
 
 If not using DVC but using a data repository, push all new files to GitHub as follows
