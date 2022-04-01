@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. Configure Environment for Full Profiling Pipeline &#8212; Image-based Profiling Handbook</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Setup Images" href="03-setup-images.html" />
+    <link rel="prev" title="1. Introduction" href="01-overview.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Image-based Profiling Handbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Preface
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01-overview.html">
+   1. Introduction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Configuration
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. Configure Environment for Full Profiling Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03-setup-images.html">
+   3. Setup Images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04-run-cellprofiler.html">
+   4. Run each CellProfiler step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05-create-profiles.html">
+   5. Create Profiles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="06-appendix.html">
+   Appendix
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/02-config.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/cytomining/profiling-handbook"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        <a class="edit-button" href="https://github.com/cytomining/profiling-handbook/edit/master/02-config.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#launch-an-aws-virtual-machine-for-making-csvs-and-running-distributed-cellprofiler">
+   2.1. Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-a-tmux-session">
+   2.2. Create a tmux session
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#define-environment-variables">
+   2.3. Define Environment Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-directories">
+   2.4. Create Directories
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-software">
+   2.5. Download Software
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Configure Environment for Full Profiling Pipeline</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#launch-an-aws-virtual-machine-for-making-csvs-and-running-distributed-cellprofiler">
+   2.1. Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-a-tmux-session">
+   2.2. Create a tmux session
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#define-environment-variables">
+   2.3. Define Environment Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-directories">
+   2.4. Create Directories
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-software">
+   2.5. Download Software
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="configure-environment-for-full-profiling-pipeline">
+<h1><span class="section-number">2. </span>Configure Environment for Full Profiling Pipeline<a class="headerlink" href="#configure-environment-for-full-profiling-pipeline" title="Permalink to this headline">¶</a></h1>
+<p>This workflow assumes you have already set up an AWS account with an S3 bucket and EFS, and created a VM per the instructions in the link below.</p>
+<div class="section" id="launch-an-aws-virtual-machine-for-making-csvs-and-running-distributed-cellprofiler">
+<span id="config-aws"></span><h2><span class="section-number">2.1. </span>Launch an AWS Virtual Machine for making CSVs and running Distributed-CellProfiler<a class="headerlink" href="#launch-an-aws-virtual-machine-for-making-csvs-and-running-distributed-cellprofiler" title="Permalink to this headline">¶</a></h2>
+<p>Launch an EC2 node using AMI <code class="docutils literal notranslate"><span class="pre">cytomining/images/hvm-ssd/cytominer-bionic-trusty-18.04-amd64-server-*</span></code>, created using <a class="reference external" href="https://github.com/cytomining/cytominer-vm">cytominer-vm</a>.</p>
+<p>You will need to create an AMI for your own infrastructure because the provisioning includes mounting S3 and EFS, which is account specific. We recommend using an <code class="docutils literal notranslate"><span class="pre">m4.xlarge</span></code> instance, with an 8Gb EBS volume.</p>
+<p>Note: Proper configuration is essential to mount the S3 bucket. The following configuration provides an example, named <code class="docutils literal notranslate"><span class="pre">imaging-platform</span></code> (modifications will be necessary).</p>
+<ul class="simple">
+<li><p>Launch an ec2 instance on AWS</p></li>
+<li><p>AMI: <code class="docutils literal notranslate"><span class="pre">cytomining/images/hvm-ssd/cytominer-ubuntu-trusty-18.04-amd64-server-1529668435</span></code></p></li>
+<li><p>Instance Type: m4.xlarge</p></li>
+<li><p>Network: vpc-35149752</p></li>
+<li><p>Subnet: Default (imaging platform terraform)</p></li>
+<li><p>IAM role: <code class="docutils literal notranslate"><span class="pre">s3-imaging-platform-role</span></code></p></li>
+<li><p>No Tags</p></li>
+<li><p>Select Existing Security Group: <code class="docutils literal notranslate"><span class="pre">SSH_HTTP</span></code></p></li>
+<li><p>Review and Launch</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-i</span> <span class="pre">&lt;USER&gt;.pem</span> <span class="pre">ubuntu&#64;&lt;Public</span> <span class="pre">DNS</span> <span class="pre">IPv4&gt;</span></code></p></li>
+</ul>
+<p>After starting the instance, ensure that the S3 bucket is mounted on <code class="docutils literal notranslate"><span class="pre">~/bucket</span></code>. If not, run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">mount</span> <span class="pre">-a</span></code>.</p>
+<p>Log in to the EC2 instance.</p>
+<p>Enter your AWS credentials</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>aws configure
+</pre></div>
+</div>
+<p>The infrastructure is configured with one S3 bucket. Mount this S3 bucket (if it is not automatically mounted)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo mount -a
+</pre></div>
+</div>
+<p>Check that the bucket was was mounted. This path should exist:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ls ~/bucket/projects
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-tmux-session">
+<h2><span class="section-number">2.2. </span>Create a tmux session<a class="headerlink" href="#create-a-tmux-session" title="Permalink to this headline">¶</a></h2>
+<p>You will want to retain environment variables once defined, and for processes to run when you are not connected, so you should create a tmux session to work in</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tmux new -s sessionname
+</pre></div>
+</div>
+<p>You can detach from this session at any time by typing <code class="docutils literal notranslate"><span class="pre">Ctl+b</span></code>, then <code class="docutils literal notranslate"><span class="pre">d</span></code>.
+To reattach to an existing session, type <code class="docutils literal notranslate"><span class="pre">tmux</span> <span class="pre">a</span> <span class="pre">-t</span> <span class="pre">sessionname</span></code></p>
+<p>You can list existing sessions with <code class="docutils literal notranslate"><span class="pre">tmux</span> <span class="pre">list-sessions</span></code> and kill any poorly-behaving session with <code class="docutils literal notranslate"><span class="pre">tmux</span> <span class="pre">kill-session</span> <span class="pre">-t</span> <span class="pre">sessionname</span></code></p>
+</div>
+<div class="section" id="define-environment-variables">
+<h2><span class="section-number">2.3. </span>Define Environment Variables<a class="headerlink" href="#define-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>These variables will be used throughout the project to tag instances, logs etc so that you know which machines are working on what, which files to operate on, where your logs are, etc.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">PROJECT_NAME</span><span class="o">=</span>2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad
+
+<span class="nv">BATCH_ID</span><span class="o">=</span>2016_04_01_a549_48hr_batch1
+
+<span class="nv">BUCKET</span><span class="o">=</span>imaging-platform
+
+<span class="nv">MAXPROCS</span><span class="o">=</span><span class="m">3</span> <span class="c1"># m4.xlarge has 4 cores; this should be # of cores on your instance - 1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-directories">
+<h2><span class="section-number">2.4. </span>Create Directories<a class="headerlink" href="#create-directories" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/
+
+<span class="nb">cd</span> ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/
+
+mkdir -p log/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="download-software">
+<h2><span class="section-number">2.5. </span>Download Software<a class="headerlink" href="#download-software" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/
+mkdir software
+<span class="nb">cd</span> software
+git clone https://github.com/broadinstitute/pe2loaddata.git
+git clone https://github.com/CellProfiler/Distributed-CellProfiler.git
+
+<span class="nb">cd</span> ..
+</pre></div>
+</div>
+<p>If these repos have already been cloned, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> to make sure they are up to date.</p>
+<p>This is the resulting structure of <code class="docutils literal notranslate"><span class="pre">software</span></code> on EFS (one level below <code class="docutils literal notranslate"><span class="pre">workspace</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>└── software
+    ├── Distributed-CellProfiler
+    └── pe2loaddata
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="01-overview.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">1. </span>Introduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="03-setup-images.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Setup Images</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi, Callum Tromans-Coia<br/>
+    
+        &copy; Copyright .<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

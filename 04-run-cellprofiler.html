@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Run each CellProfiler step &#8212; Image-based Profiling Handbook</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Create Profiles" href="05-create-profiles.html" />
+    <link rel="prev" title="3. Setup Images" href="03-setup-images.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Image-based Profiling Handbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Preface
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01-overview.html">
+   1. Introduction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Configuration
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02-config.html">
+   2. Configure Environment for Full Profiling Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03-setup-images.html">
+   3. Setup Images
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   4. Run each CellProfiler step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05-create-profiles.html">
+   5. Create Profiles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="06-appendix.html">
+   Appendix
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/04-run-cellprofiler.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/cytomining/profiling-handbook"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        <a class="edit-button" href="https://github.com/cytomining/profiling-handbook/edit/master/04-run-cellprofiler.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#upload-your-pipelines-to-s3">
+   4.1. Upload your pipelines to S3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configure-distributed-cellprofiler-s-run-batch-general-script">
+   4.2. Configure Distributed-CellProfiler’s
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     run_batch_general
+    </span>
+   </code>
+   script
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configure-distributed-cellprofiler-s-fleet-file">
+   4.3. Configure Distributed-CellProfiler’s fleet file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#change-required-parameters-in-distributed-cellprofiler-s-config-file">
+   4.4. Change required parameters in Distributed-CellProfiler’s config file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4.5. Run each CellProfiler step
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optional-z-projection">
+     4.5.1. (Optional) Z projection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optional-qc">
+     4.5.2. (Optional) QC
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#illumination-correction">
+     4.5.3. Illumination Correction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optional-assay-dev">
+     4.5.4. (Optional) Assay Dev
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     4.5.5. Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-do-any-post-cellprofiler-steps">
+   4.6. (Optional) Do any post-CellProfiler steps
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Run each CellProfiler step</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#upload-your-pipelines-to-s3">
+   4.1. Upload your pipelines to S3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configure-distributed-cellprofiler-s-run-batch-general-script">
+   4.2. Configure Distributed-CellProfiler’s
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     run_batch_general
+    </span>
+   </code>
+   script
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configure-distributed-cellprofiler-s-fleet-file">
+   4.3. Configure Distributed-CellProfiler’s fleet file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#change-required-parameters-in-distributed-cellprofiler-s-config-file">
+   4.4. Change required parameters in Distributed-CellProfiler’s config file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4.5. Run each CellProfiler step
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optional-z-projection">
+     4.5.1. (Optional) Z projection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optional-qc">
+     4.5.2. (Optional) QC
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#illumination-correction">
+     4.5.3. Illumination Correction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optional-assay-dev">
+     4.5.4. (Optional) Assay Dev
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     4.5.5. Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-do-any-post-cellprofiler-steps">
+   4.6. (Optional) Do any post-CellProfiler steps
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="run-each-cellprofiler-step">
+<h1><span class="section-number">4. </span>Run each CellProfiler step<a class="headerlink" href="#run-each-cellprofiler-step" title="Permalink to this headline">¶</a></h1>
+<p>The steps below are outlined specifically for running Distributed
+CellProfiler on AWS. If you are not doing so, the steps will still be more-or-less the same</p>
+<ul class="simple">
+<li><p>Make sure CellProfiler pipelines are accessible</p></li>
+<li><p>Make sure CellProfiler knows where the input images are, either via a CSV or a batch file</p></li>
+<li><p>Run each CellProfiler pipeline, in sequence, with appropriate input folder, output folder, and grouping</p></li>
+</ul>
+<div class="section" id="upload-your-pipelines-to-s3">
+<h2><span class="section-number">4.1. </span>Upload your pipelines to S3<a class="headerlink" href="#upload-your-pipelines-to-s3" title="Permalink to this headline">¶</a></h2>
+<p>In your project’s workspace directory, create a batch specific folder and upload your pipelines there. If there are previous batches from the same project or a similar one, you may find it easiest to copy the files directly. Once uploaded and/or copied, the file structure should look like the below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>└── pipelines
+    └── 2016_04_01_a549_48hr_batch1
+        ├── illum_without_batchfile.cppipe
+        └── analysis_without_batchfile.cppipe
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-distributed-cellprofiler-s-run-batch-general-script">
+<h2><span class="section-number">4.2. </span>Configure Distributed-CellProfiler’s <code class="docutils literal notranslate"><span class="pre">run_batch_general</span></code> script<a class="headerlink" href="#configure-distributed-cellprofiler-s-run-batch-general-script" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that <a class="reference external" href="https://github.com/CellProfiler/Distributed-CellProfiler/blob/master/run_batch_general.py"><code class="docutils literal notranslate"><span class="pre">run_batch_general</span></code></a> is not required;  the Distributed CellProfiler <a class="reference external" href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Step-2%3A-Submit-jobs">handbook</a> lays out a number of different ways of creating jobs.   However, we find it the most efficient way to run numerous pipelines on the same data.  If you do not wish to use it, you can adjust steps 3 and 4 in the “Run each CellProfiler step” to “Create a job file” and “Execute <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">run.py</span> <span class="pre">submitJob</span> <span class="pre">jobFileName.json</span></code>”</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> can be configured once at the beginning of the run of a batch of data, and then can be run for each step simply by uncommenting the name of the step to run. The following variables in the <code class="docutils literal notranslate"><span class="pre">project</span> <span class="pre">specific</span> <span class="pre">stuff</span></code> section of the script should be configured:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">topdirname</span></code> and <code class="docutils literal notranslate"><span class="pre">batchsuffix</span></code> should match your <code class="docutils literal notranslate"><span class="pre">PROJECT_NAME</span></code> and <code class="docutils literal notranslate"><span class="pre">BATCH_ID</span></code>, respectively</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">appname</span></code> is typically the same as <code class="docutils literal notranslate"><span class="pre">topdirname</span></code>, but if that name is long and cumbersome you can create an abbreviated version here (ie <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing</span></code> rather than <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing_AravindSubramanian_GolubLab_Broad</span></code>). This will be used in your <code class="docutils literal notranslate"><span class="pre">config.py</span></code> file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code>, <code class="docutils literal notranslate"><span class="pre">columns</span></code>, and <code class="docutils literal notranslate"><span class="pre">sites</span></code> should reflect the imaging conditions used</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">platelist</span></code> should contain a list of plates, comma separated, ie <code class="docutils literal notranslate"><span class="pre">['SQ00015167','SQ00015168']</span></code></p></li>
+<li><p>If you are using pipeline files with the LoadData module and CSVs, you should make sure that the pipeline names reflect your pipeline names (or adjust if not). Otherwise, you should make sure that the batch file names reflect your batch file names.</p></li>
+<li><p>If following the recommended structures and procedures, none of the <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">project</span> <span class="pre">specific</span></code> section of the script should need to be adapted, but if you are making changes you may need to.</p></li>
+</ul>
+</div>
+<div class="section" id="configure-distributed-cellprofiler-s-fleet-file">
+<h2><span class="section-number">4.3. </span>Configure Distributed-CellProfiler’s fleet file<a class="headerlink" href="#configure-distributed-cellprofiler-s-fleet-file" title="Permalink to this headline">¶</a></h2>
+<p>If running in a fresh clone of Distributed-CellProfiler, you will need to configure a single fleet file, which will be used in all subsequent steps. Refer to the <a class="reference external" href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Step-3%3A-Start-your-cluster">manual</a> for instructions.</p>
+</div>
+<div class="section" id="change-required-parameters-in-distributed-cellprofiler-s-config-file">
+<h2><span class="section-number">4.4. </span>Change required parameters in Distributed-CellProfiler’s config file<a class="headerlink" href="#change-required-parameters-in-distributed-cellprofiler-s-config-file" title="Permalink to this headline">¶</a></h2>
+<p>If running in a fresh clone of Distributed-CellProfiler, you will need to set the <code class="docutils literal notranslate"><span class="pre">AWS_REGION</span></code>, <code class="docutils literal notranslate"><span class="pre">SSH_KEY_NAME</span></code>, <code class="docutils literal notranslate"><span class="pre">AWS_BUCKET</span></code>, and <code class="docutils literal notranslate"><span class="pre">SQS_DEAD_LETTER_QUEUE</span></code> settings to appropriate settings for your account. Refer to the <a class="reference external" href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki/Step-1%3A--Configuration">manual</a> for instructions.</p>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">4.5. </span>Run each CellProfiler step<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>You may have as many as 5 or as few as 2 CellProfiler steps</p>
+<ul class="simple">
+<li><p>(optional) Z projection</p></li>
+<li><p>(optional) QC - see also section 4.6</p></li>
+<li><p>illumination correction</p></li>
+<li><p>(optional) assay development - see also section 4.6</p></li>
+<li><p>analysis</p></li>
+</ul>
+<p>For each step, the steps you will run will be identical:</p>
+<ol class="simple">
+<li><p>Configure the <code class="docutils literal notranslate"><span class="pre">config.py</span></code> file</p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">run.py</span> <span class="pre">setup</span></code></p></li>
+<li><p>Uncomment the correct step name in your <code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> file (and ensure all other steps are commented out)</p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">run_batch_general.py</span></code></p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">run.py</span> <span class="pre">startCluster</span> <span class="pre">files/yourFleetFileName.json</span></code>, where you have set the name of the fleet file previously created or located</p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">run.py</span> <span class="pre">monitor</span> <span class="pre">files/APP_NAMESpotFleetRequestId.json</span></code>, where APP_NAME matches the APP_NAME variable set in step 1.</p></li>
+</ol>
+<p>Information on all of these steps is available in the <a class="reference external" href="https://github.com/CellProfiler/Distributed-CellProfiler/wiki">Distributed-CellProfiler wiki</a>.</p>
+<p>You need only absolutely change the variables stated above and below for Distributed-CellProfiler to function, but other variables may be useful, such as using a non-default profile, adjusting whether or not you would like to pre-download files and/or use plugins and/or restart only parts of a batch of data.</p>
+<p>In general, as long as you are running inside a tmux session and it isn’t killed, the monitor should destroy any and all infrastructure created on AWS as part of the running Distributed-CellProfiler, but it is the user’s responsibility to check that this has completed appropriately; failure to do so may lead to spot fleets generating charges after all useful work has completed.</p>
+<div class="section" id="optional-z-projection">
+<h3><span class="section-number">4.5.1. </span>(Optional) Z projection<a class="headerlink" href="#optional-z-projection" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code> variable should be set to the <code class="docutils literal notranslate"><span class="pre">appname</span></code> set in <code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> plus <code class="docutils literal notranslate"><span class="pre">_Zproj</span></code>, ie <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing_Zproj</span></code></p></li>
+<li><p>Your number of <code class="docutils literal notranslate"><span class="pre">CLUSTER_MACHINES</span></code> should be medium-large, ie a hundred or few hundred.</p></li>
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">SQS_MESSAGE_VISIBILITY</span></code> should be short, such as <code class="docutils literal notranslate"><span class="pre">5*60</span></code> (5 minutes)</p></li>
+</ul>
+</div>
+<div class="section" id="optional-qc">
+<h3><span class="section-number">4.5.2. </span>(Optional) QC<a class="headerlink" href="#optional-qc" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code> variable should be set to the <code class="docutils literal notranslate"><span class="pre">appname</span></code> set in <code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> plus <code class="docutils literal notranslate"><span class="pre">_QC</span></code>, ie <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing_QC</span></code></p></li>
+<li><p>Your number of <code class="docutils literal notranslate"><span class="pre">CLUSTER_MACHINES</span></code> should be medium-large, ie a hundred or few hundred.</p></li>
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">SQS_MESSAGE_VISIBILITY</span></code> should be short, such as <code class="docutils literal notranslate"><span class="pre">5*60</span></code> (5 minutes)</p></li>
+</ul>
+</div>
+<div class="section" id="illumination-correction">
+<h3><span class="section-number">4.5.3. </span>Illumination Correction<a class="headerlink" href="#illumination-correction" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code> variable should be set to the <code class="docutils literal notranslate"><span class="pre">appname</span></code> set in <code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> plus <code class="docutils literal notranslate"><span class="pre">_Illum</span></code>, ie <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing_Illum</span></code></p></li>
+<li><p>Your number of <code class="docutils literal notranslate"><span class="pre">CLUSTER_MACHINES</span></code> should be set to the number of plates you have divided by 4 then rounded up, ie 6 for 22 plates</p></li>
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">SQS_MESSAGE_VISIBILITY</span></code> should be 12 hours <code class="docutils literal notranslate"><span class="pre">720*60</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="optional-assay-dev">
+<h3><span class="section-number">4.5.4. </span>(Optional) Assay Dev<a class="headerlink" href="#optional-assay-dev" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code> variable should be set to the <code class="docutils literal notranslate"><span class="pre">appname</span></code> set in <code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> plus <code class="docutils literal notranslate"><span class="pre">_AssayDev</span></code>, ie <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing_AssayDev</span></code></p></li>
+<li><p>Your number of <code class="docutils literal notranslate"><span class="pre">CLUSTER_MACHINES</span></code> should be medium-large, ie a hundred or few hundred.</p></li>
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">SQS_MESSAGE_VISIBILITY</span></code> should be short, such as <code class="docutils literal notranslate"><span class="pre">5*60</span></code> (5 minutes)</p></li>
+</ul>
+</div>
+<div class="section" id="analysis">
+<h3><span class="section-number">4.5.5. </span>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code> variable should be set to the <code class="docutils literal notranslate"><span class="pre">appname</span></code> set in <code class="docutils literal notranslate"><span class="pre">run_batch_general.py</span></code> plus <code class="docutils literal notranslate"><span class="pre">_Analysis</span></code>, ie <code class="docutils literal notranslate"><span class="pre">2015_10_05_DrugRepurposing_Analysis</span></code></p></li>
+<li><p>Your number of <code class="docutils literal notranslate"><span class="pre">CLUSTER_MACHINES</span></code> should be as many as possible per your account limits, ideally at least a few hundred.</p></li>
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">SQS_MESSAGE_VISIBILITY</span></code> should be 10-20 minutes for images with a binning of 2, longer (30-120 minutes) for unbinned images and/or CellProfiler 2 or 3 runs. This value is the most potentially variable -once you’ve run a single analysis workflow, you can adjust this value accordingly based on your log files.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="optional-do-any-post-cellprofiler-steps">
+<h2><span class="section-number">4.6. </span>(Optional) Do any post-CellProfiler steps<a class="headerlink" href="#optional-do-any-post-cellprofiler-steps" title="Permalink to this headline">¶</a></h2>
+<p>The optional QC and assay development steps have post-CellProfiler components. These pipelines need only be run if the user plans to do these post-CellProfiler steps.</p>
+<ul class="simple">
+<li><p>QC may require visual inspection of images, <a class="reference external" href="https://github.com/CellProfiler/tutorials/tree/master/QualityControl">creation of a machine learning classifier to detect poor quality images</a>, and/or running scripts to evaluate CV. How best to evaluate quality is left to the user.</p></li>
+<li><p>The assay development step creates images to be visually evaluated, either individually or <a class="reference external" href="https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpz1.89">after stitching for easier evaluation</a>. If your segmentation is not ideal, you may need to update your assay dev and analysis pipelines by manually tuning the segmentation steps on a local set of representative data until they perform better on your images, then making sure to update the segmentation in the assay dev and analysis pipelines on your cluster accordingly.</p></li>
+<li><p>After running the final analysis pipelines, proceed to the next step of this guide.</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="03-setup-images.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">3. </span>Setup Images</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="05-create-profiles.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Create Profiles</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi, Callum Tromans-Coia<br/>
+    
+        &copy; Copyright .<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
