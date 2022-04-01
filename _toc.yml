@@ -1,0 +1,17 @@
+format: jb-book
+root: index
+parts:
+- caption: Getting Started
+  numbered: true
+  chapters:
+  - file: 01-overview
+- caption: Configuration
+  numbered: true
+  chapters:
+  - file: 02-config
+  - file: 03-setup-images
+  - file: 04-run-cellprofiler
+  - file: 05-create-profiles
+- caption: Appendix
+  chapters:
+  - file: 06-appendix 
