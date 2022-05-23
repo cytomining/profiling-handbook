@@ -70,14 +70,12 @@ git clone https://github.com/cytomining/pycytominer.git
 
 cd pycytominer
 
-git checkout jump
-
 python3 -m pip install -e .
 ```
 
 The command below first calls `cytominer-database ingest` to create the SQLite backend, and then pycytominer's `aggregate_profiles` to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache are deleted. This step takes several hours, but metadata creation and GitHub setup can be done in this time.
 
-[collate.py](https://github.com/cytomining/pycytominer/blob/jump/pycytominer/cyto_utils/collate.py) ingests and indexes the database.
+[collate.py](https://github.com/cytomining/pycytominer/blob/master/pycytominer/cyto_utils/collate.py) ingests and indexes the database. [collate_command.py](https://github.com/cytomining/pycytominer/blob/master/pycytominer/cyto_utils/collate_cmd.py) exposes this functionality to the command line. 
 
 ```sh
 pyenv shell 3.8.10
@@ -91,7 +89,7 @@ parallel \
 --results ../../log/${BATCH_ID}/collate \
 --files \
 --keep-order \
-python3 pycytominer/cyto_utils/collate.py ${BATCH_ID}  pycytominer/cyto_utils/ingest_config.ini {1} \
+python3 pycytominer/cyto_utils/collate_cmd.py ${BATCH_ID}  pycytominer/cyto_utils/ingest_config.ini {1} \
 --temp ~/ebs_tmp \
 --remote=s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
 ```
