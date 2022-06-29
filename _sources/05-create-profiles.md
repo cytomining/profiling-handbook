@@ -70,8 +70,6 @@ git clone https://github.com/cytomining/pycytominer.git
 
 cd pycytominer
 
-git checkout jump
-
 python3 -m pip install -e .
 ```
 
