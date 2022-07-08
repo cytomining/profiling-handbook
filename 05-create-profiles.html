@@ -678,7 +678,7 @@ parallel <span class="se">\</span>
 --files <span class="se">\</span>
 --keep-order <span class="se">\</span>
 python3 pycytominer/cyto_utils/collate.py <span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>  pycytominer/cyto_utils/ingest_config.ini <span class="o">{</span><span class="m">1</span><span class="o">}</span> <span class="se">\</span>
---temp ~/ebs_tmp <span class="se">\</span>
+--tmp-dir ~/ebs_tmp <span class="se">\</span>
 --remote<span class="o">=</span>s3://<span class="si">${</span><span class="nv">BUCKET</span><span class="si">}</span>/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace :::: <span class="si">${</span><span class="nv">PLATES</span><span class="si">}</span>
 </pre></div>
 </div>
