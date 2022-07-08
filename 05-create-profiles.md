@@ -90,7 +90,7 @@ parallel \
 --files \
 --keep-order \
 python3 pycytominer/cyto_utils/collate.py ${BATCH_ID}  pycytominer/cyto_utils/ingest_config.ini {1} \
---temp ~/ebs_tmp \
+--tmp-dir ~/ebs_tmp \
 --remote=s3://${BUCKET}/projects/${PROJECT_NAME}/workspace :::: ${PLATES}
 ```
 
