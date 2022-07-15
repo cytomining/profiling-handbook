@@ -664,6 +664,7 @@ git clone https://github.com/cytomining/pycytominer.git
 python3 -m pip install -e .
 </pre></div>
 </div>
+<p>Note that if your system does not already have <code class="docutils literal notranslate"><span class="pre">cytominer-database</span></code> installed, you can install it at the same time as pycytominer by changing the final command above to <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[collate]</span></code></p>
 <p>The command below first calls <code class="docutils literal notranslate"><span class="pre">cytominer-database</span> <span class="pre">ingest</span></code> to create the SQLite backend, and then pycytominer’s <code class="docutils literal notranslate"><span class="pre">aggregate_profiles</span></code> to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache are deleted. This step takes several hours, but metadata creation and GitHub setup can be done in this time.</p>
 <p><a class="reference external" href="https://github.com/cytomining/pycytominer/blob/jump/pycytominer/cyto_utils/collate.py">collate.py</a> ingests and indexes the database.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pyenv shell <span class="m">3</span>.8.10
