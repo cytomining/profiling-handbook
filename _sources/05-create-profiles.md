@@ -299,6 +299,9 @@ git add .dvc/.gitignore .dvc/config
 git commit -m "Setup DVC"
 ```
 
+```{note}
+If you have multiple AWS profiles on your machine and do not want to use the default one for DVC, you can specify which profile to use by running `dvc remote modify S3storage profile PROFILE_NAME` at any point between adding the remote and performing the final DVC push. 
+```
 
 ### If a first batch in this project, create the necessary directories
 
@@ -360,6 +363,11 @@ git commit -m 'add profiles'
 git add *
 git commit -m 'add files made in profiling'
 git push
+```
+
+
+```{note}
+If you have multiple AWS profiles on your machine and do not want to use the default one for DVC, you can specify which profile to use by running `dvc remote modify S3storage profile PROFILE_NAME` at any point between adding the remote and performing the final DVC push. 
 ```
 
 If not using DVC but using a data repository, push all new files to GitHub as follows

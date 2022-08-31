@@ -872,6 +872,10 @@ git add .dvc/.gitignore .dvc/config
 git commit -m &quot;Setup DVC&quot;
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have multiple AWS profiles on your machine and do not want to use the default one for DVC, you can specify which profile to use by running <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">modify</span> <span class="pre">S3storage</span> <span class="pre">profile</span> <span class="pre">PROFILE_NAME</span></code> at any point between adding the remote and performing the final DVC push.</p>
+</div>
 </section>
 <section id="if-a-first-batch-in-this-project-create-the-necessary-directories">
 <h3><span class="section-number">5.6.10. </span>If a first batch in this project, create the necessary directories<a class="headerlink" href="#if-a-first-batch-in-this-project-create-the-necessary-directories" title="Permalink to this headline">#</a></h3>
@@ -932,6 +936,10 @@ git add *
 git commit -m &#39;add files made in profiling&#39;
 git push
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have multiple AWS profiles on your machine and do not want to use the default one for DVC, you can specify which profile to use by running <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">modify</span> <span class="pre">S3storage</span> <span class="pre">profile</span> <span class="pre">PROFILE_NAME</span></code> at any point between adding the remote and performing the final DVC push.</p>
 </div>
 <p>If not using DVC but using a data repository, push all new files to GitHub as follows</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git add *
