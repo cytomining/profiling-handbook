@@ -347,7 +347,7 @@ rsync -arzv --include="*/" --include="*.gz" --exclude "*" ../../backend/${BATCH_
 Especially for large number of plates, this will take some time.  Output will be logged to the console as different steps proceed.
 
 ```
-python profiling-recipe/profiles/profiling_pipeline.py --config config_files/{$CONFIG_FILE}.yml
+python profiling-recipe/profiles/profiling_pipeline.py --config config_files/${CONFIG_FILE}.yml
 ```
 
 ### Push resulting files back up to GitHub
