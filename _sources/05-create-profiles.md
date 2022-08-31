@@ -186,8 +186,6 @@ Once and only once - fork the [profiling recipe](https://github.com/cytomining/p
 
 Once per new PROJECT, not new batch - make a copy of the [template repository](https://github.com/cytomining/profiling-template) into your preferred organization with a project name that is similar OR identical to its project tag on S3 and elsewhere.
 
-Once per new PROJECT, not new batch - make a copy of the [template repository](https://github.com/cytomining/profiling-template) into your preferred organization with a project name that is similar OR identical to its project tag on S3 and elsewhere.
-
 ## Make Profiles
 
 ### Optional - set up compute environment
@@ -303,9 +301,6 @@ git commit -m "Setup DVC"
 
 
 ### If a first batch in this project, create the necessary directories
-```
-
-### If a first batch in this project, create the necessary directories
 
 ```sh
 profiling-recipe/scripts/create_dirs.sh
@@ -365,8 +360,6 @@ git commit -m 'add profiles'
 git add *
 git commit -m 'add files made in profiling'
 git push
-```
-If not using DVC but using a data repository, push all new files to GitHub as follows
 ```
 
 If not using DVC but using a data repository, push all new files to GitHub as follows

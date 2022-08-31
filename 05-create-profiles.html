@@ -760,7 +760,6 @@ python3 pycytominer/cyto_utils/collate_cmd.py <span class="si">${</span><span cl
 <p>Once and only once - fork the <a class="reference external" href="https://github.com/cytomining/profiling-recipe">profiling recipe</a> to your own user name
 (Each time you make a new project - you may want to <a class="reference external" href="https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork">keep your fork up to date</a></p>
 <p>Once per new PROJECT, not new batch - make a copy of the <a class="reference external" href="https://github.com/cytomining/profiling-template">template repository</a> into your preferred organization with a project name that is similar OR identical to its project tag on S3 and elsewhere.</p>
-<p>Once per new PROJECT, not new batch - make a copy of the <a class="reference external" href="https://github.com/cytomining/profiling-template">template repository</a> into your preferred organization with a project name that is similar OR identical to its project tag on S3 and elsewhere.</p>
 </section>
 <section id="make-profiles">
 <h2><span class="section-number">5.6. </span>Make Profiles<a class="headerlink" href="#make-profiles" title="Permalink to this headline">#</a></h2>
@@ -876,11 +875,7 @@ git commit -m &quot;Setup DVC&quot;
 </section>
 <section id="if-a-first-batch-in-this-project-create-the-necessary-directories">
 <h3><span class="section-number">5.6.10. </span>If a first batch in this project, create the necessary directories<a class="headerlink" href="#if-a-first-batch-in-this-project-create-the-necessary-directories" title="Permalink to this headline">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-### If a first batch in this project, create the necessary directories
-
-```sh
-profiling-recipe/scripts/create_dirs.sh
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>profiling-recipe/scripts/create_dirs.sh
 </pre></div>
 </div>
 </section>
@@ -939,12 +934,8 @@ git push
 </pre></div>
 </div>
 <p>If not using DVC but using a data repository, push all new files to GitHub as follows</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-If not using DVC but using a data repository, push all new files to GitHub as follows
-
-```sh
-git add *
-git commit -m &#39;add profiles for batch _&#39;
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git add *
+git commit -m <span class="s1">&#39;add profiles for batch _&#39;</span>
 git push
 </pre></div>
 </div>
