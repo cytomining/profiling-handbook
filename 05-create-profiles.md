@@ -289,11 +289,11 @@ This needs to happen once per project, not per batch.
 Skip this step if not using DVC.
 ```
 # Navigate
-cd ~/work/projects/${PROJECT_NAME}/workspace/software/<data_repo>
+cd ~/work/projects/${PROJECT_NAME}/workspace/software/${DATA}
 # Initialize DVC
 dvc init
 # Set up remote storage
-dvc remote add -d S3storage s3://<bucket>/projects/${PROJECT_NAME}/workspace/software/<data_repo>_DVC
+dvc remote add -d S3storage s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/software/${DATA}_DVC
 # Commit new files to git
 git add .dvc/.gitignore .dvc/config
 git commit -m "Setup DVC"
