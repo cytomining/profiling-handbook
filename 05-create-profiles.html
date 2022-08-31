@@ -917,7 +917,7 @@ rsync -arzv --include=&quot;*/&quot; --include=&quot;*.gz&quot; --exclude &quot;
 <section id="run-the-profiling-workflow">
 <h3><span class="section-number">5.6.15. </span>Run the profiling workflow<a class="headerlink" href="#run-the-profiling-workflow" title="Permalink to this headline">#</a></h3>
 <p>Especially for large number of plates, this will take some time.  Output will be logged to the console as different steps proceed.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>python profiling-recipe/profiles/profiling_pipeline.py --config config_files/{$CONFIG_FILE}.yml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>python profiling-recipe/profiles/profiling_pipeline.py --config config_files/${CONFIG_FILE}.yml
 </pre></div>
 </div>
 </section>
