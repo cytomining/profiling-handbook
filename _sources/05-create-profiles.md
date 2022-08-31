@@ -289,11 +289,11 @@ This needs to happen once per project, not per batch.
 Skip this step if not using DVC.
 ```
 # Navigate
-cd ~/work/projects/${PROJECT_NAME}/workspace/software/${DATA}/profiling-recipe
+cd ~/work/projects/${PROJECT_NAME}/workspace/software/<data_repo>
 # Initialize DVC
 dvc init
 # Set up remote storage
-dvc remote add -d S3storage s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/software/${DATA}_DVC
+dvc remote add -d S3storage s3://<bucket>/projects/${PROJECT_NAME}/workspace/software/<data_repo>_DVC
 # Commit new files to git
 git add .dvc/.gitignore .dvc/config
 git commit -m "Setup DVC"
@@ -358,7 +358,7 @@ If using a data repository, push the newly created profiles to DVC and the .dvc 
 ```
 dvc add profiles/${BATCH} --recursive
 dvc push
-git add profiles/${BATCH}/*.dvc profiles/*.gitignore
+git add profiles/${BATCH}/*/*.dvc profiles/${BATCH}/*/*.gitignore
 git commit -m 'add profiles'
 git add *
 git commit -m 'add files made in profiling'

@@ -862,11 +862,11 @@ conda env create --force --file environment.yml
 This needs to happen once per project, not per batch.
 Skip this step if not using DVC.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Navigate
-cd ~/work/projects/${PROJECT_NAME}/workspace/software/${DATA}/profiling-recipe
+cd ~/work/projects/${PROJECT_NAME}/workspace/software/&lt;data_repo&gt;
 # Initialize DVC
 dvc init
 # Set up remote storage
-dvc remote add -d S3storage s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/software/${DATA}_DVC
+dvc remote add -d S3storage s3://&lt;bucket&gt;/projects/${PROJECT_NAME}/workspace/software/&lt;data_repo&gt;_DVC
 # Commit new files to git
 git add .dvc/.gitignore .dvc/config
 git commit -m &quot;Setup DVC&quot;
@@ -930,7 +930,7 @@ rsync -arzv --include=&quot;*/&quot; --include=&quot;*.gz&quot; --exclude &quot;
 <p>If using a data repository, push the newly created profiles to DVC and the .dvc files and other files to GitHub as follows</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dvc add profiles/${BATCH} --recursive
 dvc push
-git add profiles/${BATCH}/*.dvc profiles/*.gitignore
+git add profiles/${BATCH}/*/*.dvc profiles/${BATCH}/*/*.gitignore
 git commit -m &#39;add profiles&#39;
 git add *
 git commit -m &#39;add files made in profiling&#39;
