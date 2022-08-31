@@ -862,11 +862,11 @@ conda env create --force --file environment.yml
 This needs to happen once per project, not per batch.
 Skip this step if not using DVC.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Navigate
-cd ~/work/projects/${PROJECT_NAME}/workspace/software/&lt;data_repo&gt;
+cd ~/work/projects/${PROJECT_NAME}/workspace/software/${DATA}
 # Initialize DVC
 dvc init
 # Set up remote storage
-dvc remote add -d S3storage s3://&lt;bucket&gt;/projects/${PROJECT_NAME}/workspace/software/&lt;data_repo&gt;_DVC
+dvc remote add -d S3storage s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/software/${DATA}_DVC
 # Commit new files to git
 git add .dvc/.gitignore .dvc/config
 git commit -m &quot;Setup DVC&quot;
