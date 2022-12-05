@@ -98,6 +98,7 @@ python3 pycytominer/cyto_utils/collate_cmd.py ${BATCH_ID}  pycytominer/cyto_util
 
 ```{note}
 `collate_cmd.py` does not recreate the SQLite backend if it already exists in the local cache. Add `--overwrite` flag to recreate.
+If your SQLite creation succeeded but you ran into issues during aggregation, rerunning with `--aggregate-only` will allow you to rerun just that sub-step.
 ```
 
 ```{note}
