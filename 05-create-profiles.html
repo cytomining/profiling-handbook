@@ -685,7 +685,8 @@ python3 pycytominer/cyto_utils/collate_cmd.py <span class="si">${</span><span cl
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">collate_cmd.py</span></code> does not recreate the SQLite backend if it already exists in the local cache. Add <code class="docutils literal notranslate"><span class="pre">--overwrite</span></code> flag to recreate.</p>
+<p><code class="docutils literal notranslate"><span class="pre">collate_cmd.py</span></code> does not recreate the SQLite backend if it already exists in the local cache. Add <code class="docutils literal notranslate"><span class="pre">--overwrite</span></code> flag to recreate.
+If your SQLite creation succeeded but you ran into issues during aggregation, rerunning with <code class="docutils literal notranslate"><span class="pre">--aggregate-only</span></code> will allow you to rerun just that sub-step.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
