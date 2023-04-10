@@ -17,7 +17,7 @@ this handbook
         image data
     -   The `illum` folder is identical to the `images` folder in terms
         of structure
-        -   `illum` is an output of the first stage of cell profiler
+        -   `illum` is an output of the first stage of CellProfiler
             pipeline that stores a function to adjust the plates in
             `images`
 -   `workspace` also has subdirectories
@@ -87,12 +87,11 @@ this handbook
     ├── 2016_04_01_a549_48hr_batch1
     │   ├── illum
     │   │   └── SQ00015167
-    │   │       ├── SQ00015167_IllumAGP.mat
-    │   │       ├── SQ00015167_IllumDNA.mat
-    │   │       ├── SQ00015167_IllumER.mat
-    │   │       ├── SQ00015167_IllumMito.mat
-    │   │       ├── SQ00015167_IllumRNA.mat
-    │   │       └── SQ00015167.stderr
+    │   │       ├── SQ00015167_IllumAGP.npy
+    │   │       ├── SQ00015167_IllumDNA.npy
+    │   │       ├── SQ00015167_IllumER.npy
+    │   │       ├── SQ00015167_IllumMito.npy
+    │   │       └── SQ00015167_IllumRNA.npy
     │   └── images
     │       └── SQ00015167__2016-04-21T03_34_00-Measurement1
     │         ├── Assaylayout
