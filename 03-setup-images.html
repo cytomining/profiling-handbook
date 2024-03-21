@@ -1,48 +1,60 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>3. Setup Images &#8212; Image-based Profiling Handbook</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,56 +62,98 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '03-setup-images';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="4. Run each CellProfiler step" href="04-run-cellprofiler.html" />
     <link rel="prev" title="2. Configure Environment for Full Profiling Pipeline" href="02-config.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="container-fluid" id="banner"></div>
-
     
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Image-based Profiling Handbook</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Image-based Profiling Handbook</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -108,316 +162,235 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Getting Started
- </span>
-</p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="01-overview.html">
-   1. Introduction
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="01-overview.html">1. Introduction</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Configuration
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Configuration</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="02-config.html">
-   2. Configure Environment for Full Profiling Pipeline
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   3. Setup Images
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="04-run-cellprofiler.html">
-   4. Run each CellProfiler step
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="05-create-profiles.html">
-   5. Create Profiles
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="02-config.html">2. Configure Environment for Full Profiling Pipeline</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Setup Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-run-cellprofiler.html">4. Run each CellProfiler step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-create-profiles.html">5. Create Profiles</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Appendix
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="06-appendix.html">
-   Appendix
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="06-appendix.html">Appendix</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/cytomining/profiling-handbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cytomining/profiling-handbook/edit/master/03-setup-images.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
 
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
 
 
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/03-setup-images.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
   </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/cytomining/profiling-handbook"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/cytomining/profiling-handbook/edit/master/03-setup-images.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/03-setup-images.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.md</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#upload-images">
-   3.1. Upload Images
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#prepare-images">
-   3.2. Prepare Images
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-list-of-plates">
-   3.3. Create List of Plates
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-loaddata-csvs">
-   3.4. Create LoadData CSVs
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#upload-image-location-files-to-s3">
-   3.5. Upload image location files to S3
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Setup Images</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#upload-images">
-   3.1. Upload Images
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#prepare-images">
-   3.2. Prepare Images
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-list-of-plates">
-   3.3. Create List of Plates
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-loaddata-csvs">
-   3.4. Create LoadData CSVs
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#upload-image-location-files-to-s3">
-   3.5. Upload image location files to S3
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Setup Images</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-images">3.1. Upload Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-images">3.2. Prepare Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-list-of-plates">3.3. Create List of Plates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-loaddata-csvs">3.4. Create LoadData CSVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-image-location-files-to-s3">3.5. Upload image location files to S3</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="setup-images">
-<h1><span class="section-number">3. </span>Setup Images<a class="headerlink" href="#setup-images" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">3. </span>Setup Images<a class="headerlink" href="#setup-images" title="Permalink to this heading">#</a></h1>
 <section id="upload-images">
-<h2><span class="section-number">3.1. </span>Upload Images<a class="headerlink" href="#upload-images" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1. </span>Upload Images<a class="headerlink" href="#upload-images" title="Permalink to this heading">#</a></h2>
 <p>Your image files should be uploaded to AWS from your local compute environment via a tool like <a class="reference external" href="https://cyberduck.io/">Cyberduck</a> or the <a class="reference external" href="https://aws.amazon.com/cli/">AWS CLI</a> (<code class="docutils literal notranslate"><span class="pre">aws</span> <span class="pre">s3</span> <span class="pre">sync</span> <span class="pre">/local/path</span> <span class="pre">s3://BUCKET/PROJECT_NAME/BATCH_ID/images</span></code>) (see also Appendix A.2 for more information on folder structures). Some important tips BEFORE uploading (these are much more difficult to fix once uploaded):</p>
 <ul class="simple">
 <li><p>Ensure your image sets are complete i.e. all image sets should have the same number of channels and z-planes, and that this is true across the entire batch of plates you are processing.</p></li>
@@ -427,7 +400,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="prepare-images">
-<h2><span class="section-number">3.2. </span>Prepare Images<a class="headerlink" href="#prepare-images" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.2. </span>Prepare Images<a class="headerlink" href="#prepare-images" title="Permalink to this heading">#</a></h2>
 <p>(if using <code class="docutils literal notranslate"><span class="pre">pe2loaddata</span></code> to create image sets)</p>
 <p>Create soft link to the image folder. Note that the relevant S3 bucket has been mounted at <code class="docutils literal notranslate"><span class="pre">/home/ubuntu/bucket/</span></code>.</p>
 <div class="admonition note">
@@ -436,11 +409,11 @@ title="Print to PDF"
 <p>If you’re Z-projecting images and the unprojected images are in a folder with a different name (such as /unprojected_images/), you should create the soft link to that folder:
 <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">~/bucket/projects/${PROJECT_NAME}/${BATCH_ID}/unprojected_images/</span> <span class="pre">${BATCH_ID}</span></code></p>
 </div>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/
-mkdir images <span class="c1">#Run this only if this is the first batch for this project</span>
-<span class="nb">cd</span> images
-ln -s ~/bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/images/ <span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>
-<span class="nb">cd</span> ..
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/
+mkdir<span class="w"> </span>images<span class="w"> </span><span class="c1">#Run this only if this is the first batch for this project</span>
+<span class="nb">cd</span><span class="w"> </span>images
+ln<span class="w"> </span>-s<span class="w"> </span>~/bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/images/<span class="w"> </span><span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>
+<span class="nb">cd</span><span class="w"> </span>..
 </pre></div>
 </div>
 <p>This is the resulting structure of the image folder on EFS (one level below <code class="docutils literal notranslate"><span class="pre">workspace</span></code>):</p>
@@ -465,18 +438,18 @@ ln -s ~/bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME<
 <p><code class="docutils literal notranslate"><span class="pre">SQ00015167__2016-04-21T03_34_00-Measurement1</span></code> is the typical nomenclature followed by Broad Chemical Biology Platform for plate names. <code class="docutils literal notranslate"><span class="pre">Measurement1</span></code> indicates the first attempt to image the plate. <code class="docutils literal notranslate"><span class="pre">Measurement2</span></code> indicates second attempt and so on.</p>
 </section>
 <section id="create-list-of-plates">
-<span id="setup-images-create-plates"></span><h2><span class="section-number">3.3. </span>Create List of Plates<a class="headerlink" href="#create-list-of-plates" title="Permalink to this headline">#</a></h2>
+<span id="setup-images-create-plates"></span><h2><span class="section-number">3.3. </span>Create List of Plates<a class="headerlink" href="#create-list-of-plates" title="Permalink to this heading">#</a></h2>
 <p>(if using <code class="docutils literal notranslate"><span class="pre">pe2loaddata</span></code> to create image sets)</p>
 <p>Create a text file with one plate id per line. The plate IDs, if using <code class="docutils literal notranslate"><span class="pre">pe2loaddata</span></code>, must match the plate IDs given when operating the Phenix. Otherwise, they should match CellProfiler’s understanding of the <code class="docutils literal notranslate"><span class="pre">Plate</span></code> grouping variable, whether that is explicitly stated in a loaddata CSV OR produced from the Metadata module if the CSVs and/or batch files are created using CellProfiler’s input modules. For downstream purposes, i.e. <code class="docutils literal notranslate"><span class="pre">cytominer</span></code>, you may choose to use only so much of the plate name as you need to keep the plates unique (e.g. <code class="docutils literal notranslate"><span class="pre">SQ00015167</span></code> instead of <code class="docutils literal notranslate"><span class="pre">SQ00015167__2016-04-21T03_34_00-Measurement1</span></code> to keep the names compact.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/scratch/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/scratch/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/
 
-<span class="nv">PLATES</span><span class="o">=</span><span class="k">$(</span>readlink -f ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/scratch/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/plates_to_process.txt<span class="k">)</span>
+<span class="nv">PLATES</span><span class="o">=</span><span class="k">$(</span>readlink<span class="w"> </span>-f<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/scratch/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/plates_to_process.txt<span class="k">)</span>
 
-<span class="nv">FULL_PLATES</span><span class="o">=</span><span class="k">$(</span>readlink -f ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/scratch/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/full_plates_to_process.txt<span class="k">)</span>
+<span class="nv">FULL_PLATES</span><span class="o">=</span><span class="k">$(</span>readlink<span class="w"> </span>-f<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/scratch/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/full_plates_to_process.txt<span class="k">)</span>
 
-ls ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/ <span class="p">|</span> cut -d <span class="s1">&#39;_&#39;</span> -f <span class="m">1</span> &gt;&gt; <span class="nv">$PLATES</span>
+ls<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$PLATES</span>
 
-ls ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/ &gt;&gt; <span class="nv">$FULL_PLATES</span>
+ls<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$FULL_PLATES</span>
 </pre></div>
 </div>
 <p>Check that your plate names are correct by <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">$PLATES</span></code> and <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">$FULL_PLATES</span></code>. If your plate names contain underscores, you may need to fix the simplified plate names. Both should have the same number of rows as the number of plates in your batch.</p>
@@ -484,10 +457,10 @@ ls ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span cla
 <p><code class="docutils literal notranslate"><span class="pre">SAMPLE_FULL_PLATE_NAME=FULL_PLATE_NAME_1</span></code> This can be any single plate name, this time using the full name.</p>
 </section>
 <section id="create-loaddata-csvs">
-<h2><span class="section-number">3.4. </span>Create LoadData CSVs<a class="headerlink" href="#create-loaddata-csvs" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.4. </span>Create LoadData CSVs<a class="headerlink" href="#create-loaddata-csvs" title="Permalink to this heading">#</a></h2>
 <p>(if using <code class="docutils literal notranslate"><span class="pre">pe2loaddata</span></code> to create image sets)</p>
 <p>The script below works only for Phenix microscopes – it reads a standard XML file (<code class="docutils literal notranslate"><span class="pre">Index.idx.xml</span></code>) and writes a LoadData CSV file. For other microscopes, you will have to roll your own (see the overview chapter for more information). The script below requires <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>, which specifies</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>The mapping between channel names in <code class="docutils literal notranslate"><span class="pre">Index.idx.xml</span></code> and the channel names in the CellProfiler pipelines</p></li>
 <li><p>Metadata to extract from <code class="docutils literal notranslate"><span class="pre">Index.idx.xml</span></code></p></li>
 </ol>
@@ -526,13 +499,13 @@ different in <code class="docutils literal notranslate"><span class="pre">Index.
 </div>
 <p>Copy the text into a text file somewhere on your computer so you can refer to it.</p>
 <p>Now navigate to your pe2loaddata repository and ensure that it is up to date</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/software/pe2loaddata
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/software/pe2loaddata
 
-git pull
+git<span class="w"> </span>pull
 
-pyenv shell <span class="m">3</span>.8.10
+pyenv<span class="w"> </span>shell<span class="w"> </span><span class="m">3</span>.8.10
 
-pip3 install -e . 
+pip3<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span>
 </pre></div>
 </div>
 <p>Adjust any discrepancies between the list of channels from your index file and the config by editing <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>:</p>
@@ -554,24 +527,24 @@ pip3 install -e .
 <li><p>If your images require Z projection, make sure that <code class="docutils literal notranslate"><span class="pre">sub-string-in</span></code> is set to the folder that you soft-linked to in the previous step.</p></li>
 </ul>
 </div>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pyenv shell <span class="m">3</span>.8.10
-parallel <span class="se">\</span>
-  --link <span class="se">\</span>
-  --max-procs <span class="m">1</span> <span class="se">\</span>
-  --eta <span class="se">\</span>
-  --joblog ../../log/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/create_csv_from_xml.log <span class="se">\</span>
-  --results ../../log/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/create_csv_from_xml <span class="se">\</span>
-  --files <span class="se">\</span>
-  --keep-order <span class="se">\</span>
-  pe2loaddata config.yml <span class="se">\</span>
-    ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="o">{</span><span class="m">1</span><span class="o">}</span>/load_data.csv <span class="se">\</span>
-    --index-directory ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="o">{</span><span class="m">2</span><span class="o">}</span>/Images <span class="se">\</span>
-    --illum <span class="se">\</span>
-    --illum-directory /home/ubuntu/bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/illum/<span class="o">{</span><span class="m">1</span><span class="o">}</span> <span class="se">\</span>
-    --plate-id <span class="o">{</span><span class="m">1</span><span class="o">}</span> <span class="se">\</span>
-    --illum-output ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="o">{</span><span class="m">1</span><span class="o">}</span>/load_data_with_illum.csv <span class="se">\</span>
-    --sub-string-out efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span> <span class="se">\</span>
-    --sub-string-in bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/images :::: <span class="si">${</span><span class="nv">PLATES</span><span class="si">}</span> <span class="si">${</span><span class="nv">FULL_PLATES</span><span class="si">}</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pyenv<span class="w"> </span>shell<span class="w"> </span><span class="m">3</span>.8.10
+parallel<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--link<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-procs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--eta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--joblog<span class="w"> </span>../../log/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/create_csv_from_xml.log<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--results<span class="w"> </span>../../log/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/create_csv_from_xml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--files<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--keep-order<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pe2loaddata<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="o">{</span><span class="m">1</span><span class="o">}</span>/load_data.csv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--index-directory<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="o">{</span><span class="m">2</span><span class="o">}</span>/Images<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--illum<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--illum-directory<span class="w"> </span>/home/ubuntu/bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/illum/<span class="o">{</span><span class="m">1</span><span class="o">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--plate-id<span class="w"> </span><span class="o">{</span><span class="m">1</span><span class="o">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--illum-output<span class="w"> </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="o">{</span><span class="m">1</span><span class="o">}</span>/load_data_with_illum.csv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--sub-string-out<span class="w"> </span>efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/images/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--sub-string-in<span class="w"> </span>bucket/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/images<span class="w"> </span>::::<span class="w"> </span><span class="si">${</span><span class="nv">PLATES</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">FULL_PLATES</span><span class="si">}</span>
 </pre></div>
 </div>
 <p>This is the resulting structure of <code class="docutils literal notranslate"><span class="pre">load_data_csv</span></code> on EFS (one level below <code class="docutils literal notranslate"><span class="pre">workspace</span></code>). Files for only <code class="docutils literal notranslate"><span class="pre">SQ00015167</span></code> are shown.</p>
@@ -595,12 +568,12 @@ You should then upload your edited CSVs to S3.</p>
 </div>
 </section>
 <section id="upload-image-location-files-to-s3">
-<h2><span class="section-number">3.5. </span>Upload image location files to S3<a class="headerlink" href="#upload-image-location-files-to-s3" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.5. </span>Upload image location files to S3<a class="headerlink" href="#upload-image-location-files-to-s3" title="Permalink to this heading">#</a></h2>
 <p>If using <code class="docutils literal notranslate"><span class="pre">pe2loaddata</span></code>, run the command below</p>
 <p>Copy the load data files to S3:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>aws s3 sync <span class="se">\</span>
-    ~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/ <span class="se">\</span>
-    s3://<span class="si">${</span><span class="nv">BUCKET</span><span class="si">}</span>/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>s3<span class="w"> </span>sync<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>~/efs/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>s3://<span class="si">${</span><span class="nv">BUCKET</span><span class="si">}</span>/projects/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>/workspace/load_data_csv/<span class="si">${</span><span class="nv">BATCH_ID</span><span class="si">}</span>/
 </pre></div>
 </div>
 <p>If using your own home-created load data CSVs, load them to the same location - <code class="docutils literal notranslate"><span class="pre">s3://${BUCKET}/projects/${PROJECT_NAME}/workspace/load_data_csv/${BATCH_ID}</span></code> - we strongly recommend the structure of making one subfolder with CSVs in it per plate and then using the names <code class="docutils literal notranslate"><span class="pre">load_data.csv</span></code> for CSVs without illum files and <code class="docutils literal notranslate"><span class="pre">load_data_with_illum.csv</span></code> for those with the illum files.</p>
@@ -620,7 +593,7 @@ You should then upload your edited CSVs to S3.</p>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -628,50 +601,99 @@ You should then upload your edited CSVs to S3.</p>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="02-config.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">2. </span>Configure Environment for Full Profiling Pipeline</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02-config.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Configure Environment for Full Profiling Pipeline</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="04-run-cellprofiler.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="04-run-cellprofiler.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title"><span class="section-number">4. </span>Run each CellProfiler step</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-images">3.1. Upload Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-images">3.2. Prepare Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-list-of-plates">3.3. Create List of Plates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-loaddata-csvs">3.4. Create LoadData CSVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-image-location-files-to-s3">3.5. Upload image location files to S3</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi, Callum Tromans-Coia<br/>
-  
-      &copy; Copyright .<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Beth Cimini, Tim Becker, Shantanu Singh, Gregory Way, Hamdah Abbasi, Callum Tromans-Coia
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
