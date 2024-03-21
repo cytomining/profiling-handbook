@@ -77,7 +77,7 @@ Note that if your system does not already have `cytominer-database` installed, y
 
 The command below first calls `cytominer-database ingest` to create the SQLite backend, and then pycytominer's `aggregate_profiles` to create per-well profiles. Once complete, all files are uploaded to S3 and the local cache are deleted. This step takes several hours, but metadata creation and GitHub setup can be done in this time.
 
-[collate_cmd.py](https://github.com/cytomining/pycytominer/blob/master/pycytominer/cyto_utils/collate_cmd.py) ingests and indexes the database.
+[collate.py](https://github.com/cytomining/pycytominer/blob/master/pycytominer/cyto_utils/collate.py) ingests and indexes the database. [collate_command.py](https://github.com/cytomining/pycytominer/blob/master/pycytominer/cyto_utils/collate_cmd.py) exposes this functionality to the command line. 
 
 ```sh
 pyenv shell 3.8.10
